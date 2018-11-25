@@ -1,0 +1,22 @@
+<form #loginForm="ngForm" (ngSubmit)="search()" autocomplete="off" novalidate>
+  <label for="issueDateFrom">Issue date from:</label>
+  <input [ngModel] ="invoicesSearchCriteria.issueDateFrom | date:'yyyy-MM-dd'" (ngModelChange)="invoicesSearchCriteria.issueDateFrom = parseDate($event)" name="issueDateFrom" id="issueDateFrom" type="date" placeholder="Date from..."/>
+  <label for="issueDateTo">Issue date to:</label>
+  <input [ngModel] ="invoicesSearchCriteria.issueDateTo | date:'yyyy-MM-dd'" (ngModelChange)="invoicesSearchCriteria.issueDateTo = parseDate($event)" name="issueDateTo" id="issueDateTo" type="date" placeholder="Date to..." />
+  <button type="submit">Search</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>IssueDate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let invoice of invoices">
+      <td>{{ invoice.number }}</td>
+      <td>{{ invoice.issueDate | date:'dd.MM.yyyy' }}</td>
+    </tr>
+  </tbody>
+</table>

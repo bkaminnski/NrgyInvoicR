@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: nrgyinvoicr
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/kafkadb
+#    username: kafkadb
+#    password: kafkadb
+#  jpa:
+#    generate-ddl: true
+
+server:
+  port: 8080
