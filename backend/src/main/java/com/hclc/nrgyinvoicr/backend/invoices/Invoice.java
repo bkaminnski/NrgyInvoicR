@@ -18,7 +18,7 @@ public class Invoice {
         Date from = invoicesSearchCriteria.getIssueDateFrom();
         Date to = invoicesSearchCriteria.getIssueDateTo();
         return (from == null || !issueDate.before(from)) &&
-                (to == null || issueDate.before(to));
+                (to == null || !issueDate.after(to));
     }
 
     public Long getId() {

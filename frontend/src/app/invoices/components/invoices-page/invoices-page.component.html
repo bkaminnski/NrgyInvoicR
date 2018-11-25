@@ -1,9 +1,19 @@
 <form #loginForm="ngForm" (ngSubmit)="search()" autocomplete="off" novalidate>
-  <label for="issueDateFrom">Issue date from:</label>
-  <input [ngModel] ="invoicesSearchCriteria.issueDateFrom | date:'yyyy-MM-dd'" (ngModelChange)="invoicesSearchCriteria.issueDateFrom = parseDate($event)" name="issueDateFrom" id="issueDateFrom" type="date" placeholder="Date from..."/>
-  <label for="issueDateTo">Issue date to:</label>
-  <input [ngModel] ="invoicesSearchCriteria.issueDateTo | date:'yyyy-MM-dd'" (ngModelChange)="invoicesSearchCriteria.issueDateTo = parseDate($event)" name="issueDateTo" id="issueDateTo" type="date" placeholder="Date to..." />
-  <button type="submit">Search</button>
+  <mat-form-field>
+    <input matInput [matDatepicker]="issueDateFrom" placeholder="Issue date from" name="issueDateFrom" [(ngModel)]="invoicesSearchCriteria.issueDateFrom">
+    <mat-datepicker-toggle matSuffix [for]="issueDateFrom"></mat-datepicker-toggle>
+    <mat-datepicker #issueDateFrom></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="issueDateTo" placeholder="Issue date to" name="issueDateTo" [(ngModel)]="invoicesSearchCriteria.issueDateTo">
+    <mat-datepicker-toggle matSuffix [for]="issueDateTo"></mat-datepicker-toggle>
+    <mat-datepicker #issueDateTo></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-button type="submit">
+    <mat-icon>search</mat-icon> Search
+  </button>
 </form>
 
 <table>
@@ -16,7 +26,7 @@
   <tbody>
     <tr *ngFor="let invoice of invoices">
       <td>{{ invoice.number }}</td>
-      <td>{{ invoice.issueDate | date:'dd.MM.yyyy' }}</td>
+      <td>{{ invoice.issueDate | date:'shortDate' }}</td>
     </tr>
   </tbody>
 </table>

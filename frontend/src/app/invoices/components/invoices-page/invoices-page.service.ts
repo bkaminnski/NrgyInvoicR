@@ -15,9 +15,7 @@ export class InvoicesPageService {
       params = params.append('issueDateFrom', invoicesSearchCriteria.issueDateFrom.toISOString());
     }
     if (invoicesSearchCriteria.issueDateTo) {
-      const issueDateTo = new Date(invoicesSearchCriteria.issueDateTo);
-      issueDateTo.setDate(issueDateTo.getDate() + 1);
-      params = params.append('issueDateTo', issueDateTo.toISOString());
+      params = params.append('issueDateTo', invoicesSearchCriteria.issueDateTo.toISOString());
     }
     return this.http.get<Invoice[]>('/api/invoices', { params: params });
   }
