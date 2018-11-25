@@ -15,7 +15,7 @@ export class InvoicesPageComponent implements OnInit {
   testProp: any;
 
   constructor(private invoicesListService: InvoicesPageService) {
-    this.invoicesSearchCriteria = new InvoicesSearchCriteria(moment().startOf('month'), moment().endOf('month'));
+    this.invoicesSearchCriteria = new InvoicesSearchCriteria(moment().startOf('month'), moment().endOf('month').startOf('day'));
   }
 
   ngOnInit() {
