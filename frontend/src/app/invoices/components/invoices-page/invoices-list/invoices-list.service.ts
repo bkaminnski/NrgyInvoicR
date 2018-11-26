@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Invoice } from '../../model/invoice.model';
-import { InvoicesSearchCriteria } from './invoices-search-criteria.model';
+import { Invoice } from '../../../model/invoice.model';
+import { InvoicesSearchCriteria } from '../../../model/invoices-search-criteria.model';
 
 @Injectable()
-export class InvoicesPageService {
+export class InvoicesListService {
 
   constructor(private http: HttpClient) { }
 

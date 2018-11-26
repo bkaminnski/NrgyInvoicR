@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
-import { InvoicesPageService } from './invoices-page.service';
-import { InvoicesSearchCriteria } from './invoices-search-criteria.model';
+import { InvoicesListService } from './invoices-list.service';
+import { InvoicesSearchCriteria } from '../../../model/invoices-search-criteria.model';
 
 describe('InvoicesPageService', () => {
 
@@ -10,11 +10,11 @@ describe('InvoicesPageService', () => {
     const UPPER_BOUND_PLUS_ONE_DAY = '2018-02-01T00:00:00.000Z';
 
     let mockHttpClient;
-    let service: InvoicesPageService;
+    let service: InvoicesListService;
 
     beforeEach(() => {
         mockHttpClient = jasmine.createSpyObj('mockHttpClient', ['get']);
-        service = new InvoicesPageService(mockHttpClient);
+        service = new InvoicesListService(mockHttpClient);
     });
 
     it('should call correct endpoint', () => {

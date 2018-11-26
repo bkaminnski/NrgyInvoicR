@@ -1,8 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { Invoice } from '../../model/invoice.model';
-import { InvoicesPageService } from './invoices-page.service';
-import { InvoicesSearchCriteria } from './invoices-search-criteria.model';
-import * as moment from 'moment';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   templateUrl: './invoices-page.component.html',
@@ -10,19 +6,7 @@ import * as moment from 'moment';
 })
 export class InvoicesPageComponent implements OnInit {
 
-  invoicesSearchCriteria: InvoicesSearchCriteria;
-  invoices: Invoice[];
-  testProp: any;
+  constructor() { }
 
-  constructor(private invoicesListService: InvoicesPageService) {
-    this.invoicesSearchCriteria = new InvoicesSearchCriteria(moment().startOf('month'), moment().endOf('month').startOf('day'));
-  }
-
-  ngOnInit() {
-    this.search();
-  }
-
-  search() {
-    this.invoicesListService.findInvoices(this.invoicesSearchCriteria).subscribe(invoices => this.invoices = invoices);
-  }
+  ngOnInit() { }
 }
