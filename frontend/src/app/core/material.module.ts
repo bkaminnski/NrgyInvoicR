@@ -5,7 +5,10 @@ import {
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatTableModule
 } from '@angular/material';
 
 import {
@@ -19,6 +22,9 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatCardModule,
     MatMomentDateModule
   ],
   exports: [
@@ -27,6 +33,9 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatCardModule,
     MatMomentDateModule
   ]
 })

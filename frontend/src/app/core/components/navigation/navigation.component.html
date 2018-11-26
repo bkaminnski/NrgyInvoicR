@@ -1,4 +1,9 @@
-<p>
-  <a [routerLink]="['/dashboard']">Dashboard</a>
-  <a [routerLink]="['/invoices']">Invoices</a>
-</p>
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <mat-icon>flash_on</mat-icon>
+  <span class="title">NrgyInvoicR</span>
+  <button mat-button [routerLink]="['/dashboard']">Dashboard</button>
+  <button mat-button [routerLink]="['/invoices']">Invoices</button>
+  <span class="space"></span>
+  <mat-icon>account_circle</mat-icon>
+  <span class="user">Bartosz Kaminski</span>
+</mat-toolbar>

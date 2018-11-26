@@ -11,6 +11,7 @@ import { Invoice } from 'src/app/invoices/model/invoice.model';
 export class InvoicesListComponent implements OnInit {
 
   invoices: Invoice[];
+  displayedColumns: string[] = ['number', 'issueDate'];
 
   constructor(private invoicesListService: InvoicesListService) { }
 
