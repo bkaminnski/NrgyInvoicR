@@ -1,13 +1,14 @@
 spring:
   application:
     name: nrgyinvoicr
-
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/kafkadb
-#    username: kafkadb
-#    password: kafkadb
-#  jpa:
-#    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nrgyinvoicr
+    username: nrgyinvoicr
+    password: nrgyinvoicr
+  jpa:
+    generate-ddl: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 server:
   port: 8080

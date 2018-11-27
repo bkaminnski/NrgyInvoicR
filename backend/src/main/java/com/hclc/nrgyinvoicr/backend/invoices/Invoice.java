@@ -1,25 +1,27 @@
 package com.hclc.nrgyinvoicr.backend.invoices;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.TemporalType.TIMESTAMP;
+
+@Entity
 public class Invoice {
 
+    @Id
+    @SequenceGenerator(name = "invoice_id_seq", sequenceName = "invoice_id")
+    @GeneratedValue(strategy = SEQUENCE, generator = "invoice_id_seq")
     private Long id;
+
+    @NotNull
+    @Column(length = 255)
     private String number;
+
+    @NotNull
+    @Temporal(TIMESTAMP)
     private Date issueDate;
-
-    public Invoice(Long id, String number, Date issueDate) {
-        this.id = id;
-        this.number = number;
-        this.issueDate = issueDate;
-    }
-
-    public boolean matches(InvoicesSearchCriteria invoicesSearchCriteria) {
-        Date from = invoicesSearchCriteria.getIssueDateFrom();
-        Date to = invoicesSearchCriteria.getIssueDateTo();
-        return (from == null || !issueDate.before(from)) &&
-                (to == null || issueDate.before(to));
-    }
 
     public Long getId() {
         return id;

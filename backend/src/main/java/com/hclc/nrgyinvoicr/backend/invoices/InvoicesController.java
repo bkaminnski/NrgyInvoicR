@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -22,7 +21,7 @@ public class InvoicesController {
     }
 
     @GetMapping
-    public List<Invoice> findInvoices(InvoicesSearchCriteria invoicesSearchCriteria) throws ParseException {
+    public Iterable<Invoice> findInvoices(InvoicesSearchCriteria invoicesSearchCriteria) throws ParseException {
         return invoicesService.findInvoices(invoicesSearchCriteria);
     }
 }

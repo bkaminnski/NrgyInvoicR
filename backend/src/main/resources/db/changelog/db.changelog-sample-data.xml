@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="sample-data-0001" runAlways="true">
+        <validCheckSum>ANY</validCheckSum>
+        <delete tableName="invoice"/>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="01/02/2018"/>
+            <column name="issue_date" value="2018-02-04T10:59:03"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="01/11/2018"/>
+            <column name="issue_date" value="2018-11-01T13:41:12"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="02/11/2018"/>
+            <column name="issue_date" value="2018-11-04T11:15:53"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="03/11/2018"/>
+            <column name="issue_date" value="2018-11-15T16:43:07"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
