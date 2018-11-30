@@ -1,6 +1,8 @@
 package com.hclc.nrgyinvoicr.backend.invoices;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -18,9 +20,11 @@ public class InvoicesService {
         this.invoicesRepository = invoicesRepository;
     }
 
-    public Iterable<Invoice> findInvoices(InvoicesSearchCriteria invoicesSearchCriteria) throws ParseException {
-        Date from = invoicesSearchCriteria.getIssueDateFrom();
-        Date to = invoicesSearchCriteria.getIssueDateTo();
-        return this.invoicesRepository.findAll(issueDateBetween(from, to));
+    public Page<Invoice> findInvoices(InvoicesSearchCriteria criteria) throws ParseException {
+        Date from = criteria.getIssueDateFrom();
+        Date to = criteria.getIssueDateTo();
+        Specification<Invoice> specification = issueDateBetween(from, to);
+
+        return this.invoicesRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
     }
 }

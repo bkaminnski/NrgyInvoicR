@@ -10,3 +10,10 @@
   margin-left: 5px;
   font-size: 14px;
 }
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}

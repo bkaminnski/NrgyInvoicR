@@ -27,5 +27,45 @@
             <column name="number" value="03/11/2018"/>
             <column name="issue_date" value="2018-11-15T16:43:07"/>
         </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="02/02/2018"/>
+            <column name="issue_date" value="2018-02-06T09:34:18"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="03/02/2018"/>
+            <column name="issue_date" value="2018-02-08T10:43:13"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="04/02/2018"/>
+            <column name="issue_date" value="2018-02-09T06:00:27"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="05/02/2018"/>
+            <column name="issue_date" value="2018-02-14T15:50:18"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="04/11/2018"/>
+            <column name="issue_date" value="2018-11-16T14:14:41"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="05/11/2018"/>
+            <column name="issue_date" value="2018-11-16T14:18:49"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="06/11/2018"/>
+            <column name="issue_date" value="2018-11-20T07:21:42"/>
+        </insert>
+        <insert tableName="invoice">
+            <column name="id" valueSequenceNext="invoice_id"/>
+            <column name="number" value="07/11/2018"/>
+            <column name="issue_date" value="2018-11-25T14:30:17"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

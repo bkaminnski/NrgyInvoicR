@@ -8,7 +8,10 @@ import {
   MatDatepickerModule,
   MatToolbarModule,
   MatCardModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import {
@@ -23,8 +26,11 @@ import {
     MatInputModule,
     MatDatepickerModule,
     MatToolbarModule,
-    MatTableModule,
     MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
     MatMomentDateModule
   ],
   exports: [
@@ -34,8 +40,11 @@ import {
     MatInputModule,
     MatDatepickerModule,
     MatToolbarModule,
-    MatTableModule,
     MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
     MatMomentDateModule
   ]
 })

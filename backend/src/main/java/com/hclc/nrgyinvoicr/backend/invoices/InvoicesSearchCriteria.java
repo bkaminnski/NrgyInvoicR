@@ -1,5 +1,6 @@
 package com.hclc.nrgyinvoicr.backend.invoices;
 
+import com.hclc.nrgyinvoicr.backend.PageDefinition;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -11,6 +12,8 @@ public class InvoicesSearchCriteria {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date issueDateTo;
+
+    private PageDefinition pageDefinition;
 
     public Date getIssueDateFrom() {
         return issueDateFrom;
@@ -26,5 +29,13 @@ public class InvoicesSearchCriteria {
 
     public void setIssueDateTo(Date issueDateTo) {
         this.issueDateTo = issueDateTo;
+    }
+
+    public PageDefinition getPageDefinition() {
+        return pageDefinition;
+    }
+
+    public void setPageDefinition(PageDefinition pageDefinition) {
+        this.pageDefinition = pageDefinition;
     }
 }
