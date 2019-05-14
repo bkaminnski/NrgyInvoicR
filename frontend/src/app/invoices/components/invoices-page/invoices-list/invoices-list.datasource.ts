@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { InvoicesListService } from './invoices-list.service';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
+import { Page } from 'src/app/invoices/model/page.model';
 
 export class InvoicesListDataSource implements DataSource<Invoice> {
 
@@ -33,7 +34,7 @@ export class InvoicesListDataSource implements DataSource<Invoice> {
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false)),
-        tap(page => this.totalElementsSubject.next(page.totalElements))
+        tap<Page<Invoice>>(page => this.totalElementsSubject.next(page.totalElements))
       )
       .subscribe(page => this.invoicesSubject.next(page.content));
   }
