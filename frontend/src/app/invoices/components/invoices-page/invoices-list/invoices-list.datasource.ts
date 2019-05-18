@@ -7,7 +7,6 @@ import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-c
 import { Page } from 'src/app/invoices/model/page.model';
 
 export class InvoicesListDataSource implements DataSource<Invoice> {
-
   private invoicesSubject = new BehaviorSubject<Invoice[]>([]);
   private totalElementsSubject = new BehaviorSubject<number>(0);
   private loadingSubject = new BehaviorSubject<boolean>(false);

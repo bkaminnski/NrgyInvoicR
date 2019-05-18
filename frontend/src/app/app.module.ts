@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { InvoicesModule } from './invoices/invoices.module';
+import { ReadingsModule } from './readings/readings.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { AppComponent } from './app.component';
     CoreModule,
     DashboardModule,
     InvoicesModule,
+    ReadingsModule,
     AppRoutingModule
   ],
   providers: [],
