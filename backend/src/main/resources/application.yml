@@ -3,8 +3,8 @@ spring:
     name: nrgyinvoicr
   servlet:
     multipart:
-      max-file-size: 17MB
-      max-request-size: 17MB
+      max-file-size: 170MB
+      max-request-size: 170MB
   datasource:
     url: jdbc:postgresql://localhost:5432/nrgyinvoicr
     username: nrgyinvoicr

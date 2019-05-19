@@ -18,7 +18,7 @@
       <ng-container matColumnDef="progress">
         <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
         <mat-cell *matCellDef="let reading">
-          <mat-progress-bar mode="determinate" [value]="(reading.progress | async) * 100"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="reading.progress | async" *ngIf="(reading.progress | async) > 0"></mat-progress-bar>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="processingResult">

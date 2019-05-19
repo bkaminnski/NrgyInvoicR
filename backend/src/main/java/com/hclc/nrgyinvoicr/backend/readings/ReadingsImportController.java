@@ -22,7 +22,7 @@ public class ReadingsImportController {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println("line = " + line);
+                // System.out.println("line = " + line);
             }
         }
         if (ThreadLocalRandom.current().nextDouble() < 0.5) {

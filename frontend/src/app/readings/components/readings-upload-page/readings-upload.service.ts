@@ -29,7 +29,7 @@ export class ReadingsUploadService {
   }
 
   private uploadFile(file: File) {
-    const progress = new Subject<number>();
+    const progress = new BehaviorSubject<number>(0);
     const processingResult = new BehaviorSubject<ProcessingResult>(ProcessingResult.WAITING);
     this.readings.push(new ReadingUploadProgress(file.name, progress.asObservable(), processingResult.asObservable()));
     this.http
@@ -56,7 +56,7 @@ export class ReadingsUploadService {
 
   private handleEvent(event: any, progress: Subject<number>, processingResult: Subject<ProcessingResult>) {
     if (event.type === HttpEventType.UploadProgress) {
-      progress.next(event.loaded / event.total);
+      progress.next(Math.round(100 * event.loaded / event.total));
     } else if (event instanceof HttpResponse) {
       processingResult.next(ProcessingResult.SUCCESS);
       processingResult.complete();
