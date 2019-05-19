@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ReadingsUploadDataSource } from '../readings-upload.datasource';
 
 @Component({
@@ -8,6 +8,7 @@ import { ReadingsUploadDataSource } from '../readings-upload.datasource';
 })
 export class UploadControlComponent implements OnInit {
   public uploadStarted = false;
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   constructor(public dataSource: ReadingsUploadDataSource) { }
 
@@ -22,5 +23,6 @@ export class UploadControlComponent implements OnInit {
     }
     this.dataSource.uploadFiles(files);
     this.uploadStarted = true;
+    this.fileInput.nativeElement.value = null;
   }
 }
