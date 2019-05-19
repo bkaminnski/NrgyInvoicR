@@ -1,11 +1,14 @@
 import { Observable } from 'rxjs';
+import { ProcessingResult } from './processing-result.model';
 
 export class ReadingUploadProgress {
   readonly fileName: string;
-  readonly percentage: Observable<number>;
+  readonly progress: Observable<number>;
+  readonly processingResult: Observable<ProcessingResult>;
 
-  constructor(fileName: string, percentage: Observable<number>) {
+  constructor(fileName: string, progress: Observable<number>, processingResult: Observable<ProcessingResult>) {
     this.fileName = fileName;
-    this.percentage = percentage;
+    this.progress = progress;
+    this.processingResult = processingResult;
   }
 }

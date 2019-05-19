@@ -11,7 +11,9 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatProgressBar,
+  MatProgressBarModule
 } from '@angular/material';
 
 import {
@@ -31,7 +33,8 @@ import {
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatProgressBarModule
   ],
   exports: [
     MatButtonModule,
@@ -45,7 +48,8 @@ import {
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

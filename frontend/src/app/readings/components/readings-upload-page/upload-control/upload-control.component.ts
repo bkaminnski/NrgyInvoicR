@@ -3,14 +3,15 @@ import { ReadingsUploadDataSource } from '../readings-upload.datasource';
 
 @Component({
   selector: 'app-upload-control',
-  templateUrl: './upload-control.component.html'
+  templateUrl: './upload-control.component.html',
+  styleUrls: ['./upload-control.component.scss']
 })
 export class UploadControlComponent implements OnInit {
+  public uploadStarted = false;
 
   constructor(public dataSource: ReadingsUploadDataSource) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   uploadFiles($event: any) {
     const files: File[] = [];
@@ -20,5 +21,6 @@ export class UploadControlComponent implements OnInit {
       }
     }
     this.dataSource.uploadFiles(files);
+    this.uploadStarted = true;
   }
 }

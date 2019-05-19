@@ -13,6 +13,7 @@ export class ReadingsUploadDataSource implements DataSource<ReadingUploadProgres
 
   public readings = this.readingsSubject.asObservable();
   public loading = false;
+  public numberOfFilesToUpload: number;
   public numberOfSuccessfulUploads: number;
   public numberOfFailedUploads: number;
 
@@ -27,7 +28,11 @@ export class ReadingsUploadDataSource implements DataSource<ReadingUploadProgres
   }
 
   uploadFiles(files: File[]) {
+    if (files.length === 0) {
+      return;
+    }
     this.loading = true;
+    this.numberOfFilesToUpload = files.length;
     this.numberOfSuccessfulUploads = 0;
     this.numberOfFailedUploads = 0;
     const summary: ReadingsUploadSummary = this.readingsUploadService.uploadFiles(files);

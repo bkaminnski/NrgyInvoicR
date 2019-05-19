@@ -5,21 +5,33 @@
         Upload Progress
         <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
       </span>
-      <span *ngIf="dataSource.loading">({{dataSource.numberOfSuccessfulUploads}})</span>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="fileName">
         <mat-header-cell *matHeaderCellDef>File Name</mat-header-cell>
-        <mat-cell *matCellDef="let uploadProgressItem">{{uploadProgressItem.fileName}}</mat-cell>
+        <mat-cell *matCellDef="let reading">
+          {{reading.fileName}}
+        </mat-cell>
       </ng-container>
-
-      <ng-container matColumnDef="percentage">
-        <mat-header-cell *matHeaderCellDef>Percentage</mat-header-cell>
-        <mat-cell *matCellDef="let uploadProgressItem">{{uploadProgressItem.percentage | async | percent | default:'Waiting...'}}</mat-cell>
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
+        <mat-cell *matCellDef="let reading">
+          <mat-progress-bar mode="determinate" [value]="(reading.progress | async) * 100"></mat-progress-bar>
+        </mat-cell>
       </ng-container>
-
+      <ng-container matColumnDef="processingResult">
+        <mat-header-cell *matHeaderCellDef>Processing Result</mat-header-cell>
+        <mat-cell *matCellDef="let reading">
+          <mat-spinner *ngIf="(reading.processingResult | async) === ProcessingResult.WAITING" [diameter]="20"
+            class="table-spinner"></mat-spinner>
+          <mat-icon *ngIf="(reading.processingResult | async) === ProcessingResult.SUCCESS" color="primary">cloud_done
+          </mat-icon>
+          <mat-icon *ngIf="(reading.processingResult | async) === ProcessingResult.ERROR" color="primary">cloud_off
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

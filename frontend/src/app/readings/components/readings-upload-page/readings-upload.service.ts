@@ -1,8 +1,10 @@
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, of, BehaviorSubject } from 'rxjs';
 import { ReadingsUploadSummary } from '../../model/readings-upload-summary';
 import { ReadingUploadProgress } from '../../model/reading-upload-progress.model';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { ProcessingResult } from '../../model/processing-result.model';
 
 @Injectable()
 export class ReadingsUploadService {
@@ -27,11 +29,23 @@ export class ReadingsUploadService {
   }
 
   private uploadFile(file: File) {
-    const uploadProgress = new Subject<number>();
-    this.readings.push(new ReadingUploadProgress(file.name, uploadProgress.asObservable()));
+    const progress = new Subject<number>();
+    const processingResult = new BehaviorSubject<ProcessingResult>(ProcessingResult.WAITING);
+    this.readings.push(new ReadingUploadProgress(file.name, progress.asObservable(), processingResult.asObservable()));
     this.http
       .request(this.prepareHttpRequest(file))
-      .subscribe(event => this.handleEvent(event, uploadProgress));
+      .pipe(
+        catchError(() => this.handleError(processingResult))
+      )
+      .subscribe(event => this.handleEvent(event, progress, processingResult));
+  }
+
+  private handleError(processingResult: Subject<ProcessingResult>) {
+    this.numberOfFailedUploadsSubject.next(++this.numberOfFailedUploads);
+    processingResult.next(ProcessingResult.ERROR);
+    processingResult.complete();
+    this.tryCompletingSubjects();
+    return of([]);
   }
 
   private prepareHttpRequest(file: File): HttpRequest<FormData> {
@@ -40,16 +54,22 @@ export class ReadingsUploadService {
     return new HttpRequest('POST', '/api/readings', formData, { reportProgress: true });
   }
 
-  private handleEvent(event: any, uploadProgress: Subject<number>) {
+  private handleEvent(event: any, progress: Subject<number>, processingResult: Subject<ProcessingResult>) {
     if (event.type === HttpEventType.UploadProgress) {
-      uploadProgress.next(event.loaded / event.total);
+      progress.next(event.loaded / event.total);
     } else if (event instanceof HttpResponse) {
-      uploadProgress.complete();
+      processingResult.next(ProcessingResult.SUCCESS);
+      processingResult.complete();
+      progress.complete();
       this.numberOfSuccessfulUploadsSubject.next(++this.numberOfSuccessfulUploads);
-      if (this.numberOfSuccessfulUploads + this.numberOfFailedUploads === this.numberOfFiles) {
-        this.numberOfSuccessfulUploadsSubject.complete();
-        this.numberOfFailedUploadsSubject.complete();
-      }
+      this.tryCompletingSubjects();
+    }
+  }
+
+  private tryCompletingSubjects() {
+    if (this.numberOfSuccessfulUploads + this.numberOfFailedUploads === this.numberOfFiles) {
+      this.numberOfSuccessfulUploadsSubject.complete();
+      this.numberOfFailedUploadsSubject.complete();
     }
   }
 }
