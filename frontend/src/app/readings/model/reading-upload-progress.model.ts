@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-export class UploadProgressItem {
+export class ReadingUploadProgress {
   readonly fileName: string;
   readonly percentage: Observable<number>;
 
