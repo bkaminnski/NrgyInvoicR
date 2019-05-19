@@ -1,1 +1,2 @@
-![Screenshot](readme/screenshot01.png)
+![Screenshot](readme/invoices.png)
+![Screenshot](readme/readings_upload.png)
