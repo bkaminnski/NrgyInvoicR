@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
 
 @Controller
-public class ReadingsImportController {
+public class ReadingsUploadController {
 
     @PostMapping(value = "/api/readings")
     public ResponseEntity<Void> handleUploadedReadingFile(@RequestParam("file") MultipartFile file) throws IOException {

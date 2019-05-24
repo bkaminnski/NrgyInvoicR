@@ -1,5 +1,7 @@
 package com.hclc.nrgyinvoicr.backend.invoices;
 
+import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -8,10 +10,10 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-public class Invoice {
+public class Invoice extends AuditableEntity {
 
     @Id
-    @SequenceGenerator(name = "invoice_id_seq", sequenceName = "invoice_id")
+    @SequenceGenerator(name = "invoice_id_seq", sequenceName = "invoice_id_seq")
     @GeneratedValue(strategy = SEQUENCE, generator = "invoice_id_seq")
     private Long id;
 

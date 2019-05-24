@@ -4,14 +4,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet author="bkaminnski" id="1.0-0001">
+    <changeSet author="bkaminnski" id="1.0_invoice_001">
         <createTable tableName="invoice">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="number" type="varchar(255)"/>
-            <column name="issue_date" type="datetime"/>
+            <column name="issue_date" type="timestamp with timezone"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
-        <createSequence sequenceName="invoice_id" startValue="5"/>
+        <createSequence sequenceName="invoice_id_seq" startValue="1"/>
     </changeSet>
 </databaseChangeLog>

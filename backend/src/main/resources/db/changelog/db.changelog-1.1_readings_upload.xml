@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="1.1_readings_upload_001">
+        <createTable tableName="meter">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="external_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="meter_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.1_readings_upload_002">
+        <createTable tableName="import">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="file_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="import_date" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="readings_since_closed" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="readings_until_open" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="meter_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="import_id_seq" startValue="1"/>
+        <addForeignKeyConstraint baseTableName="import" baseColumnNames="meter_id" constraintName="import_meter_fk"
+                                 referencedTableName="meter" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.1_readings_upload_003">
+        <createTable tableName="reading">
+            <column name="import_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reading_date" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="number(11,4)"/>
+        </createTable>
+        <addPrimaryKey tableName="reading" columnNames="import_id, reading_date" constraintName="reading_pk"/>
+        <addForeignKeyConstraint baseTableName="reading" baseColumnNames="import_id" constraintName="reading_import_fk"
+                                 referencedTableName="import" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
