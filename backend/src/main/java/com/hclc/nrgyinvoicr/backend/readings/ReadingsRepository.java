@@ -1,6 +1,6 @@
 package com.hclc.nrgyinvoicr.backend.readings;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface ReadingsRepository extends CrudRepository<Reading, ReadingId> {
+interface ReadingsRepository extends JpaRepository<Reading, Long> {
 }

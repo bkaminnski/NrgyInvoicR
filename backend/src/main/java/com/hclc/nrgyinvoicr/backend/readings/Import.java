@@ -23,47 +23,19 @@ public class Import extends AuditableEntity {
 
     @NotNull
     @Temporal(TIMESTAMP)
-    private Date importDate;
-
-    @NotNull
-    @Temporal(TIMESTAMP)
-    private Date readingDate;
+    private Date date;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "meter_id", nullable = false)
-    private Meter meter;
-
-    @Embedded
-    private ReadingsSpread readingsSpread;
+    @JoinColumn(name = "reading_id", nullable = false)
+    private Reading reading;
 
     public Import() {
     }
 
-    public Import(@NotNull String fileName, @NotNull Date readingDate, @NotNull Meter meter) {
-        this.importDate = new Date();
+    public Import(@NotNull String fileName, @NotNull Reading reading) {
+        this.date = new Date();
         this.fileName = fileName;
-        this.readingDate = readingDate;
-        this.meter = meter;
-    }
-
-    public void updateWithReadingsPeriod(Date readingsSinceClosed, Date readingsUntilOpen, long numberOfImportedReadings) {
-        this.readingsSpread = new ReadingsSpread(readingsSinceClosed, readingsUntilOpen, numberOfImportedReadings);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public Date getImportDate() {
-        return importDate;
-    }
-
-    public ReadingsSpread getReadingsSpread() {
-        return readingsSpread;
+        this.reading = reading;
     }
 }

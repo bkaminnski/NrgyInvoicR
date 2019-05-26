@@ -1,47 +1,47 @@
 package com.hclc.nrgyinvoicr.backend.readings;
 
+import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-@IdClass(ReadingId.class)
-public class Reading {
+public class Reading extends AuditableEntity {
 
-    @NotNull
-    @Column
     @Id
-    private Long importId;
+    @SequenceGenerator(name = "reading_id_seq", sequenceName = "reading_id_seq", initialValue = 1, allocationSize = 50)
+    @GeneratedValue(strategy = SEQUENCE, generator = "reading_id_seq")
+    private Long id;
 
     @NotNull
     @Temporal(TIMESTAMP)
-    @Id
     private Date date;
 
-    @Column
-    private BigDecimal value;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "meter_id", nullable = false)
+    private Meter meter;
+
+    @Embedded
+    private ReadingsSpread readingsSpread;
 
     public Reading() {
     }
 
-    public Reading(@NotNull Long importId, @NotNull Date date, BigDecimal value) {
-        this.importId = importId;
+    public Reading(@NotNull Date date, @NotNull Meter meter) {
         this.date = date;
-        this.value = value;
+        this.meter = meter;
     }
 
-    public Long getImportId() {
-        return importId;
+    public void updateWithReadingsSpread(Date readingsSinceClosed, Date readingsUntilOpen, long numberOfMadeReadings) {
+        this.readingsSpread = new ReadingsSpread(readingsSinceClosed, readingsUntilOpen, numberOfMadeReadings);
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public BigDecimal getValue() {
-        return value;
+    public Long getId() {
+        return id;
     }
 }

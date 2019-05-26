@@ -25,13 +25,15 @@ public class ReadingsUploadController {
     private final ImportsRepository importsRepository;
     private final ReadingLineParser readingLineParser;
     private final ReadingsRepository readingsRepository;
+    private final ReadingValuesRepository readingValuesRepository;
 
-    public ReadingsUploadController(FileNameParser fileNameParser, MetersRepository metersRepository, ImportsRepository importsRepository, ReadingLineParser readingLineParser, ReadingsRepository readingsRepository) {
+    public ReadingsUploadController(FileNameParser fileNameParser, MetersRepository metersRepository, ImportsRepository importsRepository, ReadingLineParser readingLineParser, ReadingsRepository readingsRepository, ReadingValuesRepository readingValuesRepository) {
         this.fileNameParser = fileNameParser;
         this.metersRepository = metersRepository;
         this.importsRepository = importsRepository;
         this.readingLineParser = readingLineParser;
         this.readingsRepository = readingsRepository;
+        this.readingValuesRepository = readingValuesRepository;
     }
 
     @PostMapping(value = "/api/readings")
@@ -42,31 +44,32 @@ public class ReadingsUploadController {
         Meter meter = metersRepository
                 .findByExternalId(parsedFileName.getMeterId())
                 .orElseThrow(() -> new ReadingUploadException("Meter not found: " + parsedFileName.getMeterId()));
-        Import anImport = importsRepository.saveAndFlush(new Import(fileName, parsedFileName.getReadingDate(), meter));
+        Reading reading = readingsRepository.saveAndFlush(new Reading(parsedFileName.getReadingDate(), meter));
         Date readingSinceClosed = null;
         Date readingUntilOpen = null;
         int lineNumber = 0;
-        Reading reading = null;
-        Long importId = anImport.getId();
+        ReadingValue readingValue = null;
+        Long readingId = reading.getId();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 lineNumber++;
-                reading = readingLineParser.parse(importId, lineNumber, line);
-                readingsRepository.save(reading);
+                readingValue = readingLineParser.parse(readingId, lineNumber, line);
+                readingValuesRepository.save(readingValue);
                 if (readingSinceClosed == null) {
-                    readingSinceClosed = reading.getDate();
+                    readingSinceClosed = readingValue.getDate();
                 }
             }
         }
-        if (reading != null) {
-            readingUntilOpen = Date.from(reading.getDate().toInstant().plus(15, ChronoUnit.MINUTES));
+        if (readingValue != null) {
+            readingUntilOpen = Date.from(readingValue.getDate().toInstant().plus(15, ChronoUnit.MINUTES));
         }
         if (lineNumber == 0) {
             throw new ReadingUploadException("File is empty: " + fileName);
         }
-        anImport.updateWithReadingsPeriod(readingSinceClosed, readingUntilOpen, lineNumber);
-        importsRepository.save(anImport);
+        reading.updateWithReadingsSpread(readingSinceClosed, readingUntilOpen, lineNumber);
+        readingsRepository.save(reading);
+        importsRepository.saveAndFlush(new Import(fileName, reading));
         return new ResponseEntity<>(OK);
     }
 

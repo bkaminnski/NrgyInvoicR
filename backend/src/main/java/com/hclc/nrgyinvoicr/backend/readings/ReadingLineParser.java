@@ -14,14 +14,14 @@ import static com.hclc.nrgyinvoicr.backend.DateTimeFormat.ISO_8601_OFFSET_DATE_T
 class ReadingLineParser {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION);
 
-    Reading parse(Long importId, int lineNumber, String line) throws ReadingLineParserException {
+    ReadingValue parse(Long readingId, int lineNumber, String line) throws ReadingLineParserException {
         validateEmptyLine(lineNumber, line);
         String[] values = splitLine(lineNumber, line);
         String dateAsString = values[0];
         Date date = parseDate(lineNumber, dateAsString);
         String valueAsString = values[1];
         BigDecimal value = parseValue(lineNumber, valueAsString);
-        return new Reading(importId, date, value);
+        return new ReadingValue(readingId, date, value);
     }
 
     private void validateEmptyLine(int lineNumber, String line) throws ReadingLineParserException {

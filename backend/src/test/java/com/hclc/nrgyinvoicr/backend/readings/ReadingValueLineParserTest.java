@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
-class ReadingLineParserTest {
+class ReadingValueLineParserTest {
     private ReadingLineParser readingLineParser;
 
     @BeforeEach
@@ -25,16 +25,16 @@ class ReadingLineParserTest {
     void whenLineIsCorrect_shouldParseLine() throws ReadingLineParserException {
         String line = "2019-10-27T00:00+02:00;123.45";
 
-        Reading reading = readingLineParser.parse(1L, 2, line);
+        ReadingValue readingValue = readingLineParser.parse(1L, 2, line);
 
-        assertThat(reading.getImportId()).isEqualTo(1L);
-        assertThat(reading.getDate()).isEqualTo("2019-10-27T00:00+02:00");
-        assertThat(reading.getValue()).isEqualByComparingTo(new BigDecimal("123.45"));
+        assertThat(readingValue.getReadingId()).isEqualTo(1L);
+        assertThat(readingValue.getDate()).isEqualTo("2019-10-27T00:00+02:00");
+        assertThat(readingValue.getValue()).isEqualByComparingTo(new BigDecimal("123.45"));
     }
 
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("parameters")
-    void whenLineIsIncorrect_shouldThrowException(String description, String line, String expectedMessage) throws ReadingLineParserException {
+    void whenLineIsIncorrect_shouldThrowException(String description, String line, String expectedMessage) {
         assertThatThrownBy(() -> readingLineParser.parse(1L, 2, line)).hasMessage(expectedMessage);
     }
 

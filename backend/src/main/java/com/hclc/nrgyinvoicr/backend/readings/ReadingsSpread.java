@@ -23,35 +23,19 @@ public class ReadingsSpread {
     private long numberOfExpectedReadings;
 
     @Column
-    private long numberOfImportedReadings;
+    private long numberOfMadeReadings;
 
     public ReadingsSpread() {
     }
 
-    public ReadingsSpread(Date readingsSinceClosed, Date readingsUntilOpen, long numberOfImportedReadings) {
+    public ReadingsSpread(Date readingsSinceClosed, Date readingsUntilOpen, long numberOfMadeReadings) {
         this.readingsSinceClosed = readingsSinceClosed;
         this.readingsUntilOpen = readingsUntilOpen;
         this.numberOfExpectedReadings = calculateNumberOfIntervalsInDuration(readingsSinceClosed, readingsUntilOpen);
-        this.numberOfImportedReadings = numberOfImportedReadings;
+        this.numberOfMadeReadings = numberOfMadeReadings;
     }
 
     private long calculateNumberOfIntervalsInDuration(Date readingsSinceClosed, Date readingsUntilOpen) {
         return Duration.between(readingsSinceClosed.toInstant(), readingsUntilOpen.toInstant()).getSeconds() / SECONDS_IN_MINUTE / READINGS_INTERVAL_IN_MINUTES;
-    }
-
-    public Date getReadingsSinceClosed() {
-        return readingsSinceClosed;
-    }
-
-    public Date getReadingsUntilOpen() {
-        return readingsUntilOpen;
-    }
-
-    public long getNumberOfExpectedReadings() {
-        return numberOfExpectedReadings;
-    }
-
-    public long getNumberOfImportedReadings() {
-        return numberOfImportedReadings;
     }
 }

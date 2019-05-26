@@ -21,6 +21,30 @@
         <addUniqueConstraint tableName="meter" columnNames="external_id" constraintName="meter_external_id_uk"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_002">
+        <createTable tableName="reading">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="meter_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="readings_since_closed" type="timestamp with timezone"/>
+            <column name="readings_until_open" type="timestamp with timezone"/>
+            <column name="number_of_expected_readings" type="bigint"/>
+            <column name="number_of_made_readings" type="bigint"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="reading_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="reading" baseColumnNames="meter_id" constraintName="reading_meter_fk"
+                                 referencedTableName="meter" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.1_readings_upload_003">
         <createTable tableName="import">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
@@ -28,17 +52,10 @@
             <column name="file_name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="import_date" type="timestamp with timezone">
+            <column name="date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
-            <column name="reading_date" type="timestamp with timezone">
-                <constraints nullable="false"/>
-            </column>
-            <column name="readings_since_closed" type="timestamp with timezone"/>
-            <column name="readings_until_open" type="timestamp with timezone"/>
-            <column name="number_of_expected_readings" type="bigint"/>
-            <column name="number_of_imported_readings" type="bigint"/>
-            <column name="meter_id" type="bigint">
+            <column name="reading_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="created_by" type="varchar(255)"/>
@@ -47,12 +64,12 @@
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
         <createSequence sequenceName="import_id_seq" startValue="1" minValue="1" incrementBy="50"/>
-        <addForeignKeyConstraint baseTableName="import" baseColumnNames="meter_id" constraintName="import_meter_fk"
-                                 referencedTableName="meter" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="import" baseColumnNames="reading_id" constraintName="import_reading_fk"
+                                 referencedTableName="reading" referencedColumnNames="id"/>
     </changeSet>
-    <changeSet author="bkaminnski" id="1.1_readings_upload_003">
-        <createTable tableName="reading">
-            <column name="import_id" type="bigint">
+    <changeSet author="bkaminnski" id="1.1_readings_upload_004">
+        <createTable tableName="reading_value">
+            <column name="reading_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="date" type="timestamp with timezone">
@@ -60,8 +77,9 @@
             </column>
             <column name="value" type="number(11,4)"/>
         </createTable>
-        <addPrimaryKey tableName="reading" columnNames="import_id, date" constraintName="reading_pk"/>
-        <addForeignKeyConstraint baseTableName="reading" baseColumnNames="import_id" constraintName="reading_import_fk"
-                                 referencedTableName="import" referencedColumnNames="id"/>
+        <addPrimaryKey tableName="reading_value" columnNames="reading_id, date" constraintName="reading_value_pk"/>
+        <addForeignKeyConstraint baseTableName="reading_value" baseColumnNames="reading_id"
+                                 constraintName="reading_value_reading_fk"
+                                 referencedTableName="reading" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
