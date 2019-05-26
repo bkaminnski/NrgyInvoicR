@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subject, of, BehaviorSubject } from 'rxjs';
 import { ReadingsUploadSummary } from '../../model/readings-upload-summary';
 import { ReadingUploadProgress } from '../../model/reading-upload-progress.model';
@@ -31,19 +31,22 @@ export class ReadingsUploadService {
   private uploadFile(file: File) {
     const progress = new BehaviorSubject<number>(0);
     const processingResult = new BehaviorSubject<ProcessingResult>(ProcessingResult.WAITING);
-    this.readings.push(new ReadingUploadProgress(file.name, progress.asObservable(), processingResult.asObservable()));
+    const errorMessage = new BehaviorSubject<string>('');
+    this.readings.push(new ReadingUploadProgress(file.name, progress.asObservable(), processingResult.asObservable(), errorMessage.asObservable()));
     this.http
       .request(this.prepareHttpRequest(file))
       .pipe(
-        catchError(() => this.handleError(processingResult))
+        catchError((errorResponse) => this.handleError(errorResponse, processingResult, errorMessage))
       )
       .subscribe(event => this.handleEvent(event, progress, processingResult));
   }
 
-  private handleError(processingResult: Subject<ProcessingResult>) {
+  private handleError(errorResponse: HttpErrorResponse, processingResult: Subject<ProcessingResult>, errorMessage: Subject<string>) {
     this.numberOfFailedUploadsSubject.next(++this.numberOfFailedUploads);
     processingResult.next(ProcessingResult.ERROR);
     processingResult.complete();
+    errorMessage.next(errorResponse.error.errorMessage);
+    errorMessage.complete();
     this.tryCompletingSubjects();
     return of([]);
   }

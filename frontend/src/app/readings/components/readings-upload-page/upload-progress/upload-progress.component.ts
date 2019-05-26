@@ -8,7 +8,7 @@ import { ProcessingResult } from 'src/app/readings/model/processing-result.model
   styleUrls: ['./upload-progress.component.scss']
 })
 export class UploadProgressComponent implements OnInit {
-  public displayedColumns: string[] = ['fileName', 'progress', 'processingResult'];
+  public displayedColumns: string[] = ['fileName', 'progress', 'processingResult', 'errorMessage'];
   public ProcessingResult = ProcessingResult;
 
   constructor(public dataSource: ReadingsUploadDataSource) {

@@ -17,7 +17,8 @@
             <column name="modified_by" type="varchar(255)"/>
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
-        <createSequence sequenceName="meter_id_seq" startValue="1"/>
+        <createSequence sequenceName="meter_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addUniqueConstraint tableName="meter" columnNames="external_id" constraintName="meter_external_id_uk"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_002">
         <createTable tableName="import">
@@ -30,12 +31,13 @@
             <column name="import_date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
-            <column name="readings_since_closed" type="timestamp with timezone">
+            <column name="reading_date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
-            <column name="readings_until_open" type="timestamp with timezone">
-                <constraints nullable="false"/>
-            </column>
+            <column name="readings_since_closed" type="timestamp with timezone"/>
+            <column name="readings_until_open" type="timestamp with timezone"/>
+            <column name="number_of_expected_readings" type="bigint"/>
+            <column name="number_of_imported_readings" type="bigint"/>
             <column name="meter_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -44,7 +46,7 @@
             <column name="modified_by" type="varchar(255)"/>
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
-        <createSequence sequenceName="import_id_seq" startValue="1"/>
+        <createSequence sequenceName="import_id_seq" startValue="1" minValue="1" incrementBy="50"/>
         <addForeignKeyConstraint baseTableName="import" baseColumnNames="meter_id" constraintName="import_meter_fk"
                                  referencedTableName="meter" referencedColumnNames="id"/>
     </changeSet>
@@ -53,12 +55,12 @@
             <column name="import_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="reading_date" type="timestamp with timezone">
+            <column name="date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
             <column name="value" type="number(11,4)"/>
         </createTable>
-        <addPrimaryKey tableName="reading" columnNames="import_id, reading_date" constraintName="reading_pk"/>
+        <addPrimaryKey tableName="reading" columnNames="import_id, date" constraintName="reading_pk"/>
         <addForeignKeyConstraint baseTableName="reading" baseColumnNames="import_id" constraintName="reading_import_fk"
                                  referencedTableName="import" referencedColumnNames="id"/>
     </changeSet>

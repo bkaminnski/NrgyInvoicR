@@ -18,11 +18,12 @@
       <ng-container matColumnDef="progress">
         <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
         <mat-cell *matCellDef="let reading">
-          <mat-progress-bar mode="determinate" [value]="reading.progress | async" *ngIf="(reading.progress | async) > 0"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="reading.progress | async"
+            *ngIf="(reading.progress | async) > 0"></mat-progress-bar>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="processingResult">
-        <mat-header-cell *matHeaderCellDef>Processing Result</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Result</mat-header-cell>
         <mat-cell *matCellDef="let reading">
           <mat-spinner *ngIf="(reading.processingResult | async) === ProcessingResult.WAITING" [diameter]="20"
             class="table-spinner"></mat-spinner>
@@ -30,6 +31,12 @@
           </mat-icon>
           <mat-icon *ngIf="(reading.processingResult | async) === ProcessingResult.ERROR" color="primary">cloud_off
           </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="errorMessage">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let reading">
+          {{reading.errorMessage | async}}
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

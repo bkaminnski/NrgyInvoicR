@@ -5,12 +5,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+import static com.hclc.nrgyinvoicr.backend.DateTimeFormat.ISO_8601_EXTENDED_UTC;
+
 public class InvoicesSearchCriteria {
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    @DateTimeFormat(pattern = ISO_8601_EXTENDED_UTC)
     private Date issueDateFrom;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    @DateTimeFormat(pattern = ISO_8601_EXTENDED_UTC)
     private Date issueDateTo;
 
     private PageDefinition pageDefinition;

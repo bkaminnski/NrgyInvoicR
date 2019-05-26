@@ -16,6 +16,6 @@
             <column name="modified_by" type="varchar(255)"/>
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
-        <createSequence sequenceName="invoice_id_seq" startValue="1"/>
+        <createSequence sequenceName="invoice_id_seq" startValue="1" minValue="1" incrementBy="50"/>
     </changeSet>
 </databaseChangeLog>

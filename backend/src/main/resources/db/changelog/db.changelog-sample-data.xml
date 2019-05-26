@@ -4,8 +4,15 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet author="bkaminnski" id="sample-data-0001" runAlways="true">
+    <changeSet author="bkaminnski" id="sample-data-0001">
         <validCheckSum>ANY</validCheckSum>
+        <delete tableName="meter"/>
+        <insert tableName="meter">
+            <column name="id" valueSequenceNext="meter_id_seq"/>
+            <column name="external_id" value="17d42621-e689-44fc-8f52-af9cf5918729"/>
+            <column name="created_by" value="SYSTEM"/>
+            <column name="created_date" value="2018-01-01T11:15:00"/>
+        </insert>
         <delete tableName="invoice"/>
         <insert tableName="invoice">
             <column name="id" valueSequenceNext="invoice_id_seq"/>

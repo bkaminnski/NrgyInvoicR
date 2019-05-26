@@ -10,10 +10,10 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-public class Invoice extends AuditableEntity {
+class Invoice extends AuditableEntity {
 
     @Id
-    @SequenceGenerator(name = "invoice_id_seq", sequenceName = "invoice_id_seq")
+    @SequenceGenerator(name = "invoice_id_seq", sequenceName = "invoice_id_seq", initialValue = 1, allocationSize = 50)
     @GeneratedValue(strategy = SEQUENCE, generator = "invoice_id_seq")
     private Long id;
 

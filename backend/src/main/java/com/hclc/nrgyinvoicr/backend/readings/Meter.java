@@ -1,4 +1,4 @@
-package com.hclc.nrgyinvoicr.backend.meters;
+package com.hclc.nrgyinvoicr.backend.readings;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 
@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class Meter extends AuditableEntity {
 
     @Id
-    @SequenceGenerator(name = "meter_id_seq", sequenceName = "meter_id_seq")
+    @SequenceGenerator(name = "meter_id_seq", sequenceName = "meter_id_seq", initialValue = 1, allocationSize = 50)
     @GeneratedValue(strategy = SEQUENCE, generator = "meter_id_seq")
     private Long id;
 
@@ -24,6 +24,10 @@ public class Meter extends AuditableEntity {
 
     public Meter(@NotNull String externalId) {
         this.externalId = externalId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getExternalId() {

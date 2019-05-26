@@ -12,7 +12,6 @@ import {
   MatPaginatorModule,
   MatSortModule,
   MatProgressSpinnerModule,
-  MatProgressBar,
   MatProgressBarModule
 } from '@angular/material';
 

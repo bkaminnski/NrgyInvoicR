@@ -8,18 +8,18 @@ import java.util.Date;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-@IdClass(ReadingPrimaryKey.class)
+@IdClass(ReadingId.class)
 public class Reading {
 
     @NotNull
     @Column
     @Id
-    private Long meterId;
+    private Long importId;
 
     @NotNull
     @Temporal(TIMESTAMP)
     @Id
-    private Date readingDate;
+    private Date date;
 
     @Column
     private BigDecimal value;
@@ -27,18 +27,18 @@ public class Reading {
     public Reading() {
     }
 
-    public Reading(@NotNull Long meterId, @NotNull Date readingDate, BigDecimal value) {
-        this.meterId = meterId;
-        this.readingDate = readingDate;
+    public Reading(@NotNull Long importId, @NotNull Date date, BigDecimal value) {
+        this.importId = importId;
+        this.date = date;
         this.value = value;
     }
 
-    public Long getMeterId() {
-        return meterId;
+    public Long getImportId() {
+        return importId;
     }
 
-    public Date getReadingDate() {
-        return readingDate;
+    public Date getDate() {
+        return date;
     }
 
     public BigDecimal getValue() {
