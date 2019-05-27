@@ -1,6 +1,7 @@
 package com.hclc.nrgyinvoicr.backend.readings;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+import com.hclc.nrgyinvoicr.backend.meters.Meter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,7 +28,7 @@ public class Reading extends AuditableEntity {
     private Meter meter;
 
     @Embedded
-    private ReadingsSpread readingsSpread;
+    private ReadingSpread readingsSpread;
 
     public Reading() {
     }
@@ -37,8 +38,9 @@ public class Reading extends AuditableEntity {
         this.meter = meter;
     }
 
-    public void updateWithReadingsSpread(Date readingsSinceClosed, Date readingsUntilOpen, long numberOfMadeReadings) {
-        this.readingsSpread = new ReadingsSpread(readingsSinceClosed, readingsUntilOpen, numberOfMadeReadings);
+    public Reading updatedWithReadingsSpread(ReadingSpread readingsSpread) {
+        this.readingsSpread = readingsSpread;
+        return this;
     }
 
     public Long getId() {

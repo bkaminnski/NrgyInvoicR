@@ -1,5 +1,6 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.files;
 
+import com.hclc.nrgyinvoicr.backend.readings.ReadingValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,10 +23,10 @@ class ReadingValueLineParserTest {
     }
 
     @Test
-    void whenLineIsCorrect_shouldParseLine() throws ReadingLineParserException {
+    void whenLineIsCorrect_shouldParseLine() throws ReadingException {
         String line = "2019-10-27T00:00+02:00;123.45";
 
-        ReadingValue readingValue = readingLineParser.parse(1L, 2, line);
+        ReadingValue readingValue = readingLineParser.parse(line, 2, 1L);
 
         assertThat(readingValue.getReadingId()).isEqualTo(1L);
         assertThat(readingValue.getDate()).isEqualTo("2019-10-27T00:00+02:00");
@@ -35,7 +36,7 @@ class ReadingValueLineParserTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("parameters")
     void whenLineIsIncorrect_shouldThrowException(String description, String line, String expectedMessage) {
-        assertThatThrownBy(() -> readingLineParser.parse(1L, 2, line)).hasMessage(expectedMessage);
+        assertThatThrownBy(() -> readingLineParser.parse(line, 2, 1L)).hasMessage(expectedMessage);
     }
 
     private static Stream<Arguments> parameters() {

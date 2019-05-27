@@ -1,4 +1,4 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.meters;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 

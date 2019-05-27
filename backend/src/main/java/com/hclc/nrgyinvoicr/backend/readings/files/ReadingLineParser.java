@@ -1,5 +1,6 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.files;
 
+import com.hclc.nrgyinvoicr.backend.readings.ReadingValue;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import static com.hclc.nrgyinvoicr.backend.DateTimeFormat.ISO_8601_OFFSET_DATE_T
 class ReadingLineParser {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION);
 
-    ReadingValue parse(Long readingId, int lineNumber, String line) throws ReadingLineParserException {
+    ReadingValue parse(String line, int lineNumber, Long readingId) throws ReadingException {
         validateEmptyLine(lineNumber, line);
         String[] values = splitLine(lineNumber, line);
         String dateAsString = values[0];
@@ -24,36 +25,36 @@ class ReadingLineParser {
         return new ReadingValue(readingId, date, value);
     }
 
-    private void validateEmptyLine(int lineNumber, String line) throws ReadingLineParserException {
+    private void validateEmptyLine(int lineNumber, String line) throws ReadingException {
         if (line == null || line.isEmpty()) {
-            throw new ReadingLineParserException("Line " + lineNumber + " is empty.");
+            throw new ReadingException("Line " + lineNumber + " is empty.");
         }
     }
 
-    private String[] splitLine(int lineNumber, String line) throws ReadingLineParserException {
+    private String[] splitLine(int lineNumber, String line) throws ReadingException {
         String[] values = line.split(";");
         if (values.length != 2) {
-            throw new ReadingLineParserException("Line " + lineNumber + " has " + values.length + " value(s). Line should have exactly two values.");
+            throw new ReadingException("Line " + lineNumber + " has " + values.length + " value(s). Line should have exactly two values.");
         }
         return values;
     }
 
-    private Date parseDate(int lineNumber, String readingDateAsString) throws ReadingLineParserException {
+    private Date parseDate(int lineNumber, String readingDateAsString) throws ReadingException {
         Date date;
         try {
             date = Date.from(ZonedDateTime.parse(readingDateAsString, formatter).toInstant());
         } catch (DateTimeParseException e) {
-            throw new ReadingLineParserException("Invalid date in line " + lineNumber + ": " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION + ".");
+            throw new ReadingException("Invalid date in line " + lineNumber + ": " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION + ".");
         }
         return date;
     }
 
-    private BigDecimal parseValue(int lineNumber, String valueAsString) throws ReadingLineParserException {
+    private BigDecimal parseValue(int lineNumber, String valueAsString) throws ReadingException {
         BigDecimal value;
         try {
             value = new BigDecimal(valueAsString);
         } catch (NumberFormatException e) {
-            throw new ReadingLineParserException("Invalid numeric value in line " + lineNumber + ": " + valueAsString + ".");
+            throw new ReadingException("Invalid numeric value in line " + lineNumber + ": " + valueAsString + ".");
         }
         return value;
     }

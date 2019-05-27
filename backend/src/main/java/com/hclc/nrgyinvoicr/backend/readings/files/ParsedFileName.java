@@ -1,4 +1,4 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.files;
 
 import java.util.Date;
 

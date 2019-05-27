@@ -1,4 +1,4 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.files;
 
 import org.springframework.stereotype.Component;
 
@@ -18,10 +18,7 @@ class FileNameParser {
     private static final Pattern fileNamePattern = Pattern.compile(FILE_NAME_REGEX);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_8601_DATE);
 
-    /**
-     * @param fileName For example: "mr_18f026ab-552a-4963-b058-57eae0c5ce59_20190521_001.csv";
-     */
-    ParsedFileName parse(String fileName) throws FileNameParsingException {
+    ParsedFileName parse(String fileName) throws ReadingException {
         Matcher matcher = findGroups(fileName);
         String meterId = matcher.group(1);
         String readingDateAsString = matcher.group(2);
@@ -29,19 +26,19 @@ class FileNameParser {
         return new ParsedFileName(meterId, readingDate);
     }
 
-    private Matcher findGroups(String fileName) throws FileNameParsingException {
+    private Matcher findGroups(String fileName) throws ReadingException {
         Matcher matcher = fileNamePattern.matcher(fileName);
         if (!matcher.matches()) {
-            throw new FileNameParsingException("Invalid file name: " + fileName + ". A file name should match the following pattern: mr_[meter UUID]_[reading date " + ISO_8601_DATE + "]_[sequence number].csv.");
+            throw new ReadingException("Invalid file name: " + fileName + ". A file name should match the following pattern: mr_[meter UUID]_[reading date " + ISO_8601_DATE + "]_[sequence number].csv.");
         }
         return matcher;
     }
 
-    private Date parseDate(String readingDateAsString) throws FileNameParsingException {
+    private Date parseDate(String readingDateAsString) throws ReadingException {
         try {
             return Date.from(LocalDate.parse(readingDateAsString, formatter).atStartOfDay(ZoneId.systemDefault()).toInstant());
         } catch (DateTimeParseException e) {
-            throw new FileNameParsingException("Invalid reading date in the file name: " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_DATE + ".");
+            throw new ReadingException("Invalid reading date in the file name: " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_DATE + ".");
         }
     }
 }

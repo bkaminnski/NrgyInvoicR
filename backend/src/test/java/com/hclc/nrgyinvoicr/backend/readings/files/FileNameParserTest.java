@@ -1,4 +1,4 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.files;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class FileNameParserTest {
     }
 
     @Test
-    void whenFileNameIsCorrect_shouldParseFileName() throws FileNameParsingException {
+    void whenFileNameIsCorrect_shouldParseFileName() throws ReadingException {
         ParsedFileName parsedFileName = fileNameParser.parse("mr_18f026ab-552a-4963-b058-57eae0c5ce59_2019-05-21_001.csv");
 
         assertThat(parsedFileName.getMeterId()).isEqualTo("18f026ab-552a-4963-b058-57eae0c5ce59");

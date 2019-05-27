@@ -31,8 +31,8 @@
             <column name="date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
-            <column name="readings_since_closed" type="timestamp with timezone"/>
-            <column name="readings_until_open" type="timestamp with timezone"/>
+            <column name="since_closed" type="timestamp with timezone"/>
+            <column name="until_open" type="timestamp with timezone"/>
             <column name="number_of_expected_readings" type="bigint"/>
             <column name="number_of_made_readings" type="bigint"/>
             <column name="created_by" type="varchar(255)"/>
@@ -45,7 +45,7 @@
                                  referencedTableName="meter" referencedColumnNames="id"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_003">
-        <createTable tableName="import">
+        <createTable tableName="reading_upload">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
@@ -63,8 +63,8 @@
             <column name="modified_by" type="varchar(255)"/>
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
-        <createSequence sequenceName="import_id_seq" startValue="1" minValue="1" incrementBy="50"/>
-        <addForeignKeyConstraint baseTableName="import" baseColumnNames="reading_id" constraintName="import_reading_fk"
+        <createSequence sequenceName="reading_upload_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="reading_upload" baseColumnNames="reading_id" constraintName="reading_upload_reading_fk"
                                  referencedTableName="reading" referencedColumnNames="id"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_004">

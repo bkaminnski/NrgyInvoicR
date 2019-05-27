@@ -1,6 +1,7 @@
-package com.hclc.nrgyinvoicr.backend.readings;
+package com.hclc.nrgyinvoicr.backend.readings.upload;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+import com.hclc.nrgyinvoicr.backend.readings.Reading;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,11 +11,11 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-public class Import extends AuditableEntity {
+public class ReadingUpload extends AuditableEntity {
 
     @Id
-    @SequenceGenerator(name = "import_id_seq", sequenceName = "import_id_seq", initialValue = 1, allocationSize = 50)
-    @GeneratedValue(strategy = SEQUENCE, generator = "import_id_seq")
+    @SequenceGenerator(name = "reading_upload_id_seq", sequenceName = "reading_upload_id_seq", initialValue = 1, allocationSize = 50)
+    @GeneratedValue(strategy = SEQUENCE, generator = "reading_upload_id_seq")
     private Long id;
 
     @NotNull
@@ -30,10 +31,10 @@ public class Import extends AuditableEntity {
     @JoinColumn(name = "reading_id", nullable = false)
     private Reading reading;
 
-    public Import() {
+    public ReadingUpload() {
     }
 
-    public Import(@NotNull String fileName, @NotNull Reading reading) {
+    ReadingUpload(@NotNull String fileName, @NotNull Reading reading) {
         this.date = new Date();
         this.fileName = fileName;
         this.reading = reading;

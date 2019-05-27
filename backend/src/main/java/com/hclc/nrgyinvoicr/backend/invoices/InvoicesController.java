@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-
 @RestController
 @RequestMapping({"/api/invoices"})
 public class InvoicesController {
@@ -16,7 +14,7 @@ public class InvoicesController {
     }
 
     @GetMapping
-    public Iterable<Invoice> findInvoices(InvoicesSearchCriteria invoicesSearchCriteria) throws ParseException {
+    public Iterable<Invoice> findInvoices(InvoicesSearchCriteria invoicesSearchCriteria) {
         return invoicesService.findInvoices(invoicesSearchCriteria);
     }
 }
