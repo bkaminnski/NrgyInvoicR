@@ -54,7 +54,7 @@ export class ReadingsUploadService {
   private prepareHttpRequest(file: File): HttpRequest<FormData> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return new HttpRequest('POST', '/api/readings', formData, { reportProgress: true });
+    return new HttpRequest('POST', '/api/readingUploads', formData, { reportProgress: true });
   }
 
   private handleEvent(event: any, progress: Subject<number>, processingResult: Subject<ProcessingResult>) {

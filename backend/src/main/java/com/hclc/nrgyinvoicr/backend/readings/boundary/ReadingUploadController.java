@@ -30,7 +30,7 @@ public class ReadingUploadController {
         this.readingUploadsRepository = readingUploadsRepository;
     }
 
-    @PostMapping(value = "/api/readings")
+    @PostMapping(value = "/api/readingUploads")
     @Transactional(rollbackFor = {ReadingException.class, IOException.class})
     public ResponseEntity<Void> handleReadingUpload(@RequestParam("file") MultipartFile file) throws ReadingException, IOException {
         String fileName = file.getOriginalFilename();
