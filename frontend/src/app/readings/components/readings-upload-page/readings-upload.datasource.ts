@@ -10,9 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ReadingsUploadDataSource implements DataSource<ReadingUploadProgress> {
   private readingsSubject = new BehaviorSubject<ReadingUploadProgress[]>([]);
+  private uploadInProgressSubject = new BehaviorSubject<boolean>(false);
 
   public readings = this.readingsSubject.asObservable();
-  public loading = false;
+  public uploadInProgress = this.uploadInProgressSubject.asObservable();
   public numberOfFilesToUpload: number;
   public numberOfSuccessfulUploads: number;
   public numberOfFailedUploads: number;
@@ -25,22 +26,23 @@ export class ReadingsUploadDataSource implements DataSource<ReadingUploadProgres
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.readingsSubject.complete();
+    this.uploadInProgressSubject.complete();
   }
 
   uploadFiles(files: File[]) {
     if (files.length === 0) {
       return;
     }
-    this.loading = true;
+    this.uploadInProgressSubject.next(true);
     this.numberOfFilesToUpload = files.length;
     this.numberOfSuccessfulUploads = 0;
     this.numberOfFailedUploads = 0;
     const summary: ReadingsUploadSummary = this.readingsUploadService.uploadFiles(files);
     summary.numberOfSuccessfulUploads
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.uploadInProgressSubject.next(false)))
       .subscribe(numberOfSuccessfulUploads => this.numberOfSuccessfulUploads = numberOfSuccessfulUploads);
     summary.numberOfFailedUploads
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.uploadInProgressSubject.next(false)))
       .subscribe(numberOfFailedUploads => this.numberOfFailedUploads = numberOfFailedUploads);
     this.readingsSubject.next(summary.readings);
   }

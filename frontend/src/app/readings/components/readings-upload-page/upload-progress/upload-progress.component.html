@@ -3,7 +3,7 @@
     <mat-card-title>
       <span>
         Upload Progress
-        <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
+        <mat-spinner *ngIf="dataSource.uploadInProgress | async" [diameter]="20" class="table-spinner"></mat-spinner>
       </span>
     </mat-card-title>
   </mat-card-header>
