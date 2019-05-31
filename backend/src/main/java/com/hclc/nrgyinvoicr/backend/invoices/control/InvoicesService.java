@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import static com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceSpecifications.issueDateBetween;
 
@@ -19,8 +19,8 @@ public class InvoicesService {
     }
 
     public Page<Invoice> findInvoices(InvoicesSearchCriteria criteria) {
-        Date from = criteria.getIssueDateFrom();
-        Date to = criteria.getIssueDateTo();
+        ZonedDateTime from = criteria.getIssueDateSince();
+        ZonedDateTime to = criteria.getIssueDateUntil();
         Specification<Invoice> specification = issueDateBetween(from, to);
 
         return this.invoicesRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());

@@ -5,14 +5,14 @@
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
-        <input matInput [matDatepicker]="issueDateFrom" placeholder="Issue date from" name="issueDateFrom" [(ngModel)]="invoicesSearchCriteria.issueDateFrom">
-        <mat-datepicker-toggle matSuffix [for]="issueDateFrom"></mat-datepicker-toggle>
-        <mat-datepicker #issueDateFrom></mat-datepicker>
+        <input matInput [matDatepicker]="issueDateSince" placeholder="Issue date from" name="issueDateSince" [(ngModel)]="invoicesSearchCriteria.issueDateSince">
+        <mat-datepicker-toggle matSuffix [for]="issueDateSince"></mat-datepicker-toggle>
+        <mat-datepicker #issueDateSince></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="issueDateTo" placeholder="Issue date to" name="issueDateTo" [(ngModel)]="invoicesSearchCriteria.issueDateTo">
-        <mat-datepicker-toggle matSuffix [for]="issueDateTo"></mat-datepicker-toggle>
-        <mat-datepicker #issueDateTo></mat-datepicker>
+        <input matInput [matDatepicker]="issueDateUntil" placeholder="Issue date to" name="issueDateUntil" [(ngModel)]="invoicesSearchCriteria.issueDateUntil">
+        <mat-datepicker-toggle matSuffix [for]="issueDateUntil"></mat-datepicker-toggle>
+        <mat-datepicker #issueDateUntil></mat-datepicker>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>

@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 
 import static com.hclc.nrgyinvoicr.backend.DateTimeFormat.ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION;
 
@@ -19,7 +18,7 @@ class ReadingLineParser {
         validateEmptyLine(lineNumber, line);
         String[] values = splitLine(lineNumber, line);
         String dateAsString = values[0];
-        Date date = parseDate(lineNumber, dateAsString);
+        ZonedDateTime date = parseDate(lineNumber, dateAsString);
         String valueAsString = values[1];
         BigDecimal value = parseValue(lineNumber, valueAsString);
         return new ReadingValue(readingId, date, value);
@@ -39,10 +38,10 @@ class ReadingLineParser {
         return values;
     }
 
-    private Date parseDate(int lineNumber, String readingDateAsString) throws ReadingException {
-        Date date;
+    private ZonedDateTime parseDate(int lineNumber, String readingDateAsString) throws ReadingException {
+        ZonedDateTime date;
         try {
-            date = Date.from(ZonedDateTime.parse(readingDateAsString, formatter).toInstant());
+            date = ZonedDateTime.parse(readingDateAsString, formatter);
         } catch (DateTimeParseException e) {
             throw new ReadingException("Invalid date in line " + lineNumber + ": " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION + ".");
         }

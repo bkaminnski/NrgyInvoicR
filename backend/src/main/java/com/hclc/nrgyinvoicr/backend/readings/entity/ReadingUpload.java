@@ -4,10 +4,9 @@ import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 public class ReadingUpload extends AuditableEntity {
@@ -22,8 +21,7 @@ public class ReadingUpload extends AuditableEntity {
     private String fileName;
 
     @NotNull
-    @Temporal(TIMESTAMP)
-    private Date date;
+    private ZonedDateTime date;
 
     @NotNull
     @ManyToOne
@@ -34,7 +32,7 @@ public class ReadingUpload extends AuditableEntity {
     }
 
     public ReadingUpload(@NotNull String fileName, @NotNull Reading reading) {
-        this.date = new Date();
+        this.date = ZonedDateTime.now();
         this.fileName = fileName;
         this.reading = reading;
     }

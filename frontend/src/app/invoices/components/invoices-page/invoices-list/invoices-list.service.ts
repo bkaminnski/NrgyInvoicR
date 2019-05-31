@@ -13,12 +13,12 @@ export class InvoicesListService {
   findInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize): Observable<Page<Invoice>> {
     let params = new HttpParams();
 
-    if (invoicesSearchCriteria.issueDateFrom) {
-      params = params.append('issueDateFrom', invoicesSearchCriteria.issueDateFrom.toISOString());
+    if (invoicesSearchCriteria.issueDateSince) {
+      params = params.append('issueDateSince', invoicesSearchCriteria.issueDateSince.toISOString());
     }
 
-    if (invoicesSearchCriteria.issueDateTo) {
-      params = params.append('issueDateTo', invoicesSearchCriteria.issueDateTo.clone().add(1, 'day').toISOString());
+    if (invoicesSearchCriteria.issueDateUntil) {
+      params = params.append('issueDateUntil', invoicesSearchCriteria.issueDateUntil.clone().add(1, 'day').toISOString());
     }
 
     params = params

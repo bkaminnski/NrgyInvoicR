@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +22,8 @@ class FileNameParser {
         Matcher matcher = findGroups(fileName);
         String meterId = matcher.group(1);
         String readingDateAsString = matcher.group(2);
-        Date readingDate = parseDate(readingDateAsString);
-        return new ParsedFileName(meterId, readingDate);
+        final ZonedDateTime zonedDateTime = parseDate(readingDateAsString);
+        return new ParsedFileName(meterId, zonedDateTime);
     }
 
     private Matcher findGroups(String fileName) throws ReadingException {
@@ -34,9 +34,9 @@ class FileNameParser {
         return matcher;
     }
 
-    private Date parseDate(String readingDateAsString) throws ReadingException {
+    private ZonedDateTime parseDate(String readingDateAsString) throws ReadingException {
         try {
-            return Date.from(LocalDate.parse(readingDateAsString, formatter).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            return LocalDate.parse(readingDateAsString, formatter).atStartOfDay(ZoneId.systemDefault());
         } catch (DateTimeParseException e) {
             throw new ReadingException("Invalid reading date in the file name: " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_DATE + ".");
         }

@@ -1,11 +1,12 @@
 package com.hclc.nrgyinvoicr.backend.readings.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
-
-import static javax.persistence.TemporalType.TIMESTAMP;
+import java.time.ZonedDateTime;
 
 @Entity
 @IdClass(ReadingValueId.class)
@@ -17,9 +18,8 @@ public class ReadingValue {
     private Long readingId;
 
     @NotNull
-    @Temporal(TIMESTAMP)
     @Id
-    private Date date;
+    private ZonedDateTime date;
 
     @Column
     private BigDecimal value;
@@ -27,7 +27,7 @@ public class ReadingValue {
     public ReadingValue() {
     }
 
-    public ReadingValue(@NotNull Long readingId, @NotNull Date date, BigDecimal value) {
+    public ReadingValue(@NotNull Long readingId, @NotNull ZonedDateTime date, BigDecimal value) {
         this.readingId = readingId;
         this.date = date;
         this.value = value;
@@ -37,7 +37,7 @@ public class ReadingValue {
         return readingId;
     }
 
-    public Date getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 

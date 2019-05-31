@@ -4,10 +4,9 @@ import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 public class Invoice extends AuditableEntity {
@@ -22,8 +21,7 @@ public class Invoice extends AuditableEntity {
     private String number;
 
     @NotNull
-    @Temporal(TIMESTAMP)
-    private Date issueDate;
+    private ZonedDateTime issueDate;
 
     public Long getId() {
         return id;
@@ -41,11 +39,11 @@ public class Invoice extends AuditableEntity {
         this.number = number;
     }
 
-    public Date getIssueDate() {
+    public ZonedDateTime getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(ZonedDateTime issueDate) {
         this.issueDate = issueDate;
     }
 }

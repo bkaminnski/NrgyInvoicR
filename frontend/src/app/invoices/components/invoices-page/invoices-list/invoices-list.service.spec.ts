@@ -31,32 +31,32 @@ describe('InvoicesPageService', () => {
     service.findInvoices(new InvoicesSearchCriteria(), 'number', 'asc', 0, 10);
   });
 
-  it('should send only issueDateFrom request param when dates range is lower bound', () => {
+  it('should send only issueDateSince request param when dates range is lower bound', () => {
     mockHttpClient.get.and.callFake((url, params) => {
       expect(params.params.updates.length).toBe(5);
-      expect(params.params.updates[0].param).toBe('issueDateFrom');
+      expect(params.params.updates[0].param).toBe('issueDateSince');
       expect(params.params.updates[0].value).toBe(LOWER_BOUND);
     });
 
     service.findInvoices(new InvoicesSearchCriteria(moment(LOWER_BOUND)), 'number', 'asc', 0, 10);
   });
 
-  it('should send only issueDateTo request param when dates range is upper bound', () => {
+  it('should send only issueDateUntil request param when dates range is upper bound', () => {
     mockHttpClient.get.and.callFake((url, params) => {
       expect(params.params.updates.length).toBe(5);
-      expect(params.params.updates[0].param).toBe('issueDateTo');
+      expect(params.params.updates[0].param).toBe('issueDateUntil');
       expect(params.params.updates[0].value).toBe(UPPER_BOUND_PLUS_ONE_DAY);
     });
 
     service.findInvoices(new InvoicesSearchCriteria(null, moment(UPPER_BOUND)), 'number', 'asc', 0, 10);
   });
 
-  it('should send both issueDateFrom and issueDateTo request params when dates range is lower and upper bound', () => {
+  it('should send both issueDateSince and issueDateUntil request params when dates range is lower and upper bound', () => {
     mockHttpClient.get.and.callFake((url, params) => {
       expect(params.params.updates.length).toBe(6);
-      expect(params.params.updates[0].param).toBe('issueDateFrom');
+      expect(params.params.updates[0].param).toBe('issueDateSince');
       expect(params.params.updates[0].value).toBe(LOWER_BOUND);
-      expect(params.params.updates[1].param).toBe('issueDateTo');
+      expect(params.params.updates[1].param).toBe('issueDateUntil');
       expect(params.params.updates[1].value).toBe(UPPER_BOUND_PLUS_ONE_DAY);
     });
 

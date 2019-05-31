@@ -37,8 +37,8 @@ describe('InvoicesFilterComponent', () => {
     const invoicesFilterComponent: InvoicesFilterComponent = fixture.componentInstance;
     invoicesFilterComponent.searchEvent.subscribe((invoicesSearchCriteria: InvoicesSearchCriteria) => {
       expect(invoicesSearchCriteria).toBeDefined();
-      expect(invoicesSearchCriteria.issueDateFrom.toDate()).toEqual(moment(BEGINNING_OF_MONTH).toDate());
-      expect(invoicesSearchCriteria.issueDateTo.toDate()).toEqual(moment(END_OF_MONTH).toDate());
+      expect(invoicesSearchCriteria.issueDateSince.toDate()).toEqual(moment(BEGINNING_OF_MONTH).toDate());
+      expect(invoicesSearchCriteria.issueDateUntil.toDate()).toEqual(moment(END_OF_MONTH).toDate());
       done();
     });
     invoicesFilterComponent.ngOnInit();

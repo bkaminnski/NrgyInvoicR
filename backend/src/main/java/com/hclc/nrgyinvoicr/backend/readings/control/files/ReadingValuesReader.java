@@ -4,15 +4,15 @@ import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingSpread;
 import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingValue;
 
 import java.io.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class ReadingValuesReader implements Closeable {
     private final Long readingId;
     private final BufferedReader bufferedReader;
     private final ReadingLineParser readingLineParser;
     private int lineNumber = 0;
-    private Date firstReadingDate = null;
-    private Date lastReadingDate = null;
+    private ZonedDateTime firstReadingDate = null;
+    private ZonedDateTime lastReadingDate = null;
 
     ReadingValuesReader(InputStream fileContent, ReadingLineParser readingLineParser, Long readingId) {
         this.bufferedReader = new BufferedReader(new InputStreamReader(fileContent));
@@ -31,7 +31,7 @@ public class ReadingValuesReader implements Closeable {
         return readingValue;
     }
 
-    private void keepFirstAndLastReading(Date readingDate) {
+    private void keepFirstAndLastReading(ZonedDateTime readingDate) {
         if (firstReadingDate == null) {
             firstReadingDate = readingDate;
         }

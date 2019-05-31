@@ -1,12 +1,12 @@
 package com.hclc.nrgyinvoicr.backend.readings.control.files;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 class ParsedFileName {
     private final String meterId;
-    private final Date readingDate;
+    private final ZonedDateTime readingDate;
 
-    ParsedFileName(String meterId, Date readingDate) {
+    ParsedFileName(String meterId, ZonedDateTime readingDate) {
         this.meterId = meterId;
         this.readingDate = readingDate;
     }
@@ -15,7 +15,7 @@ class ParsedFileName {
         return meterId;
     }
 
-    Date getReadingDate() {
+    ZonedDateTime getReadingDate() {
         return readingDate;
     }
 }
