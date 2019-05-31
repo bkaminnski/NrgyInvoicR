@@ -33,8 +33,13 @@ public class ReadingFilesService {
         ParsedFileName parsedFileName = parseFileName(fileName);
         Meter meter = findMeter(parsedFileName.getMeterId());
         Reading reading = saveReading(parsedFileName.getReadingDate(), meter);
-        ReadingSpread readingSpread = saveReadingValues(fileContent, reading.getId());
-        updateReadingWithReadingSpread(reading, readingSpread);
+        try {
+            ReadingSpread readingSpread = saveReadingValues(fileContent, reading.getId());
+            updateReadingWithReadingSpread(reading, readingSpread);
+        } catch (ReadingException e) {
+            rollbackReadingCreation(reading);
+            throw e;
+        }
         return reading;
     }
 
@@ -64,5 +69,10 @@ public class ReadingFilesService {
 
     private void updateReadingWithReadingSpread(Reading reading, ReadingSpread readingSpread) {
         readingsRepository.save(reading.updatedWithReadingsSpread(readingSpread));
+    }
+
+    private void rollbackReadingCreation(Reading reading) {
+        readingValuesRepository.deleteByReadingId(reading.getId());
+        readingsRepository.deleteById(reading.getId());
     }
 }

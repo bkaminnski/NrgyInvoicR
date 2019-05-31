@@ -55,23 +55,22 @@
             <column name="date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>
-            <column name="reading_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
+            <column name="error_message" type="varchar(2048)"/>
+            <column name="status" type="varchar(10)"/>
+            <column name="reading_id" type="bigint"/>
             <column name="created_by" type="varchar(255)"/>
             <column name="created_date" type="timestamp with timezone"/>
             <column name="modified_by" type="varchar(255)"/>
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
         <createSequence sequenceName="reading_upload_id_seq" startValue="1" minValue="1" incrementBy="50"/>
-        <addForeignKeyConstraint baseTableName="reading_upload" baseColumnNames="reading_id" constraintName="reading_upload_reading_fk"
+        <addForeignKeyConstraint baseTableName="reading_upload" baseColumnNames="reading_id"
+                                 constraintName="reading_upload_reading_fk"
                                  referencedTableName="reading" referencedColumnNames="id"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_004">
         <createTable tableName="reading_value">
-            <column name="reading_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
+            <column name="reading_id" type="bigint"/>
             <column name="date" type="timestamp with timezone">
                 <constraints nullable="false"/>
             </column>

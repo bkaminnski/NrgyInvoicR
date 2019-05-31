@@ -31,12 +31,17 @@ public class ReadingUploadController {
     }
 
     @PostMapping(value = "/api/readingUploads")
-    @Transactional(rollbackFor = {ReadingException.class, IOException.class})
+    @Transactional(rollbackFor = {IOException.class})
     public ResponseEntity<Void> handleReadingUpload(@RequestParam("file") MultipartFile file) throws ReadingException, IOException {
         String fileName = file.getOriginalFilename();
         InputStream fileContent = file.getInputStream();
-        Reading reading = readingFilesService.saveReading(fileName, fileContent);
-        readingUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
+        try {
+            Reading reading = readingFilesService.saveReading(fileName, fileContent);
+            readingUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
+        } catch (ReadingException e) {
+            readingUploadsRepository.saveAndFlush(new ReadingUpload(fileName, e.getMessage()));
+            throw e;
+        }
         return new ResponseEntity<>(OK);
     }
 
