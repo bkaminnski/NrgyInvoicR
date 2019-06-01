@@ -37,4 +37,20 @@ public class ReadingSpread {
     private long calculateNumberOfIntervalsInDuration(ZonedDateTime sinceClosed, ZonedDateTime untilOpen) {
         return Duration.between(sinceClosed, untilOpen).getSeconds() / SECONDS_IN_MINUTE / READINGS_INTERVAL_IN_MINUTES;
     }
+
+    public ZonedDateTime getSinceClosed() {
+        return sinceClosed;
+    }
+
+    public ZonedDateTime getUntilOpen() {
+        return untilOpen;
+    }
+
+    public long getNumberOfMadeReadings() {
+        return numberOfMadeReadings;
+    }
+
+    public long getNumberOfExpectedReadings() {
+        return numberOfExpectedReadings;
+    }
 }

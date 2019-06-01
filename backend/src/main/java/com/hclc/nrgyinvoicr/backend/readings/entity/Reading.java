@@ -44,4 +44,16 @@ public class Reading extends AuditableEntity {
     public Long getId() {
         return id;
     }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public Meter getMeter() {
+        return meter;
+    }
+
+    public ReadingSpread getReadingsSpread() {
+        return readingsSpread;
+    }
 }

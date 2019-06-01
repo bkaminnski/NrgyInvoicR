@@ -56,4 +56,24 @@ public class ReadingUpload extends AuditableEntity {
         this.errorMessage = errorMessage != null && errorMessage.length() > ERROR_MESSAGE_LENGTH ? errorMessage.substring(0, ERROR_MESSAGE_LENGTH) : errorMessage;
         this.status = errorMessage == null || errorMessage.isBlank() ? OK : ERROR;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public ReadingUploadStatus getStatus() {
+        return status;
+    }
+
+    public Reading getReading() {
+        return reading;
+    }
 }
