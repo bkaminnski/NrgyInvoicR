@@ -5,11 +5,13 @@ import { DashboardComponent } from './dashboard/components/dashboard/dashboard.c
 import { InvoicesPageComponent } from './invoices/components/invoices-page/invoices-page.component';
 import { ReadingsUploadPageComponent } from './readings/components/readings-upload-page/readings-upload-page.component';
 import { CanDeactivateGuard } from './core/can-deactivate.guard';
+import { ReadingsUploadHistoryPageComponent } from './readings/components/readings-upload-history-page/readings-upload-history-page/readings-upload-history-page.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'invoices', component: InvoicesPageComponent },
-  { path: 'readings', component: ReadingsUploadPageComponent, canDeactivate: [CanDeactivateGuard] },
+  { path: 'readingsUpload', component: ReadingsUploadPageComponent, canDeactivate: [CanDeactivateGuard] },
+  { path: 'readingsUploadHistory', component: ReadingsUploadHistoryPageComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];
 

@@ -2,9 +2,14 @@
   <mat-icon>flash_on</mat-icon>
   <span class="title">NrgyInvoicR</span>
   <button mat-button [routerLink]="['/dashboard']">Dashboard</button>
-  <button mat-button [routerLink]="['/readings']">Meters Readings</button>
+  <button mat-button [matMenuTriggerFor]="meterReadingsMenu">Meter Readings</button>
   <button mat-button [routerLink]="['/invoices']">Invoices</button>
   <span class="space"></span>
   <mat-icon>account_circle</mat-icon>
   <span class="user">Bartosz Kaminski</span>
 </mat-toolbar>
+
+<mat-menu #meterReadingsMenu>
+  <button mat-menu-item [routerLink]="['/readingsUpload']">New Upload</button>
+  <button mat-menu-item [routerLink]="['/readingsUploadHistory']">History of Uploads</button>
+</mat-menu>
