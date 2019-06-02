@@ -12,14 +12,14 @@ import { ReadingsUploadsListService } from './readings-uploads-list.service';
 export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   private readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria;
   dataSource: ReadingsUploadsListDataSource;
-  displayedColumns: string[] = ['fileName', 'status'];
+  displayedColumns: string[] = ['date', 'fileName', 'status', 'errorMessage'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   sortConfig = {
-    initialSortActive: 'fileName',
-    initialSortDirection: 'asc'
+    initialSortActive: 'date',
+    initialSortDirection: 'desc'
   };
 
   paginatorConfig = {

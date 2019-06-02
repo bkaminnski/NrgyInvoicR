@@ -7,17 +7,31 @@
   <mat-card-content>
     <mat-paginator [length]="dataSource.totalElements | async" [pageSize]="paginatorConfig.initialPageSize"
       [pageSizeOptions]="paginatorConfig.pageSizeOptions"></mat-paginator>
-    <mat-table [dataSource]="dataSource" matSort matSortActive="fileName" matSortDirection="asc" matSortDisableClear>
+    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <ng-container matColumnDef="date">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Upload Date</mat-header-cell>
+        <mat-cell *matCellDef="let readingUpload">{{readingUpload.date | date:'medium'}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="fileName">
         <mat-header-cell mat-sort-header *matHeaderCellDef>File Name</mat-header-cell>
         <mat-cell *matCellDef="let readingUpload">{{readingUpload.fileName}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="status">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Status</mat-header-cell>
-        <mat-cell *matCellDef="let readingUpload">{{readingUpload.status}}</mat-cell>
+        <mat-cell *matCellDef="let readingUpload">
+          <mat-icon *ngIf="readingUpload.status === 'OK'" color="primary">cloud_done
+          </mat-icon>
+          <mat-icon *ngIf="readingUpload.status !== 'OK'" color="primary">cloud_off
+          </mat-icon>
+        </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <ng-container matColumnDef="errorMessage">
+        <mat-header-cell mat-sort-header *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let readingUpload">{{readingUpload.errorMessage}}</mat-cell>
+      </ng-container>
     </mat-table>
   </mat-card-content>
 </mat-card>

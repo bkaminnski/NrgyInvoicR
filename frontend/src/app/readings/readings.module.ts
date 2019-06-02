@@ -11,7 +11,6 @@ import { ReadingsUploadControlComponent } from './components/readings-upload-pag
 import { ReadingsUploadsHistoryPageComponent } from './components/readings-uploads-history-page/readings-uploads-history-page.component';
 import { ReadingsUploadsFilterComponent } from './components/readings-uploads-history-page/readings-uploads-filter/readings-uploads-filter.component';
 import { ReadingsUploadsListComponent } from './components/readings-uploads-history-page/readings-uploads-list/readings-uploads-list.component';
-import { ReadingsUploadsListService } from './components/readings-uploads-history-page/readings-uploads-list/readings-uploads-list.service';
 
 @NgModule({
   declarations: [
