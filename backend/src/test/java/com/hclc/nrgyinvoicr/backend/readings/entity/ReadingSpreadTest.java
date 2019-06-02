@@ -17,8 +17,9 @@ class ReadingSpreadTest {
     void shouldProperlyCalculateNumberOfExpectedReadings(String description, String firstReadingDateAsString, String lastReadingDateAsString, long numberOfExpectedReadings) {
         ZonedDateTime firstReadingDate = ZonedDateTime.parse(firstReadingDateAsString);
         ZonedDateTime lastReadingDate = ZonedDateTime.parse(lastReadingDateAsString);
+
         ReadingSpread readingSpread = new ReadingSpread(firstReadingDate, lastReadingDate, 1);
-        assertThat(readingSpread.getNumberOfMadeReadings()).isEqualTo(1);
+        
         assertThat(readingSpread.getNumberOfExpectedReadings()).isEqualTo(numberOfExpectedReadings);
     }
 
