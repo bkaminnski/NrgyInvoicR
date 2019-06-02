@@ -45,7 +45,6 @@ export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    console.log(this.readingsUploadsSearchCriteria);
     this.dataSource.loadReadingsUploads(
       this.readingsUploadsSearchCriteria,
       (this.sort.active) ? this.sort.active : this.sortConfig.initialSortActive,

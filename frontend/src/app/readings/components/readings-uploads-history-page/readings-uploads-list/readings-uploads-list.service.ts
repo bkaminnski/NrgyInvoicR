@@ -26,7 +26,6 @@ export class ReadingsUploadsListService {
       .append('pageDefinition.sortDirection', sortDirection)
       .append('pageDefinition.pageNumber', pageIndex)
       .append('pageDefinition.pageSize', pageSize);
-      console.log(params);
     return this.http.get<Page<ReadingUpload>>('/api/readingsUploads', { params: params });
   }
 }

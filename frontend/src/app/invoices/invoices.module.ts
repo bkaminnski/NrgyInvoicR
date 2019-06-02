@@ -7,7 +7,6 @@ import { MaterialModule } from '../core/material.module';
 import { InvoicesPageComponent } from './components/invoices-page/invoices-page.component';
 import { InvoicesFilterComponent } from './components/invoices-page/invoices-filter/invoices-filter.component';
 import { InvoicesListComponent } from './components/invoices-page/invoices-list/invoices-list.component';
-import { InvoicesListService } from './components/invoices-page/invoices-list/invoices-list.service';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,6 @@ import { InvoicesListService } from './components/invoices-page/invoices-list/in
     FormsModule,
     MaterialModule
   ],
-  providers: [
-    InvoicesListService
-  ]
+  providers: []
 })
 export class InvoicesModule { }

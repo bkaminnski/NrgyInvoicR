@@ -4,21 +4,19 @@
           class="table-spinner"></mat-spinner></span></mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <mat-paginator [length]="dataSource.totalElements | async" [pageSize]="paginatorConfig.initialPageSize"
+      [pageSizeOptions]="paginatorConfig.pageSizeOptions"></mat-paginator>
     <mat-table [dataSource]="dataSource" matSort matSortActive="number" matSortDirection="asc" matSortDisableClear>
       <ng-container matColumnDef="number">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Number</mat-header-cell>
         <mat-cell *matCellDef="let invoice">{{invoice.number}}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="issueDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</mat-header-cell>
         <mat-cell *matCellDef="let invoice">{{invoice.issueDate | date:'shortDate'}}</mat-cell>
       </ng-container>
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator [length]="dataSource.totalElements | async" [pageSize]="paginatorConfig.initialPageSize"
-      [pageSizeOptions]="paginatorConfig.pageSizeOptions"></mat-paginator>
   </mat-card-content>
 </mat-card>

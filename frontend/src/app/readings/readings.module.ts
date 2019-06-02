@@ -28,8 +28,6 @@ import { ReadingsUploadsListService } from './components/readings-uploads-histor
     MaterialModule,
     FormsModule
   ],
-  providers: [
-    ReadingsUploadsListService
-  ]
+  providers: []
 })
 export class ReadingsModule { }
