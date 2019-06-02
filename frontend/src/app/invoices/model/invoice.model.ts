@@ -1,5 +1,5 @@
 export class Invoice {
-    id: number;
-    number: string;
-    issueDate: Date;
+  id: number;
+  number: string;
+  issueDate: Date;
 }

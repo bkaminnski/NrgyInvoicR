@@ -1,2 +1,2 @@
-<app-readings-uploads-filter></app-readings-uploads-filter>
-<app-readings-uploads-list></app-readings-uploads-list>
+<app-readings-uploads-filter (searchEvent)="readingsUploadsList.search($event)"></app-readings-uploads-filter>
+<app-readings-uploads-list #readingsUploadsList></app-readings-uploads-list>

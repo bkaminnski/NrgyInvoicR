@@ -8,7 +8,6 @@ import * as moment from 'moment';
   styleUrls: ['./invoices-filter.component.scss']
 })
 export class InvoicesFilterComponent implements OnInit {
-
   @Output() searchEvent = new EventEmitter();
   invoicesSearchCriteria: InvoicesSearchCriteria;
 

@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../core/material.module';
 
 import { InvoicesPageComponent } from './components/invoices-page/invoices-page.component';
-import { InvoicesListService } from './components/invoices-page/invoices-list/invoices-list.service';
 import { InvoicesFilterComponent } from './components/invoices-page/invoices-filter/invoices-filter.component';
 import { InvoicesListComponent } from './components/invoices-page/invoices-list/invoices-list.component';
+import { InvoicesListService } from './components/invoices-page/invoices-list/invoices-list.service';
 
 @NgModule({
   declarations: [

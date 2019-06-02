@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator, MatSort } from '@angular/material';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
 import { InvoicesListService } from './invoices-list.service';
 import { InvoicesListDataSource } from './invoices-list.datasource';
-import { MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-invoices-list',
@@ -10,7 +10,6 @@ import { MatPaginator, MatSort } from '@angular/material';
   styleUrls: ['./invoices-list.component.scss']
 })
 export class InvoicesListComponent implements OnInit, AfterViewInit {
-
   private invoicesSearchCriteria: InvoicesSearchCriteria;
   dataSource: InvoicesListDataSource;
   displayedColumns: string[] = ['number', 'issueDate'];

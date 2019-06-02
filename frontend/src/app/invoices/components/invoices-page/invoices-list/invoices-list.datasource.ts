@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { InvoicesListService } from './invoices-list.service';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
-import { Page } from 'src/app/invoices/model/page.model';
+import { Page } from 'src/app/core/model/page.model';
 
 export class InvoicesListDataSource implements DataSource<Invoice> {
   private invoicesSubject = new BehaviorSubject<Invoice[]>([]);

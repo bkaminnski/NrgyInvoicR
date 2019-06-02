@@ -1,16 +1,18 @@
-<form #loginForm="ngForm" (ngSubmit)="search()" autocomplete="off" novalidate>
+<form #invoicesFilterForm="ngForm" (ngSubmit)="search()" autocomplete="off" novalidate>
   <mat-card class="mat-card">
     <mat-card-header>
       <mat-card-title>Search Criteria</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
-        <input matInput [matDatepicker]="issueDateSince" placeholder="Issue date from" name="issueDateSince" [(ngModel)]="invoicesSearchCriteria.issueDateSince">
+        <input matInput [matDatepicker]="issueDateSince" placeholder="Issue date since" name="issueDateSince"
+          [(ngModel)]="invoicesSearchCriteria.issueDateSince">
         <mat-datepicker-toggle matSuffix [for]="issueDateSince"></mat-datepicker-toggle>
         <mat-datepicker #issueDateSince></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="issueDateUntil" placeholder="Issue date to" name="issueDateUntil" [(ngModel)]="invoicesSearchCriteria.issueDateUntil">
+        <input matInput [matDatepicker]="issueDateUntil" placeholder="Issue date until" name="issueDateUntil"
+          [(ngModel)]="invoicesSearchCriteria.issueDateUntil">
         <mat-datepicker-toggle matSuffix [for]="issueDateUntil"></mat-datepicker-toggle>
         <mat-datepicker #issueDateUntil></mat-datepicker>
       </mat-form-field>

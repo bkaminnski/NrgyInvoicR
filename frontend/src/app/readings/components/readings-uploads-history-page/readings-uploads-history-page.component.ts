@@ -8,7 +8,6 @@ export class ReadingsUploadsHistoryPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
