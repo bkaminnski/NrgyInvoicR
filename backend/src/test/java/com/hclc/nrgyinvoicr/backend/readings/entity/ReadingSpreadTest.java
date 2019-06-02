@@ -19,7 +19,7 @@ class ReadingSpreadTest {
         ZonedDateTime lastReadingDate = ZonedDateTime.parse(lastReadingDateAsString);
 
         ReadingSpread readingSpread = new ReadingSpread(firstReadingDate, lastReadingDate, 1);
-        
+
         assertThat(readingSpread.getNumberOfExpectedReadings()).isEqualTo(numberOfExpectedReadings);
     }
 

@@ -21,11 +21,11 @@ public class ReadingValuesReader implements Closeable {
     }
 
     ReadingValue readReadingValue() throws IOException, ReadingException {
-        lineNumber++;
         String line = bufferedReader.readLine();
         if (line == null) {
             return null;
         }
+        lineNumber++;
         ReadingValue readingValue = readingLineParser.parse(line, lineNumber, readingId);
         keepFirstAndLastReading(readingValue.getDate());
         return readingValue;
