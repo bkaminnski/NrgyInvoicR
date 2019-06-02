@@ -26,7 +26,7 @@ public class Reading extends AuditableEntity {
     private Meter meter;
 
     @Embedded
-    private ReadingSpread readingsSpread;
+    private ReadingSpread readingSpread;
 
     public Reading() {
     }
@@ -36,8 +36,8 @@ public class Reading extends AuditableEntity {
         this.meter = meter;
     }
 
-    public Reading updatedWithReadingsSpread(ReadingSpread readingsSpread) {
-        this.readingsSpread = readingsSpread;
+    public Reading updatedWithReadingsSpread(ReadingSpread readingSpread) {
+        this.readingSpread = readingSpread;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class Reading extends AuditableEntity {
         return meter;
     }
 
-    public ReadingSpread getReadingsSpread() {
-        return readingsSpread;
+    public ReadingSpread getReadingSpread() {
+        return readingSpread;
     }
 }

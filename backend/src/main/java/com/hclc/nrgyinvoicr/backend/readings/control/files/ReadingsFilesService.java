@@ -63,7 +63,7 @@ public class ReadingsFilesService {
             while ((readingValue = readingValuesReader.readReadingValue()) != null) {
                 readingValuesRepository.save(readingValue);
             }
-            return readingValuesReader.determineReadingsSpread();
+            return readingValuesReader.determineReadingSpread();
         }
     }
 

@@ -19,19 +19,19 @@ public class ReadingSpread {
     private ZonedDateTime untilOpen;
 
     @Column
-    private long numberOfMadeReadings;
+    private long numberOfMeasuredValues;
 
     @Column
-    private long numberOfExpectedReadings;
+    private long numberOfExpectedValues;
 
     public ReadingSpread() {
     }
 
-    public ReadingSpread(ZonedDateTime firstReadingDate, ZonedDateTime lastReadingDate, long numberOfMadeReadings) {
+    public ReadingSpread(ZonedDateTime firstReadingDate, ZonedDateTime lastReadingDate, long numberOfMeasuredValues) {
         this.sinceClosed = firstReadingDate;
         this.untilOpen = lastReadingDate.plus(READINGS_INTERVAL_IN_MINUTES, MINUTES);
-        this.numberOfMadeReadings = numberOfMadeReadings;
-        this.numberOfExpectedReadings = calculateNumberOfIntervalsInDuration(sinceClosed, untilOpen);
+        this.numberOfMeasuredValues = numberOfMeasuredValues;
+        this.numberOfExpectedValues = calculateNumberOfIntervalsInDuration(sinceClosed, untilOpen);
     }
 
     private long calculateNumberOfIntervalsInDuration(ZonedDateTime sinceClosed, ZonedDateTime untilOpen) {
@@ -46,11 +46,11 @@ public class ReadingSpread {
         return untilOpen;
     }
 
-    public long getNumberOfMadeReadings() {
-        return numberOfMadeReadings;
+    public long getNumberOfMeasuredValues() {
+        return numberOfMeasuredValues;
     }
 
-    public long getNumberOfExpectedReadings() {
-        return numberOfExpectedReadings;
+    public long getNumberOfExpectedValues() {
+        return numberOfExpectedValues;
     }
 }

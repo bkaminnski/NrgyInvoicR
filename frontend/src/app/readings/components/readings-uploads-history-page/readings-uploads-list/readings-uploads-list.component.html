@@ -29,8 +29,20 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="errorMessage">
-        <mat-header-cell mat-sort-header *matHeaderCellDef></mat-header-cell>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Error Message</mat-header-cell>
         <mat-cell *matCellDef="let readingUpload">{{readingUpload.errorMessage}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="reading.readingSpread.numberOfMeasuredValues">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Measured</mat-header-cell>
+        <mat-cell *matCellDef="let readingUpload">
+          <span>{{readingUpload?.reading?.readingSpread?.numberOfMeasuredValues}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="reading.readingSpread.numberOfExpectedValues">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Expected</mat-header-cell>
+        <mat-cell *matCellDef="let readingUpload">
+          <span>{{readingUpload?.reading?.readingSpread?.numberOfExpectedValues}}</span>
+        </mat-cell>
       </ng-container>
     </mat-table>
   </mat-card-content>

@@ -38,7 +38,7 @@ public class ReadingValuesReader implements Closeable {
         lastReadingDate = readingDate;
     }
 
-    ReadingSpread determineReadingsSpread() {
+    ReadingSpread determineReadingSpread() {
         return new ReadingSpread(firstReadingDate, lastReadingDate, lineNumber);
     }
 

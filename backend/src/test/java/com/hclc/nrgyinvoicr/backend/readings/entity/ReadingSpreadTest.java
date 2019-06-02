@@ -20,7 +20,7 @@ class ReadingSpreadTest {
 
         ReadingSpread readingSpread = new ReadingSpread(firstReadingDate, lastReadingDate, 1);
 
-        assertThat(readingSpread.getNumberOfExpectedReadings()).isEqualTo(numberOfExpectedReadings);
+        assertThat(readingSpread.getNumberOfExpectedValues()).isEqualTo(numberOfExpectedReadings);
     }
 
     private static Stream<Arguments> parameters() {

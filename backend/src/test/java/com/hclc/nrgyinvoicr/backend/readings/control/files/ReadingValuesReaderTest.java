@@ -17,10 +17,10 @@ class ReadingValuesReaderTest {
 
         try (ReadingValuesReader readingValuesReader = new ReadingValuesReader(inputStream, new ReadingLineParser(), 1L)) {
             readAllReadingValues(readingValuesReader);
-            ReadingSpread readingSpread = readingValuesReader.determineReadingsSpread();
+            ReadingSpread readingSpread = readingValuesReader.determineReadingSpread();
 
-            assertThat(readingSpread.getNumberOfMadeReadings()).isEqualTo(2L);
-            assertThat(readingSpread.getNumberOfExpectedReadings()).isEqualTo(2L);
+            assertThat(readingSpread.getNumberOfMeasuredValues()).isEqualTo(2L);
+            assertThat(readingSpread.getNumberOfExpectedValues()).isEqualTo(2L);
             assertThat(readingSpread.getSinceClosed()).isEqualByComparingTo(ZonedDateTime.parse("2019-10-27T00:00+02:00"));
             assertThat(readingSpread.getUntilOpen()).isEqualByComparingTo(ZonedDateTime.parse("2019-10-27T00:30+02:00"));
         }

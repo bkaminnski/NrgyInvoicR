@@ -34,7 +34,7 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="errorMessage">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Error Message</mat-header-cell>
         <mat-cell *matCellDef="let reading">
           {{reading.errorMessage | async}}
         </mat-cell>

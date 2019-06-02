@@ -12,7 +12,14 @@ import { ReadingsUploadsListService } from './readings-uploads-list.service';
 export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   private readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria;
   dataSource: ReadingsUploadsListDataSource;
-  displayedColumns: string[] = ['date', 'fileName', 'status', 'errorMessage'];
+  displayedColumns: string[] = [
+    'date',
+    'fileName',
+    'status',
+    'errorMessage',
+    'reading.readingSpread.numberOfMeasuredValues',
+    'reading.readingSpread.numberOfExpectedValues'
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
