@@ -14,14 +14,14 @@ import java.io.InputStream;
 import java.time.ZonedDateTime;
 
 @Service
-public class ReadingFilesService {
+public class ReadingsFilesService {
     private final FileNameParser fileNameParser;
     private final MetersRepository metersRepository;
     private final ReadingLineParser readingLineParser;
     private final ReadingsRepository readingsRepository;
     private final ReadingValuesRepository readingValuesRepository;
 
-    public ReadingFilesService(FileNameParser fileNameParser, MetersRepository metersRepository, ReadingLineParser readingLineParser, ReadingsRepository readingsRepository, ReadingValuesRepository readingValuesRepository) {
+    public ReadingsFilesService(FileNameParser fileNameParser, MetersRepository metersRepository, ReadingLineParser readingLineParser, ReadingsRepository readingsRepository, ReadingValuesRepository readingValuesRepository) {
         this.fileNameParser = fileNameParser;
         this.metersRepository = metersRepository;
         this.readingLineParser = readingLineParser;

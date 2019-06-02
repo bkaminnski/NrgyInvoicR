@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.ZonedDateTime;
 
-public class ReadingUploadsSearchCriteria {
+public class ReadingsUploadsSearchCriteria {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime dateSince;

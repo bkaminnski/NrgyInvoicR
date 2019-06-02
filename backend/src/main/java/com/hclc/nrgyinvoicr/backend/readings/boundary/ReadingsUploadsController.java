@@ -1,13 +1,13 @@
 package com.hclc.nrgyinvoicr.backend.readings.boundary;
 
 import com.hclc.nrgyinvoicr.backend.ErrorResponse;
-import com.hclc.nrgyinvoicr.backend.readings.control.ReadingUploadsRepository;
-import com.hclc.nrgyinvoicr.backend.readings.control.ReadingUploadsService;
+import com.hclc.nrgyinvoicr.backend.readings.control.ReadingsUploadsRepository;
+import com.hclc.nrgyinvoicr.backend.readings.control.ReadingsUploadsService;
 import com.hclc.nrgyinvoicr.backend.readings.control.files.ReadingException;
-import com.hclc.nrgyinvoicr.backend.readings.control.files.ReadingFilesService;
+import com.hclc.nrgyinvoicr.backend.readings.control.files.ReadingsFilesService;
 import com.hclc.nrgyinvoicr.backend.readings.entity.Reading;
 import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUpload;
-import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadsSearchCriteria;
+import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingsUploadsSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,22 +20,23 @@ import java.io.InputStream;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
-@RestController("/api/readingUploads")
-public class ReadingUploadsController {
-    private final ReadingUploadsService readingUploadsService;
-    private final ReadingFilesService readingFilesService;
-    private final ReadingUploadsRepository readingUploadsRepository;
+@RestController
+@RequestMapping("/api/readingsUploads")
+public class ReadingsUploadsController {
+    private final ReadingsUploadsService readingsUploadsService;
+    private final ReadingsFilesService readingsFilesService;
+    private final ReadingsUploadsRepository readingsUploadsRepository;
 
-    public ReadingUploadsController(ReadingUploadsService readingUploadsService, ReadingFilesService readingFilesService, ReadingUploadsRepository readingUploadsRepository) {
-        this.readingUploadsService = readingUploadsService;
-        this.readingFilesService = readingFilesService;
-        this.readingUploadsRepository = readingUploadsRepository;
+    public ReadingsUploadsController(ReadingsUploadsService readingsUploadsService, ReadingsFilesService readingsFilesService, ReadingsUploadsRepository readingsUploadsRepository) {
+        this.readingsUploadsService = readingsUploadsService;
+        this.readingsFilesService = readingsFilesService;
+        this.readingsUploadsRepository = readingsUploadsRepository;
     }
 
     @GetMapping
     @Transactional(readOnly = true)
-    public Page<ReadingUpload> findReadingUploads(ReadingUploadsSearchCriteria readingUploadsSearchCriteria) {
-        return readingUploadsService.findReadingUploads(readingUploadsSearchCriteria);
+    public Page<ReadingUpload> findReadingsUploads(ReadingsUploadsSearchCriteria criteria) {
+        return readingsUploadsService.findReadingsUploads(criteria);
     }
 
     @PostMapping
@@ -44,10 +45,10 @@ public class ReadingUploadsController {
         String fileName = file.getOriginalFilename();
         InputStream fileContent = file.getInputStream();
         try {
-            Reading reading = readingFilesService.saveReading(fileName, fileContent);
-            readingUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
+            Reading reading = readingsFilesService.saveReading(fileName, fileContent);
+            readingsUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
         } catch (ReadingException e) {
-            readingUploadsRepository.saveAndFlush(new ReadingUpload(fileName, e.getMessage()));
+            readingsUploadsRepository.saveAndFlush(new ReadingUpload(fileName, e.getMessage()));
             throw e;
         }
         return new ResponseEntity<>(OK);

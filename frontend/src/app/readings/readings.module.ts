@@ -5,17 +5,21 @@ import { MaterialModule } from '../core/material.module';
 
 import { DefaultPipe } from '../core/default.pipe';
 import { ReadingsUploadPageComponent } from './components/readings-upload-page/readings-upload-page.component';
-import { UploadProgressComponent } from './components/readings-upload-page/upload-progress/upload-progress.component';
-import { UploadControlComponent } from './components/readings-upload-page/upload-control/upload-control.component';
-import { ReadingsUploadHistoryPageComponent } from './components/readings-upload-history-page/readings-upload-history-page/readings-upload-history-page.component';
+import { ReadingsUploadProgressComponent } from './components/readings-upload-page/readings-upload-progress/readings-upload-progress.component';
+import { ReadingsUploadControlComponent } from './components/readings-upload-page/readings-upload-control/readings-upload-control.component';
+import { ReadingsUploadsHistoryPageComponent } from './components/readings-uploads-history-page/readings-uploads-history-page.component';
+import { ReadingsUploadsListComponent } from './components/readings-uploads-history-page/readings-uploads-list/readings-uploads-list.component';
+import { ReadingsUploadsFilterComponent } from './components/readings-uploads-history-page/readings-uploads-filter/readings-uploads-filter.component';
 
 @NgModule({
   declarations: [
     DefaultPipe,
     ReadingsUploadPageComponent,
-    UploadProgressComponent,
-    UploadControlComponent,
-    ReadingsUploadHistoryPageComponent
+    ReadingsUploadProgressComponent,
+    ReadingsUploadControlComponent,
+    ReadingsUploadsHistoryPageComponent,
+    ReadingsUploadsListComponent,
+    ReadingsUploadsFilterComponent
   ],
   imports: [
     CommonModule,

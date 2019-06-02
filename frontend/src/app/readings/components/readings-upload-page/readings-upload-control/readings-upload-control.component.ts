@@ -2,11 +2,11 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ReadingsUploadDataSource } from '../readings-upload.datasource';
 
 @Component({
-  selector: 'app-upload-control',
-  templateUrl: './upload-control.component.html',
-  styleUrls: ['./upload-control.component.scss']
+  selector: 'app-readings-upload-control',
+  templateUrl: './readings-upload-control.component.html',
+  styleUrls: ['./readings-upload-control.component.scss']
 })
-export class UploadControlComponent implements OnInit {
+export class ReadingsUploadControlComponent implements OnInit {
   public uploadStarted = false;
   @ViewChild('fileInput') fileInput: ElementRef;
 

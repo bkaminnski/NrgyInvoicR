@@ -4,11 +4,11 @@ import { ProcessingResult } from 'src/app/readings/model/processing-result.model
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-upload-progress',
-  templateUrl: './upload-progress.component.html',
-  styleUrls: ['./upload-progress.component.scss']
+  selector: 'app-readings-upload-progress',
+  templateUrl: './readings-upload-progress.component.html',
+  styleUrls: ['./readings-upload-progress.component.scss']
 })
-export class UploadProgressComponent implements OnInit {
+export class ReadingsUploadProgressComponent implements OnInit {
   public displayedColumns: string[] = ['fileName', 'progress', 'processingResult', 'errorMessage'];
   public ProcessingResult = ProcessingResult;
   @Output() uploadInProgress: Observable<boolean>;

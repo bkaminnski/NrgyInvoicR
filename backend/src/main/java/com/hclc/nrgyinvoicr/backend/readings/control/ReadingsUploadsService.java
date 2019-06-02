@@ -1,7 +1,7 @@
 package com.hclc.nrgyinvoicr.backend.readings.control;
 
 import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUpload;
-import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadsSearchCriteria;
+import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingsUploadsSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,14 @@ import static com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadsSpecifi
 import static com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadsSpecifications.uploadDateBetween;
 
 @Service
-public class ReadingUploadsService {
-    private final ReadingUploadsRepository readingUploadsRepository;
+public class ReadingsUploadsService {
+    private final ReadingsUploadsRepository readingUploadsRepository;
 
-    ReadingUploadsService(ReadingUploadsRepository readingUploadsRepository) {
+    ReadingsUploadsService(ReadingsUploadsRepository readingUploadsRepository) {
         this.readingUploadsRepository = readingUploadsRepository;
     }
 
-    public Page<ReadingUpload> findReadingUploads(ReadingUploadsSearchCriteria criteria) {
+    public Page<ReadingUpload> findReadingsUploads(ReadingsUploadsSearchCriteria criteria) {
         ZonedDateTime since = criteria.getDateSince();
         ZonedDateTime until = criteria.getDateUntil();
         boolean includeErrors = criteria.isIncludeErrors();
