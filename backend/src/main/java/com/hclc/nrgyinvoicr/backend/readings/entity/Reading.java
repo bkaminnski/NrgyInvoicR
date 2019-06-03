@@ -5,7 +5,7 @@ import com.hclc.nrgyinvoicr.backend.meters.entity.Meter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -18,7 +18,7 @@ public class Reading extends AuditableEntity {
     private Long id;
 
     @NotNull
-    private ZonedDateTime date;
+    private LocalDate date;
 
     @NotNull
     @ManyToOne
@@ -31,7 +31,7 @@ public class Reading extends AuditableEntity {
     public Reading() {
     }
 
-    public Reading(@NotNull ZonedDateTime date, @NotNull Meter meter) {
+    public Reading(@NotNull LocalDate date, @NotNull Meter meter) {
         this.date = date;
         this.meter = meter;
     }
@@ -45,7 +45,7 @@ public class Reading extends AuditableEntity {
         return id;
     }
 
-    public ZonedDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

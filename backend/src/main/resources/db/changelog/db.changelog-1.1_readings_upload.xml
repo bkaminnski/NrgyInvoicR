@@ -28,7 +28,7 @@
             <column name="meter_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="date" type="timestamp with timezone">
+            <column name="date" type="date">
                 <constraints nullable="false"/>
             </column>
             <column name="since_closed" type="timestamp with timezone"/>

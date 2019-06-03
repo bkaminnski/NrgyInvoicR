@@ -2,11 +2,9 @@ package com.hclc.nrgyinvoicr.backend.readings.control.files;
 
 import org.springframework.stereotype.Component;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +20,8 @@ class FileNameParser {
         Matcher matcher = findGroups(fileName);
         String meterId = matcher.group(1);
         String readingDateAsString = matcher.group(2);
-        final ZonedDateTime zonedDateTime = parseDate(readingDateAsString);
-        return new ParsedFileName(meterId, zonedDateTime);
+        LocalDate readingDate = parseDate(readingDateAsString);
+        return new ParsedFileName(meterId, readingDate);
     }
 
     private Matcher findGroups(String fileName) throws ReadingException {
@@ -34,10 +32,10 @@ class FileNameParser {
         return matcher;
     }
 
-    private ZonedDateTime parseDate(String readingDateAsString) throws ReadingException {
+    private LocalDate parseDate(String readingDateAsString) throws ReadingException {
         try {
-            return LocalDate.parse(readingDateAsString, formatter).atStartOfDay(ZoneId.systemDefault());
-        } catch (DateTimeParseException e) {
+            return LocalDate.parse(readingDateAsString, formatter);
+        } catch (DateTimeException e) {
             throw new ReadingException("Invalid reading date in the file name: " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_DATE + ".");
         }
     }

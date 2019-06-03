@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Service
 public class ReadingsFilesService {
@@ -43,7 +43,7 @@ public class ReadingsFilesService {
         return reading;
     }
 
-    private Reading saveReading(ZonedDateTime readingDate, Meter meter) {
+    private Reading saveReading(LocalDate readingDate, Meter meter) {
         return readingsRepository.saveAndFlush(new Reading(readingDate, meter));
     }
 
