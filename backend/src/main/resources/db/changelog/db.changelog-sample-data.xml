@@ -13,6 +13,12 @@
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2018-01-01T11:15:00"/>
         </insert>
+        <insert tableName="meter">
+            <column name="id" valueSequenceNext="meter_id_seq"/>
+            <column name="external_id" value="c41924a5-dc11-4029-91bb-6f07369a43d1"/>
+            <column name="created_by" value="SYSTEM"/>
+            <column name="created_date" value="2018-01-01T11:25:00"/>
+        </insert>
         <delete tableName="invoice"/>
         <insert tableName="invoice">
             <column name="id" valueSequenceNext="invoice_id_seq"/>
