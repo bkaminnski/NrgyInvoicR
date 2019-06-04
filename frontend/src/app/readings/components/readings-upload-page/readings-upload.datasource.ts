@@ -38,12 +38,12 @@ export class ReadingsUploadDataSource implements DataSource<ReadingUploadProgres
     this.numberOfSuccessfulUploads = 0;
     this.numberOfFailedUploads = 0;
     const summary: ReadingsUploadSummary = this.readingsUploadService.uploadFiles(files);
-    summary.numberOfSuccessfulUploads
+    summary.increment
       .pipe(finalize(() => this.uploadInProgressSubject.next(false)))
-      .subscribe(numberOfSuccessfulUploads => this.numberOfSuccessfulUploads = numberOfSuccessfulUploads);
-    summary.numberOfFailedUploads
-      .pipe(finalize(() => this.uploadInProgressSubject.next(false)))
-      .subscribe(numberOfFailedUploads => this.numberOfFailedUploads = numberOfFailedUploads);
+      .subscribe(increment => {
+        this.numberOfSuccessfulUploads = increment.numberOfSuccessfulUploads;
+        this.numberOfFailedUploads = increment.numberOfFailedUploads;
+      });
     this.readingsSubject.next(summary.readings);
   }
 }

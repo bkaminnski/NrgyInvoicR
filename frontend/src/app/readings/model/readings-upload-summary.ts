@@ -1,14 +1,8 @@
 import { Observable } from 'rxjs';
 import { ReadingUploadProgress } from './reading-upload-progress.model';
+import { ReadingsUploadSummaryIncrement } from './readings-upload-summary-increment.model';
 
 export class ReadingsUploadSummary {
-  readonly readings: ReadingUploadProgress[];
-  readonly numberOfSuccessfulUploads: Observable<number>;
-  readonly numberOfFailedUploads: Observable<number>;
 
-  constructor(readings: ReadingUploadProgress[], numberOfSuccessfulUploads: Observable<number>, numberOfFailedUploads: Observable<number>) {
-    this.readings = readings;
-    this.numberOfSuccessfulUploads = numberOfSuccessfulUploads;
-    this.numberOfFailedUploads = numberOfFailedUploads;
-  }
+  constructor(readonly readings: ReadingUploadProgress[], readonly increment: Observable<ReadingsUploadSummaryIncrement>) { }
 }
