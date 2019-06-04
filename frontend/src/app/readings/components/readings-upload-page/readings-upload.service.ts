@@ -4,7 +4,8 @@ import { ReadingsUploadSummary } from '../../model/readings-upload-summary';
 import { ReadingUploadProgress } from '../../model/reading-upload-progress.model';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-import { ProcessingResult } from '../../model/processing-result.model';
+import { ReadingUploadProgressIncrement } from '../../model/reading-upload-progress-increment.model';
+import { ReadingUpload } from '../../model/reading-upload.model';
 
 @Injectable()
 export class ReadingsUploadService {
@@ -29,24 +30,20 @@ export class ReadingsUploadService {
   }
 
   private uploadFile(file: File) {
-    const progress = new BehaviorSubject<number>(0);
-    const processingResult = new BehaviorSubject<ProcessingResult>(ProcessingResult.WAITING);
-    const errorMessage = new BehaviorSubject<string>('');
-    this.readings.push(new ReadingUploadProgress(file.name, progress.asObservable(), processingResult.asObservable(), errorMessage.asObservable()));
+    const increments = new BehaviorSubject<ReadingUploadProgressIncrement>(ReadingUploadProgressIncrement.waiting());
+    this.readings.push(new ReadingUploadProgress(file.name, increments.asObservable()));
     this.http
       .request(this.prepareHttpRequest(file))
       .pipe(
-        catchError((errorResponse) => this.handleError(errorResponse, processingResult, errorMessage))
+        catchError((errorResponse) => this.handleError(errorResponse, increments))
       )
-      .subscribe(event => this.handleEvent(event, progress, processingResult));
+      .subscribe(event => this.handleEvent(event, increments));
   }
 
-  private handleError(errorResponse: HttpErrorResponse, processingResult: Subject<ProcessingResult>, errorMessage: Subject<string>) {
+  private handleError(errorResponse: HttpErrorResponse, increments: Subject<ReadingUploadProgressIncrement>) {
     this.numberOfFailedUploadsSubject.next(++this.numberOfFailedUploads);
-    processingResult.next(ProcessingResult.ERROR);
-    processingResult.complete();
-    errorMessage.next(errorResponse.error.errorMessage);
-    errorMessage.complete();
+    increments.next(ReadingUploadProgressIncrement.error(errorResponse.error.errorMessage));
+    increments.complete();
     this.tryCompletingSubjects();
     return of([]);
   }
@@ -57,13 +54,14 @@ export class ReadingsUploadService {
     return new HttpRequest('POST', '/api/readingsUploads', formData, { reportProgress: true });
   }
 
-  private handleEvent(event: any, progress: Subject<number>, processingResult: Subject<ProcessingResult>) {
+  private handleEvent(event: any, increments: Subject<ReadingUploadProgressIncrement>) {
     if (event.type === HttpEventType.UploadProgress) {
-      progress.next(Math.round(100 * event.loaded / event.total));
+      increments.next(ReadingUploadProgressIncrement.progress(Math.round(100 * event.loaded / event.total)));
     } else if (event instanceof HttpResponse) {
-      processingResult.next(ProcessingResult.SUCCESS);
-      processingResult.complete();
-      progress.complete();
+      const readingUpload: ReadingUpload = event.body;
+      const readingSpread = readingUpload.reading.readingSpread;
+      increments.next(ReadingUploadProgressIncrement.success(readingSpread.numberOfMeasuredValues, readingSpread.numberOfExpectedValues));
+      increments.complete();
       this.numberOfSuccessfulUploadsSubject.next(++this.numberOfSuccessfulUploads);
       this.tryCompletingSubjects();
     }

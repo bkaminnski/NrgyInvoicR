@@ -11,6 +11,16 @@
   justify-content: center;
 }
 
+.mat-column-measured {
+  flex: 0 0 70px;
+  justify-content: center;
+}
+
+.mat-column-expected {
+  flex: 0 0 70px;
+  justify-content: center;
+}
+
 .mat-card-title {
   display: flex;
   justify-content: space-between;

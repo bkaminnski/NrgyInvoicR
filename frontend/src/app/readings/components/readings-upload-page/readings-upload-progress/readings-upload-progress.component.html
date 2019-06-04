@@ -9,6 +9,8 @@
   </mat-card-header>
   <mat-card-content>
     <mat-table [dataSource]="dataSource">
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       <ng-container matColumnDef="fileName">
         <mat-header-cell *matHeaderCellDef>File Name</mat-header-cell>
         <mat-cell *matCellDef="let reading">
@@ -18,29 +20,41 @@
       <ng-container matColumnDef="progress">
         <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
         <mat-cell *matCellDef="let reading">
-          <mat-progress-bar mode="determinate" [value]="reading.progress | async"
-            *ngIf="(reading.progress | async) > 0"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="(reading.increment | async).progress"
+            *ngIf="(reading.increment | async).progress > 0"></mat-progress-bar>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="processingResult">
         <mat-header-cell *matHeaderCellDef>Result</mat-header-cell>
         <mat-cell *matCellDef="let reading">
-          <mat-spinner *ngIf="(reading.processingResult | async) === ProcessingResult.WAITING" [diameter]="20"
+          <mat-spinner *ngIf="(reading.increment | async).processingResult === ProcessingResult.WAITING" [diameter]="20"
             class="table-spinner"></mat-spinner>
-          <mat-icon *ngIf="(reading.processingResult | async) === ProcessingResult.SUCCESS" color="primary">cloud_done
+          <mat-icon *ngIf="(reading.increment | async).processingResult === ProcessingResult.SUCCESS" color="primary">
+            cloud_done
           </mat-icon>
-          <mat-icon *ngIf="(reading.processingResult | async) === ProcessingResult.ERROR" color="primary">cloud_off
+          <mat-icon *ngIf="(reading.increment | async).processingResult === ProcessingResult.ERROR" color="primary">
+            cloud_off
           </mat-icon>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="errorMessage">
         <mat-header-cell *matHeaderCellDef>Error Message</mat-header-cell>
         <mat-cell *matCellDef="let reading">
-          {{reading.errorMessage | async}}
+          {{(reading.increment | async).errorMessage}}
         </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <ng-container matColumnDef="measured">
+        <mat-header-cell *matHeaderCellDef>Measured</mat-header-cell>
+        <mat-cell *matCellDef="let reading">
+          {{(reading.increment | async).measuredValues}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="expected">
+        <mat-header-cell *matHeaderCellDef>Expected</mat-header-cell>
+        <mat-cell *matCellDef="let reading">
+          {{(reading.increment | async).expectedValues}}
+        </mat-cell>
+      </ng-container>
     </mat-table>
   </mat-card-content>
 </mat-card>

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/readingsUploads")
@@ -41,17 +40,17 @@ public class ReadingsUploadsController {
 
     @PostMapping
     @Transactional(rollbackFor = {IOException.class})
-    public ResponseEntity<Void> handleReadingUpload(@RequestParam("file") MultipartFile file) throws ReadingException, IOException {
+    public ResponseEntity<ReadingUpload> handleReadingUpload(@RequestParam("file") MultipartFile file) throws ReadingException, IOException {
         String fileName = file.getOriginalFilename();
         InputStream fileContent = file.getInputStream();
         try {
             Reading reading = readingsFilesService.saveReading(fileName, fileContent);
-            readingsUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
+            ReadingUpload readingUpload = readingsUploadsRepository.saveAndFlush(new ReadingUpload(fileName, reading));
+            return ResponseEntity.ok(readingUpload);
         } catch (ReadingException e) {
             readingsUploadsRepository.saveAndFlush(new ReadingUpload(fileName, e.getMessage()));
             throw e;
         }
-        return new ResponseEntity<>(OK);
     }
 
     @ExceptionHandler(ReadingException.class)

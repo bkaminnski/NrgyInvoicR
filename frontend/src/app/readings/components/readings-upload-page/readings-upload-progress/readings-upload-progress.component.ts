@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./readings-upload-progress.component.scss']
 })
 export class ReadingsUploadProgressComponent implements OnInit {
-  public displayedColumns: string[] = ['fileName', 'progress', 'processingResult', 'errorMessage'];
+  public displayedColumns: string[] = ['fileName', 'progress', 'processingResult', 'errorMessage', 'measured', 'expected'];
   public ProcessingResult = ProcessingResult;
   @Output() uploadInProgress: Observable<boolean>;
 
