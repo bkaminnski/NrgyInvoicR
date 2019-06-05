@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface MetersRepository extends CrudRepository<Meter, Long>, JpaSpecificationExecutor<Meter> {
 
-    Optional<Meter> findByExternalId(String externalId);
+    Optional<Meter> findBySerialNumber(String serialNumber);
 }

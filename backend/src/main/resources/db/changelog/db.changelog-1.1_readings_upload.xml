@@ -9,7 +9,7 @@
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="external_id" type="varchar(36)">
+            <column name="serial_number" type="varchar(36)">
                 <constraints nullable="false"/>
             </column>
             <column name="created_by" type="varchar(255)"/>
@@ -18,7 +18,7 @@
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
         <createSequence sequenceName="meter_id_seq" startValue="1" minValue="1" incrementBy="50"/>
-        <addUniqueConstraint tableName="meter" columnNames="external_id" constraintName="meter_external_id_uk"/>
+        <addUniqueConstraint tableName="meter" columnNames="serial_number" constraintName="meter_serial_number_uk"/>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_002">
         <createTable tableName="reading">

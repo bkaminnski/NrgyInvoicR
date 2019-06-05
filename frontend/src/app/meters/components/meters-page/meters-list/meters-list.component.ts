@@ -12,7 +12,7 @@ import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteri
 export class MetersListComponent implements OnInit, AfterViewInit {
   private metersSearchCriteria: MetersSearchCriteria;
   dataSource: MetersListDataSource;
-  displayedColumns: string[] = ['externalId', 'createdDate'];
+  displayedColumns: string[] = ['serialNumber', 'createdDate'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

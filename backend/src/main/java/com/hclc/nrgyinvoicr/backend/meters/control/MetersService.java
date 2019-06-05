@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import static com.hclc.nrgyinvoicr.backend.meters.entity.MetersSpecification.externalIdLike;
+import static com.hclc.nrgyinvoicr.backend.meters.entity.MetersSpecification.serialNumberLike;
 
 @Service
 public class MetersService {
@@ -17,8 +17,8 @@ public class MetersService {
     }
 
     public Page<Meter> findMeters(MetersSearchCriteria criteria) {
-        String externalId = criteria.getExternalId();
-        Specification<Meter> specification = externalIdLike(externalId);
+        String serialNumber = criteria.getSerialNumber();
+        Specification<Meter> specification = serialNumberLike(serialNumber);
         return this.metersRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
     }
 }

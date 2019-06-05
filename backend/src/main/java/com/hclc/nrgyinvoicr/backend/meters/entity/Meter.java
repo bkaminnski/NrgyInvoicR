@@ -17,20 +17,20 @@ public class Meter extends AuditableEntity {
 
     @NotNull
     @Column(length = 36)
-    private String externalId;
+    private String serialNumber;
 
     public Meter() {
     }
 
-    public Meter(@NotNull String externalId) {
-        this.externalId = externalId;
+    public Meter(@NotNull String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 }

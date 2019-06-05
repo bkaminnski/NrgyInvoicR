@@ -12,8 +12,8 @@ export class MetersListService {
 
   findMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize): Observable<Page<Meter>> {
     let params = new HttpParams();
-    if (metersSearchCriteria.externalId) {
-      params = params.append('externalId', metersSearchCriteria.externalId);
+    if (metersSearchCriteria.serialNumber) {
+      params = params.append('serialNumber', metersSearchCriteria.serialNumber);
     }
     params = params
       .append('pageDefinition.sortColumn', sortColumn)

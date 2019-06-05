@@ -15,9 +15,9 @@
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      <ng-container matColumnDef="externalId">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Identifier</mat-header-cell>
-        <mat-cell *matCellDef="let meter">{{meter.externalId}}</mat-cell>
+      <ng-container matColumnDef="serialNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Serial Number</mat-header-cell>
+        <mat-cell *matCellDef="let meter">{{meter.serialNumber}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>

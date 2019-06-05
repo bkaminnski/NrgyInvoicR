@@ -1,5 +1,5 @@
 export class Meter {
   id: number;
-  externalId: string;
+  serialNumber: string;
   createdDate: Date;
 }

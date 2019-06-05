@@ -3,15 +3,15 @@ package com.hclc.nrgyinvoicr.backend.meters.entity;
 import com.hclc.nrgyinvoicr.backend.PageDefinition;
 
 public class MetersSearchCriteria {
-    private String externalId;
+    private String serialNumber;
     private PageDefinition pageDefinition;
 
-    public String getExternalId() {
-        return externalId;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public PageDefinition getPageDefinition() {
