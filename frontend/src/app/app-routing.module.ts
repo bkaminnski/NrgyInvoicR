@@ -6,12 +6,14 @@ import { InvoicesPageComponent } from './invoices/components/invoices-page/invoi
 import { ReadingsUploadPageComponent } from './readings/components/readings-upload-page/readings-upload-page.component';
 import { CanDeactivateGuard } from './core/can-deactivate.guard';
 import { ReadingsUploadsHistoryPageComponent } from './readings/components/readings-uploads-history-page/readings-uploads-history-page.component';
+import { MetersPageComponent } from './meters/components/meters-page/meters-page.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
   { path: 'invoices', component: InvoicesPageComponent },
   { path: 'readingsUpload', component: ReadingsUploadPageComponent, canDeactivate: [CanDeactivateGuard] },
   { path: 'readingsUploadsHistory', component: ReadingsUploadsHistoryPageComponent },
+  { path: 'meters', component: MetersPageComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];
 

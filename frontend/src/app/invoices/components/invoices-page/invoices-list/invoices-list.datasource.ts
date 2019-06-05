@@ -1,10 +1,10 @@
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { Invoice } from 'src/app/invoices/model/invoice.model';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
+import { Page } from 'src/app/core/model/page.model';
+import { Invoice } from 'src/app/invoices/model/invoice.model';
 import { InvoicesListService } from './invoices-list.service';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
-import { Page } from 'src/app/core/model/page.model';
 
 export class InvoicesListDataSource implements DataSource<Invoice> {
   private invoicesSubject = new BehaviorSubject<Invoice[]>([]);
