@@ -11,6 +11,7 @@ import { MetersModule } from './meters/meters.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MeterDialogComponent } from './meters/components/meters-page/meter-dialog/meter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AppComponent } from './app.component';
     MetersModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MeterDialogComponent]
 })
 export class AppModule { }
