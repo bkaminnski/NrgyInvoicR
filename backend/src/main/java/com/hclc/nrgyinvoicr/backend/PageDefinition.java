@@ -4,13 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 public class PageDefinition {
-
     private String sortColumn;
-
     private String sortDirection;
-
     private int pageNumber;
-
     private int pageSize;
 
     public PageRequest asPageRequest() {
