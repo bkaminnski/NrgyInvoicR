@@ -30,7 +30,15 @@ public class Meter extends AuditableEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getSerialNumber() {
         return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

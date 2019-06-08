@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.hclc.nrgyinvoicr.backend.meters.entity.MetersSpecification.serialNumberLike;
 
 @Service
@@ -16,9 +18,29 @@ public class MetersService {
         this.metersRepository = metersRepository;
     }
 
+    public Optional<Meter> getMeter(Long id) {
+        return metersRepository.findById(id);
+    }
+
     public Page<Meter> findMeters(MetersSearchCriteria criteria) {
         String serialNumber = criteria.getSerialNumber();
         Specification<Meter> specification = serialNumberLike(serialNumber);
-        return this.metersRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
+        return metersRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
+    }
+
+    public Optional<Meter> updateMeter(Meter meter) throws MeterAlreadyRegisteredException {
+        if (metersRepository.findBySerialNumberAndIdNot(meter.getSerialNumber(), meter.getId()).isPresent()) {
+            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
+        }
+        return metersRepository
+                .findById(meter.getId())
+                .map(m -> metersRepository.save(meter));
+    }
+
+    public Meter createMeter(Meter meter) throws MeterAlreadyRegisteredException {
+        if (metersRepository.findBySerialNumber(meter.getSerialNumber()).isPresent()) {
+            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
+        }
+        return metersRepository.save(meter);
     }
 }

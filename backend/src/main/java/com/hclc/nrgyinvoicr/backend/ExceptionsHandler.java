@@ -22,4 +22,9 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
         logger.log(Level.SEVERE, "[Exception tracking id: " + exceptionTrackingId + "]", e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ErrorResponse("Unknown server error. Please contact system administrator. [" + exceptionTrackingId + "]"));
     }
+
+    @ExceptionHandler({EntityNotFoundException.class})
+    protected ResponseEntity<Void> handleException(EntityNotFoundException e) {
+        return ResponseEntity.notFound().build();
+    }
 }
