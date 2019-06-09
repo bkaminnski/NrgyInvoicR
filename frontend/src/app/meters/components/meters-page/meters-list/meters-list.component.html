@@ -24,5 +24,6 @@
         <mat-cell *matCellDef="let meter">{{meter.createdDate | date:'mediumDate'}}</mat-cell>
       </ng-container>
     </mat-table>
+    <app-no-records-found [records]="dataSource.meters | async"></app-no-records-found>
   </mat-card-content>
 </mat-card>

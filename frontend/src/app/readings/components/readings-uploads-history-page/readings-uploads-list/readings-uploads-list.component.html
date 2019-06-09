@@ -49,5 +49,6 @@
         </mat-cell>
       </ng-container>
     </mat-table>
+    <app-no-records-found [records]="dataSource.readingsUploads | async"></app-no-records-found>
   </mat-card-content>
 </mat-card>

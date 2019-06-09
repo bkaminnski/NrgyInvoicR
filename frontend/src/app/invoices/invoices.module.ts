@@ -7,6 +7,7 @@ import { MaterialModule } from '../core/material.module';
 import { InvoicesPageComponent } from './components/invoices-page/invoices-page.component';
 import { InvoicesFilterComponent } from './components/invoices-page/invoices-filter/invoices-filter.component';
 import { InvoicesListComponent } from './components/invoices-page/invoices-list/invoices-list.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { InvoicesListComponent } from './components/invoices-page/invoices-list/
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    CoreModule
   ],
   providers: []
 })

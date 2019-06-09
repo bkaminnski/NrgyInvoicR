@@ -8,6 +8,7 @@ import { MetersPageComponent } from './components/meters-page/meters-page.compon
 import { MetersFilterComponent } from './components/meters-page/meters-filter/meters-filter.component';
 import { MetersListComponent } from './components/meters-page/meters-list/meters-list.component';
 import { MeterDialogComponent } from './components/meters-page/meter-dialog/meter-dialog.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MeterDialogComponent } from './components/meters-page/meter-dialog/mete
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    CoreModule
   ]
 })
 export class MetersModule { }

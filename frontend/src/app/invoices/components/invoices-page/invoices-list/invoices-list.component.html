@@ -24,5 +24,6 @@
         <mat-cell *matCellDef="let invoice">{{invoice.issueDate | date:'shortDate'}}</mat-cell>
       </ng-container>
     </mat-table>
+    <app-no-records-found [records]="dataSource.invoices | async"></app-no-records-found>
   </mat-card-content>
 </mat-card>

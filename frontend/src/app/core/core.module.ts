@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material.module';
 
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 
 @NgModule({
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    NoRecordsFoundComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     MaterialModule
   ],
   exports: [
-    NavigationComponent
+    NavigationComponent,
+    NoRecordsFoundComponent
   ]
 })
 export class CoreModule { }
