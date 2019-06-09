@@ -10,6 +10,16 @@ body {
   margin-left: 10px;
 }
 
-.mat-card-header-text{
+.mat-card-header-text {
   width: 100% !important;
+}
+
+.success-notification-panel {
+  color: white;
+  background-color: #43a047;
+}
+
+.error-notification-panel {
+  color: white;
+  background-color: #e91e63;
 }

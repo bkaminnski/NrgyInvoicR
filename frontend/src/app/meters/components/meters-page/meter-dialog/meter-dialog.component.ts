@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MetersService } from '../meters.service';
-import { catchError, finalize } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
+import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
   selector: 'app-meter-dialog',
@@ -22,7 +20,7 @@ export class MeterDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<MeterDialogComponent>,
     private metersService: MetersService,
-    private snackBar: MatSnackBar
+    private notification: NotificationService
   ) {
     this.meter = new Meter();
     this.loading = false;
@@ -38,9 +36,18 @@ export class MeterDialogComponent implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(
-        meter => this.dialogRef.close(meter),
-        errorResponse => this.snackBar.open(errorResponse.error.errorMessage)
+        meter => this.handleSuccess(meter),
+        errorResponse => this.handleError(errorResponse)
       );
+  }
+
+  private handleSuccess(meter: Meter): void {
+    this.notification.success('A new meter has been successfully registered.');
+    return this.dialogRef.close(meter);
+  }
+
+  private handleError(errorResponse: any): void {
+    return this.notification.error(errorResponse.error.errorMessage);
   }
 
   cancel() {

@@ -6,11 +6,13 @@ import { MaterialModule } from './material.module';
 
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
     NavigationComponent,
-    NoRecordsFoundComponent
+    NoRecordsFoundComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
