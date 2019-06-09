@@ -32,7 +32,7 @@ export class ReadingsUploadService {
     this.http
       .request(this.prepareHttpRequest(file))
       .pipe(
-        catchError((errorResponse) => this.handleError(errorResponse, increment))
+        catchError(errorResponse => this.handleError(errorResponse, increment))
       )
       .subscribe(event => this.handleEvent(event, increment));
   }

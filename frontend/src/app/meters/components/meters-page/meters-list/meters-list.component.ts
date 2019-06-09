@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatPaginator } from '@angular/material';
-import { MetersListService } from './meters-list.service';
+import { MetersService } from '../meters.service';
 import { MetersListDataSource } from './meters-list.datasource';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 
@@ -28,8 +28,8 @@ export class MetersListComponent implements OnInit, AfterViewInit {
     pageSizeOptions: [10, 100, 1000]
   };
 
-  constructor(private metersListService: MetersListService) {
-    this.dataSource = new MetersListDataSource(this.metersListService);
+  constructor(private metersService: MetersService) {
+    this.dataSource = new MetersListDataSource(this.metersService);
   }
 
   ngOnInit() { }

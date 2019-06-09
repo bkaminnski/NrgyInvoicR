@@ -15,7 +15,8 @@ import {
   MatProgressBarModule,
   MatMenuModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import {
@@ -39,7 +40,8 @@ import {
     MatProgressBarModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -57,7 +59,8 @@ import {
     MatProgressBarModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }

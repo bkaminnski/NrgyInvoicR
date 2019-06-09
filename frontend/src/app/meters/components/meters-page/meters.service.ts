@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Meter } from '../../../model/meter.model';
-import { MetersSearchCriteria } from '../../../model/meters-search-criteria.model';
+import { Meter } from '../../model/meter.model';
+import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
 
 @Injectable()
-export class MetersListService {
+export class MetersService {
 
   constructor(private http: HttpClient) { }
+
+  createMeter(meter: Meter): Observable<Meter> {
+    return this.http.post<Meter>('/api/meters', meter);
+  }
 
   findMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize): Observable<Page<Meter>> {
     let params = new HttpParams();

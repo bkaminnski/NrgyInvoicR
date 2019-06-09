@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
 import { Meter } from 'src/app/meters/model/meter.model';
-import { MetersListService } from './meters-list.service';
+import { MetersService } from '../meters.service';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 
 export class MetersListDataSource implements DataSource<Meter> {
@@ -15,7 +15,7 @@ export class MetersListDataSource implements DataSource<Meter> {
   public totalElements = this.totalElementsSubject.asObservable();
   public loading = this.loadingSubject.asObservable();
 
-  constructor(private metersListService: MetersListService) { }
+  constructor(private metersService: MetersService) { }
 
   connect(collectionViewer: CollectionViewer): Observable<Meter[]> {
     return this.meters;
@@ -29,7 +29,7 @@ export class MetersListDataSource implements DataSource<Meter> {
 
   loadMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
     this.loadingSubject.next(true);
-    this.metersListService.findMeters(metersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
+    this.metersService.findMeters(metersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false)),

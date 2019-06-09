@@ -12,6 +12,7 @@ import { MetersModule } from './meters/meters.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MeterDialogComponent } from './meters/components/meters-page/meter-dialog/meter-dialog.component';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { MeterDialogComponent } from './meters/components/meters-page/meter-dial
     ReadingsModule,
     MetersModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3500 } }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [MeterDialogComponent]
 })

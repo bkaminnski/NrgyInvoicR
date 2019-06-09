@@ -1,8 +1,12 @@
 <form #meterForm="ngForm" (ngSubmit)="meterForm.form.valid && save()" autocomplete="off" novalidate>
-  <h1 mat-dialog-title>Meter Registration</h1>
+  <h1 mat-dialog-title>
+    Meter Registration
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </h1>
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput required placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel" [(ngModel)]="meter.serialNumber">
+      <input matInput required placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel"
+        [(ngModel)]="meter.serialNumber">
       <mat-error *ngIf="serialNumber.invalid">Serial Number is required</mat-error>
     </mat-form-field>
   </mat-dialog-content>
