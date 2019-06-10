@@ -12,7 +12,5 @@ export class MetersPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

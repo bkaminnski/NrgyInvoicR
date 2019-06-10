@@ -2,6 +2,7 @@ import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MetersService } from '../meters.service';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
@@ -22,9 +23,9 @@ export class MetersListDataSource implements DataSource<Meter> {
     this.metersSubject.complete();
   }
 
-  loadMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
+  loadMeters(metersSearchCriteria: MetersSearchCriteria, pageDefinition: PageDefinition) {
     this.loading = true;
-    this.metersService.findMeters(metersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
+    this.metersService.findMeters(metersSearchCriteria, pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),

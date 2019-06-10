@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Invoice } from '../../../model/invoice.model';
 import { InvoicesSearchCriteria } from '../../../model/invoices-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
 @Injectable()
 export class InvoicesListService {
 
   constructor(private http: HttpClient) { }
 
-  findInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize): Observable<Page<Invoice>> {
+  findInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, pageDefinition: PageDefinition): Observable<Page<Invoice>> {
     let params = new HttpParams();
     if (invoicesSearchCriteria.issueDateSince) {
       params = params.append('issueDateSince', invoicesSearchCriteria.issueDateSince.toISOString());
@@ -18,11 +19,7 @@ export class InvoicesListService {
     if (invoicesSearchCriteria.issueDateUntil) {
       params = params.append('issueDateUntil', invoicesSearchCriteria.issueDateUntil.clone().add(1, 'day').toISOString());
     }
-    params = params
-      .append('pageDefinition.sortColumn', sortColumn)
-      .append('pageDefinition.sortDirection', sortDirection)
-      .append('pageDefinition.pageNumber', pageIndex)
-      .append('pageDefinition.pageSize', pageSize);
+    params = pageDefinition.appendTo(params);
     return this.http.get<Page<Invoice>>('/api/invoices', { params: params });
   }
 }

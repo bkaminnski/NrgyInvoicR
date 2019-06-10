@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { ReadingsUploadsSearchCriteria } from 'src/app/readings/model/readings-uploads-search-criteria.model';
 import * as moment from 'moment';
 
@@ -7,7 +7,7 @@ import * as moment from 'moment';
   templateUrl: './readings-uploads-filter.component.html',
   styleUrls: ['./readings-uploads-filter.component.scss']
 })
-export class ReadingsUploadsFilterComponent implements OnInit {
+export class ReadingsUploadsFilterComponent implements OnInit, AfterViewInit {
   @Output() searchEvent = new EventEmitter();
   readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria;
 
@@ -15,7 +15,9 @@ export class ReadingsUploadsFilterComponent implements OnInit {
     this.readingsUploadsSearchCriteria = new ReadingsUploadsSearchCriteria(moment().startOf('month'), moment().endOf('month').startOf('day'), false);
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     this.search();
   }
 

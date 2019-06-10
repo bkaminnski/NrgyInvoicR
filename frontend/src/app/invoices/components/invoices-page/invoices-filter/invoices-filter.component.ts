@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
 import * as moment from 'moment';
 
@@ -7,7 +7,7 @@ import * as moment from 'moment';
   templateUrl: './invoices-filter.component.html',
   styleUrls: ['./invoices-filter.component.scss']
 })
-export class InvoicesFilterComponent implements OnInit {
+export class InvoicesFilterComponent implements OnInit, AfterViewInit {
   @Output() searchEvent = new EventEmitter();
   invoicesSearchCriteria: InvoicesSearchCriteria;
 
@@ -15,7 +15,9 @@ export class InvoicesFilterComponent implements OnInit {
     this.invoicesSearchCriteria = new InvoicesSearchCriteria(moment().startOf('month'), moment().endOf('month').startOf('day'));
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     this.search();
   }
 

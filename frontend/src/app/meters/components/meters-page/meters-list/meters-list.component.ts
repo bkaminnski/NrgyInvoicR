@@ -5,6 +5,7 @@ import { MetersListDataSource } from './meters-list.datasource';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MeterDialogComponent } from '../meter-dialog/meter-dialog.component';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
 @Component({
   selector: 'app-meters-list',
@@ -53,13 +54,7 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    this.dataSource.loadMeters(
-      this.metersSearchCriteria,
-      (this.sort.active) ? this.sort.active : this.sortConfig.initialSortActive,
-      (this.sort.direction) ? this.sort.direction : this.sortConfig.initialSortDirection,
-      (this.paginator.pageIndex) ? this.paginator.pageIndex : this.paginatorConfig.initialPageIndex,
-      (this.paginator.pageSize) ? this.paginator.pageSize : this.paginatorConfig.initialPageSize
-    );
+    this.dataSource.loadMeters(this.metersSearchCriteria, new PageDefinition(this.sort, this.paginator));
   }
 
   registerMeter() {

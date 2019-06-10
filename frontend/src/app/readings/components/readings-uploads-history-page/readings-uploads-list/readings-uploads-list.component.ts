@@ -3,6 +3,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { ReadingsUploadsSearchCriteria } from 'src/app/readings/model/readings-uploads-search-criteria.model';
 import { ReadingsUploadsListDataSource } from './readings-uploads-list.datasource';
 import { ReadingsUploadsListService } from './readings-uploads-list.service';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
 @Component({
   selector: 'app-readings-uploads-list',
@@ -57,12 +58,6 @@ export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    this.dataSource.loadReadingsUploads(
-      this.readingsUploadsSearchCriteria,
-      (this.sort.active) ? this.sort.active : this.sortConfig.initialSortActive,
-      (this.sort.direction) ? this.sort.direction : this.sortConfig.initialSortDirection,
-      (this.paginator.pageIndex) ? this.paginator.pageIndex : this.paginatorConfig.initialPageIndex,
-      (this.paginator.pageSize) ? this.paginator.pageSize : this.paginatorConfig.initialPageSize
-    );
+    this.dataSource.loadReadingsUploads(this.readingsUploadsSearchCriteria, new PageDefinition(this.sort, this.paginator));
   }
 }

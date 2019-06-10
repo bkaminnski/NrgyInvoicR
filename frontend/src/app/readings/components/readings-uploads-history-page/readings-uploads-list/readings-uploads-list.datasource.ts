@@ -2,6 +2,7 @@ import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { ReadingUpload } from 'src/app/readings/model/reading-upload.model';
 import { ReadingsUploadsListService } from './readings-uploads-list.service';
 import { ReadingsUploadsSearchCriteria } from 'src/app/readings/model/readings-uploads-search-criteria.model';
@@ -22,9 +23,9 @@ export class ReadingsUploadsListDataSource implements DataSource<ReadingUpload> 
     this.readingsUploadsSubject.complete();
   }
 
-  loadReadingsUploads(readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
+  loadReadingsUploads(readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria, pageDefinition: PageDefinition) {
     this.loading = true;
-    this.readingsUploadsListService.findReadingsUploads(readingsUploadsSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
+    this.readingsUploadsListService.findReadingsUploads(readingsUploadsSearchCriteria, pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),

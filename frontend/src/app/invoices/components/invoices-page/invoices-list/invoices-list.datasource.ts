@@ -2,6 +2,7 @@ import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Invoice } from 'src/app/invoices/model/invoice.model';
 import { InvoicesListService } from './invoices-list.service';
 import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-criteria.model';
@@ -22,9 +23,9 @@ export class InvoicesListDataSource implements DataSource<Invoice> {
     this.invoicesSubject.complete();
   }
 
-  loadInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
+  loadInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, pageDefinition: PageDefinition) {
     this.loading = true;
-    this.invoicesListService.findInvoices(invoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
+    this.invoicesListService.findInvoices(invoicesSearchCriteria, pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),

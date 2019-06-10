@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Meter } from '../../model/meter.model';
 import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
 @Injectable()
 export class MetersService {
@@ -14,16 +15,12 @@ export class MetersService {
     return this.http.post<Meter>('/api/meters', meter);
   }
 
-  findMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize): Observable<Page<Meter>> {
+  findMeters(metersSearchCriteria: MetersSearchCriteria, pageDefinition: PageDefinition): Observable<Page<Meter>> {
     let params = new HttpParams();
     if (metersSearchCriteria.serialNumber) {
       params = params.append('serialNumber', metersSearchCriteria.serialNumber);
     }
-    params = params
-      .append('pageDefinition.sortColumn', sortColumn)
-      .append('pageDefinition.sortDirection', sortDirection)
-      .append('pageDefinition.pageNumber', pageIndex)
-      .append('pageDefinition.pageSize', pageSize);
+    params = pageDefinition.appendTo(params);
     return this.http.get<Page<Meter>>('/api/meters', { params: params });
   }
 }
