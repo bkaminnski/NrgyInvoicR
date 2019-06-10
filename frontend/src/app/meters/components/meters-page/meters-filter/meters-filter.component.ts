@@ -14,7 +14,7 @@ export class MetersFilterComponent implements OnInit {
   @Output() searchEvent = new EventEmitter();
   metersSearchCriteria: MetersSearchCriteria;
 
-  constructor(private dialog: MatDialog) {
+  constructor() {
     this.metersSearchCriteria = new MetersSearchCriteria('');
   }
 
@@ -22,16 +22,5 @@ export class MetersFilterComponent implements OnInit {
 
   search() {
     this.searchEvent.emit(this.metersSearchCriteria);
-  }
-
-  registerMeter() {
-    this.dialog.open(MeterDialogComponent, { disableClose: true, autoFocus: true, minWidth: '33%' })
-      .afterClosed()
-      .subscribe(meter => {
-        if (meter) {
-          this.metersSearchCriteria.serialNumber = meter.serialNumber;
-          this.search();
-        }
-      });
   }
 }

@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./no-records-found.component.scss']
 })
 export class NoRecordsFoundComponent implements OnInit {
-  @Input() records: Array<any>;
+  @Input() length: number;
 
   constructor() { }
 

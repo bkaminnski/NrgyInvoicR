@@ -42,12 +42,17 @@ export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => { this.paginator.pageIndex = 0; this.searchWithCriteria(); });
+    this.sort.sortChange.subscribe(() => this.resetPaginatorAndSearchWithCriteria());
     this.paginator.page.subscribe(() => this.searchWithCriteria());
   }
 
   search(readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria) {
     this.readingsUploadsSearchCriteria = readingsUploadsSearchCriteria;
+    this.resetPaginatorAndSearchWithCriteria();
+  }
+
+  private resetPaginatorAndSearchWithCriteria() {
+    this.paginator.pageIndex = 0;
     this.searchWithCriteria();
   }
 

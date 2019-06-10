@@ -1,19 +1,16 @@
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { ReadingUpload } from 'src/app/readings/model/reading-upload.model';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
+import { Page } from 'src/app/core/model/page.model';
+import { ReadingUpload } from 'src/app/readings/model/reading-upload.model';
 import { ReadingsUploadsListService } from './readings-uploads-list.service';
 import { ReadingsUploadsSearchCriteria } from 'src/app/readings/model/readings-uploads-search-criteria.model';
-import { Page } from 'src/app/core/model/page.model';
 
 export class ReadingsUploadsListDataSource implements DataSource<ReadingUpload> {
   private readingsUploadsSubject = new BehaviorSubject<ReadingUpload[]>([]);
-  private totalElementsSubject = new BehaviorSubject<number>(0);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
   public readingsUploads = this.readingsUploadsSubject.asObservable();
-  public totalElements = this.totalElementsSubject.asObservable();
-  public loading = this.loadingSubject.asObservable();
+  public totalElements = 0;
+  public loading = false;
 
   constructor(private readingsUploadsListService: ReadingsUploadsListService) { }
 
@@ -23,17 +20,15 @@ export class ReadingsUploadsListDataSource implements DataSource<ReadingUpload> 
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.readingsUploadsSubject.complete();
-    this.totalElementsSubject.complete();
-    this.loadingSubject.complete();
   }
 
   loadReadingsUploads(readingsUploadsSearchCriteria: ReadingsUploadsSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
-    this.loadingSubject.next(true);
+    this.loading = true;
     this.readingsUploadsListService.findReadingsUploads(readingsUploadsSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
       .pipe(
         catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false)),
-        tap<Page<ReadingUpload>>(page => this.totalElementsSubject.next(page.totalElements))
+        finalize(() => this.loading = false),
+        tap<Page<ReadingUpload>>(page => this.totalElements = page.totalElements)
       )
       .subscribe(page => this.readingsUploadsSubject.next(page.content));
   }

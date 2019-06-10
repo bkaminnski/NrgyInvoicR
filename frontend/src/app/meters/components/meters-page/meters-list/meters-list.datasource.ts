@@ -8,12 +8,9 @@ import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteri
 
 export class MetersListDataSource implements DataSource<Meter> {
   private metersSubject = new BehaviorSubject<Meter[]>([]);
-  private totalElementsSubject = new BehaviorSubject<number>(0);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
   public meters = this.metersSubject.asObservable();
-  public totalElements = this.totalElementsSubject.asObservable();
-  public loading = this.loadingSubject.asObservable();
+  public totalElements = 0;
+  public loading = false;
 
   constructor(private metersService: MetersService) { }
 
@@ -23,17 +20,15 @@ export class MetersListDataSource implements DataSource<Meter> {
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.metersSubject.complete();
-    this.totalElementsSubject.complete();
-    this.loadingSubject.complete();
   }
 
   loadMeters(metersSearchCriteria: MetersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
-    this.loadingSubject.next(true);
+    this.loading = true;
     this.metersService.findMeters(metersSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
       .pipe(
         catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false)),
-        tap<Page<Meter>>(page => this.totalElementsSubject.next(page.totalElements))
+        finalize(() => this.loading = false),
+        tap<Page<Meter>>(page => this.totalElements = page.totalElements)
       )
       .subscribe(page => this.metersSubject.next(page.content));
   }

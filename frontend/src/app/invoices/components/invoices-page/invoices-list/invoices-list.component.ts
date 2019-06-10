@@ -35,12 +35,17 @@ export class InvoicesListComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => { this.paginator.pageIndex = 0; this.searchWithCriteria(); });
+    this.sort.sortChange.subscribe(() => this.resetPaginatorAndSearchWithCriteria());
     this.paginator.page.subscribe(() => this.searchWithCriteria());
   }
 
   search(invoicesSearchCriteria: InvoicesSearchCriteria) {
     this.invoicesSearchCriteria = invoicesSearchCriteria;
+    this.resetPaginatorAndSearchWithCriteria();
+  }
+
+  private resetPaginatorAndSearchWithCriteria() {
+    this.paginator.pageIndex = 0;
     this.searchWithCriteria();
   }
 

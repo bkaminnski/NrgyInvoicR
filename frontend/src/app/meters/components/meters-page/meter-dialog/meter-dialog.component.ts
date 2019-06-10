@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MetersService } from '../meters.service';
 import { finalize } from 'rxjs/operators';
@@ -20,9 +20,10 @@ export class MeterDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<MeterDialogComponent>,
     private metersService: MetersService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    @Inject(MAT_DIALOG_DATA) data: Meter
   ) {
-    this.meter = new Meter();
+    this.meter = data;
     this.loading = false;
   }
 

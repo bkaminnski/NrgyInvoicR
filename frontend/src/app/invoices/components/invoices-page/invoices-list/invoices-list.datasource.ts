@@ -8,12 +8,9 @@ import { InvoicesSearchCriteria } from 'src/app/invoices/model/invoices-search-c
 
 export class InvoicesListDataSource implements DataSource<Invoice> {
   private invoicesSubject = new BehaviorSubject<Invoice[]>([]);
-  private totalElementsSubject = new BehaviorSubject<number>(0);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
   public invoices = this.invoicesSubject.asObservable();
-  public totalElements = this.totalElementsSubject.asObservable();
-  public loading = this.loadingSubject.asObservable();
+  public totalElements = 0;
+  public loading = false;
 
   constructor(private invoicesListService: InvoicesListService) { }
 
@@ -23,17 +20,15 @@ export class InvoicesListDataSource implements DataSource<Invoice> {
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.invoicesSubject.complete();
-    this.totalElementsSubject.complete();
-    this.loadingSubject.complete();
   }
 
   loadInvoices(invoicesSearchCriteria: InvoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize) {
-    this.loadingSubject.next(true);
+    this.loading = true;
     this.invoicesListService.findInvoices(invoicesSearchCriteria, sortColumn, sortDirection, pageIndex, pageSize)
       .pipe(
         catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false)),
-        tap<Page<Invoice>>(page => this.totalElementsSubject.next(page.totalElements))
+        finalize(() => this.loading = false),
+        tap<Page<Invoice>>(page => this.totalElements = page.totalElements)
       )
       .subscribe(page => this.invoicesSubject.next(page.content));
   }
