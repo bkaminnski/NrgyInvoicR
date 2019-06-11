@@ -6,6 +6,7 @@ import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteri
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MeterDialogComponent } from '../meter-dialog/meter-dialog.component';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-meters-list',
@@ -14,8 +15,9 @@ import { PageDefinition } from 'src/app/core/model/page-definition.model';
 })
 export class MetersListComponent implements OnInit, AfterViewInit {
   private metersSearchCriteria: MetersSearchCriteria;
-  dataSource: MetersListDataSource;
-  displayedColumns: string[] = ['serialNumber', 'createdDate'];
+  public highlightedRowIndex: number;
+  public dataSource: MetersListDataSource;
+  public displayedColumns: string[] = ['serialNumber', 'createdDate', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -58,20 +60,38 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   }
 
   registerMeter() {
+    const meter = new Meter(this.dataSource.totalElements === 0 ? this.metersSearchCriteria.serialNumber : '');
+    this.openMeterDialog(meter).subscribe(m => {
+      if (m) {
+        this.metersSearchCriteria.reset();
+        this.resetPaginatorAndSearchWithCriteria();
+      }
+    });
+  }
+
+  editMeter(meter: Meter) {
+    this.openMeterDialog(meter).subscribe(m => {
+      if (m) {
+        this.searchWithCriteria();
+      }
+    });
+  }
+
+  openMeterDialog(meter: Meter): Observable<Meter> {
     const dialogConfig: MatDialogConfig<Meter> = {
-      data: new Meter(this.dataSource.totalElements === 0 ? this.metersSearchCriteria.serialNumber : ''),
+      data: meter,
       disableClose: true,
       autoFocus: true,
       minWidth: '33%'
     };
+    return this.dialog.open(MeterDialogComponent, dialogConfig).afterClosed();
+  }
 
-    this.dialog.open(MeterDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe(meter => {
-        if (meter) {
-          this.metersSearchCriteria.serialNumber = meter.serialNumber;
-          this.resetPaginatorAndSearchWithCriteria();
-        }
-      });
+  mouseEnter(highlightedRowIndex: number) {
+    this.highlightedRowIndex = highlightedRowIndex;
+  }
+
+  mouseLeave() {
+    this.highlightedRowIndex = null;
   }
 }

@@ -14,7 +14,8 @@
     <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let meter; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"></mat-row>
       <ng-container matColumnDef="serialNumber">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Serial Number</mat-header-cell>
         <mat-cell *matCellDef="let meter">{{meter.serialNumber}}</mat-cell>
@@ -22,6 +23,14 @@
       <ng-container matColumnDef="createdDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>
         <mat-cell *matCellDef="let meter">{{meter.createdDate | date:'mediumDate'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let meter; let i = index">
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="editMeter(meter)">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+        </mat-cell>
       </ng-container>
     </mat-table>
     <div [hidden]="dataSource.totalElements === 0">

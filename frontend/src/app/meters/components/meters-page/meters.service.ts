@@ -11,8 +11,12 @@ export class MetersService {
 
   constructor(private http: HttpClient) { }
 
-  createMeter(meter: Meter): Observable<Meter> {
-    return this.http.post<Meter>('/api/meters', meter);
+  saveMeter(meter: Meter): Observable<Meter> {
+    if (meter.id === null) {
+      return this.http.post<Meter>('/api/meters', meter);
+    } else {
+      return this.http.put<Meter>('/api/meters/' + meter.id, meter);
+    }
   }
 
   findMeters(metersSearchCriteria: MetersSearchCriteria, pageDefinition: PageDefinition): Observable<Page<Meter>> {

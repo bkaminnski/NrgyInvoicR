@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/core/components/notification/notifi
   ]
 })
 export class MeterDialogComponent implements OnInit {
+  private newMeter: boolean;
   public meter: Meter;
   public loading: boolean;
 
@@ -21,9 +22,10 @@ export class MeterDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<MeterDialogComponent>,
     private metersService: MetersService,
     private notificationService: NotificationService,
-    @Inject(MAT_DIALOG_DATA) data: Meter
+    @Inject(MAT_DIALOG_DATA) meter: Meter
   ) {
-    this.meter = data;
+    this.meter = Meter.cloned(meter);
+    this.newMeter = (this.meter.id === null);
     this.loading = false;
   }
 
@@ -32,7 +34,7 @@ export class MeterDialogComponent implements OnInit {
 
   save() {
     this.loading = true;
-    this.metersService.createMeter(this.meter)
+    this.metersService.saveMeter(this.meter)
       .pipe(
         finalize(() => this.loading = false)
       )
@@ -43,7 +45,7 @@ export class MeterDialogComponent implements OnInit {
   }
 
   private handleSuccess(meter: Meter): void {
-    this.notificationService.success('A new meter has been successfully registered.');
+    this.notificationService.success(this.newMeter ? 'A new meter has been successfully registered.' : 'A meter has been successfully updated.');
     return this.dialogRef.close(meter);
   }
 

@@ -25,7 +25,6 @@ export class NotificationService implements OnInit {
   }
 
   private open(message: string, type: string, icon: string) {
-    console.log( Math.max(2000, message.length * 90));
     this.snackBar.openFromComponent(NotificationComponent, {
       data: {
         message: message,
