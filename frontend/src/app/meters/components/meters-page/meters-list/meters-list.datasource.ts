@@ -23,13 +23,14 @@ export class MetersListDataSource implements DataSource<Meter> {
     this.metersSubject.complete();
   }
 
-  loadMeters(metersSearchCriteria: MetersSearchCriteria, pageDefinition: PageDefinition) {
+  loadMeters(metersSearchCriteria: MetersSearchCriteria, pageDefinition: PageDefinition, callback: (page: Page<Meter>) => void = () => { }) {
     this.loading = true;
     this.metersService.findMeters(metersSearchCriteria, pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),
-        tap<Page<Meter>>(page => this.totalElements = page.totalElements)
+        tap<Page<Meter>>(page => this.totalElements = page.totalElements),
+        tap<Page<Meter>>(page => callback(page))
       )
       .subscribe(page => this.metersSubject.next(page.content));
   }

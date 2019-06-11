@@ -1,11 +1,12 @@
-export class Meter {
-  readonly id: number;
+import { Entity } from 'src/app/core/model/entity.model';
+
+export class Meter extends Entity {
   readonly serialNumber: string;
   readonly createdDate: Date;
 
   constructor(serialNumber: string, id: number = null) {
+    super(id);
     this.serialNumber = serialNumber;
-    this.id = id;
   }
 
   static cloned(meter: Meter): Meter {

@@ -5,6 +5,7 @@ import { Meter } from '../../model/meter.model';
 import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MetersService {
@@ -25,6 +26,8 @@ export class MetersService {
       params = params.append('serialNumber', metersSearchCriteria.serialNumber);
     }
     params = pageDefinition.appendTo(params);
-    return this.http.get<Page<Meter>>('/api/meters', { params: params });
+    return this.http.get<Page<Meter>>('/api/meters', { params: params }).pipe(
+      map(Page.cloned)
+    );
   }
 }

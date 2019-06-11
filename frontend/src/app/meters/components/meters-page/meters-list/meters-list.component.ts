@@ -5,6 +5,7 @@ import { MetersListDataSource } from './meters-list.datasource';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 import { Meter } from 'src/app/meters/model/meter.model';
 import { MeterDialogComponent } from '../meter-dialog/meter-dialog.component';
+import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Observable } from 'rxjs';
 
@@ -16,6 +17,7 @@ import { Observable } from 'rxjs';
 export class MetersListComponent implements OnInit, AfterViewInit {
   private metersSearchCriteria: MetersSearchCriteria;
   public highlightedRowIndex: number;
+  public spotlightedRowIndex: number;
   public dataSource: MetersListDataSource;
   public displayedColumns: string[] = ['serialNumber', 'createdDate', 'options'];
 
@@ -50,13 +52,20 @@ export class MetersListComponent implements OnInit, AfterViewInit {
     this.resetPaginatorAndSearchWithCriteria();
   }
 
-  private resetPaginatorAndSearchWithCriteria() {
+  private resetPaginatorAndSearchWithCriteria(meter: Meter = null) {
     this.paginator.pageIndex = 0;
-    this.searchWithCriteria();
+    this.searchWithCriteria(meter);
   }
 
-  private searchWithCriteria() {
-    this.dataSource.loadMeters(this.metersSearchCriteria, new PageDefinition(this.sort, this.paginator));
+  private searchWithCriteria(meter: Meter = null) {
+    this.dataSource.loadMeters(this.metersSearchCriteria, new PageDefinition(this.sort, this.paginator), (page: Page<Meter>) => this.spotlightMeterOnPage(page, meter));
+  }
+
+  private spotlightMeterOnPage(page: Page<Meter>, meter: Meter) {
+    if (meter !== null) {
+      this.spotlightedRowIndex = page.indexOf(meter);
+      setTimeout(() => this.spotlightedRowIndex = null, 1000);
+    }
   }
 
   registerMeter() {
@@ -64,7 +73,7 @@ export class MetersListComponent implements OnInit, AfterViewInit {
     this.openMeterDialog(meter).subscribe(m => {
       if (m) {
         this.metersSearchCriteria.reset();
-        this.resetPaginatorAndSearchWithCriteria();
+        this.resetPaginatorAndSearchWithCriteria(m);
       }
     });
   }
@@ -72,7 +81,7 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   editMeter(meter: Meter) {
     this.openMeterDialog(meter).subscribe(m => {
       if (m) {
-        this.searchWithCriteria();
+        this.searchWithCriteria(m);
       }
     });
   }

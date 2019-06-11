@@ -15,7 +15,9 @@
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let meter; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
-        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"></mat-row>
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"
+        [class.row-spotlighted]="i === spotlightedRowIndex">
+      </mat-row>
       <ng-container matColumnDef="serialNumber">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Serial Number</mat-header-cell>
         <mat-cell *matCellDef="let meter">{{meter.serialNumber}}</mat-cell>
