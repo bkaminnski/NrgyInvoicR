@@ -20,7 +20,7 @@ export class MeterDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<MeterDialogComponent>,
     private metersService: MetersService,
-    private notification: NotificationService,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) data: Meter
   ) {
     this.meter = data;
@@ -43,12 +43,12 @@ export class MeterDialogComponent implements OnInit {
   }
 
   private handleSuccess(meter: Meter): void {
-    this.notification.success('A new meter has been successfully registered.');
+    this.notificationService.success('A new meter has been successfully registered.');
     return this.dialogRef.close(meter);
   }
 
   private handleError(errorResponse: any): void {
-    return this.notification.error(errorResponse.error.errorMessage);
+    return this.notificationService.error(errorResponse.error.errorMessage);
   }
 
   cancel() {

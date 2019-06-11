@@ -16,11 +16,16 @@ export class NotificationService implements OnInit {
     this.open(message, 'success', 'check_circle');
   }
 
+  public info(message: string) {
+    this.open(message, 'info', 'info');
+  }
+
   public error(message: string) {
     this.open(message, 'error', 'error');
   }
 
   private open(message: string, type: string, icon: string) {
+    console.log( Math.max(2000, message.length * 90));
     this.snackBar.openFromComponent(NotificationComponent, {
       data: {
         message: message,
@@ -28,7 +33,8 @@ export class NotificationService implements OnInit {
       },
       panelClass: type + '-notification-panel',
       verticalPosition: 'top',
-      duration: 4000
+      horizontalPosition: 'right',
+      duration: Math.max(2000, message.length * 90)
     });
   }
 }
