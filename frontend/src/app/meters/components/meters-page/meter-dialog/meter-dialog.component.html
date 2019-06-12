@@ -5,7 +5,7 @@
   </h1>
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput required placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel"
+      <input matInput required maxlength="36" placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel"
         [(ngModel)]="meter.serialNumber">
       <mat-error *ngIf="serialNumber.invalid">Serial Number is required</mat-error>
     </mat-form-field>
