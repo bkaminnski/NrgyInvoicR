@@ -18,7 +18,7 @@ export class InvoicesFilterComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.search();
+    setTimeout(() => this.search());
   }
 
   search() {
