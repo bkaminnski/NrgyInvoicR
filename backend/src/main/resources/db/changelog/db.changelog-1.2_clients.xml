@@ -55,5 +55,8 @@
         <createIndex indexName="client_city_lower_idx" tableName="client">
             <column name="lower((city)::text)"/>
         </createIndex>
+        <createIndex indexName="client_created_date_idx" tableName="client">
+            <column name="created_date"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

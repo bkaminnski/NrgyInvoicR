@@ -22,6 +22,9 @@
         <createIndex indexName="meter_serial_number_idx" tableName="meter">
             <column name="serial_number"/>
         </createIndex>
+        <createIndex indexName="meter_created_date_idx" tableName="meter">
+            <column name="created_date"/>
+        </createIndex>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_002">
         <createTable tableName="reading">

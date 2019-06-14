@@ -17,5 +17,8 @@
             <column name="modified_date" type="timestamp with timezone"/>
         </createTable>
         <createSequence sequenceName="invoice_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <createIndex indexName="invoice_issue_date_date_idx" tableName="invoice">
+            <column name="issue_date"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>
