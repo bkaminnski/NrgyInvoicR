@@ -19,6 +19,9 @@
         </createTable>
         <createSequence sequenceName="meter_id_seq" startValue="1" minValue="1" incrementBy="50"/>
         <addUniqueConstraint tableName="meter" columnNames="serial_number" constraintName="meter_serial_number_uk"/>
+        <createIndex indexName="meter_serial_number_idx" tableName="meter">
+            <column name="serial_number"/>
+        </createIndex>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_002">
         <createTable tableName="reading">
@@ -67,6 +70,9 @@
         <addForeignKeyConstraint baseTableName="reading_upload" baseColumnNames="reading_id"
                                  constraintName="reading_upload_reading_fk"
                                  referencedTableName="reading" referencedColumnNames="id"/>
+        <createIndex indexName="reading_upload_date_idx" tableName="reading_upload">
+            <column name="date"/>
+        </createIndex>
     </changeSet>
     <changeSet author="bkaminnski" id="1.1_readings_upload_004">
         <createTable tableName="reading_value">

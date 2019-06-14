@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="1.2_clients_001">
+        <createTable tableName="client">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="number" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(36)"/>
+            <column name="last_name" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_line1" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_line2" type="varchar(50)">
+            </column>
+            <column name="postal_code" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="client_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addUniqueConstraint tableName="client" columnNames="number" constraintName="client_number_uk"/>
+        <createIndex indexName="client_first_name_lower_idx" tableName="client">
+            <column name="lower((first_name)::text)"/>
+        </createIndex>
+        <createIndex indexName="client_last_name_lower_idx" tableName="client">
+            <column name="lower((last_name)::text)"/>
+        </createIndex>
+        <createIndex indexName="client_address_line1_lower_idx" tableName="client">
+            <column name="lower((address_line1)::text)"/>
+        </createIndex>
+        <createIndex indexName="client_address_line2_lower_idx" tableName="client">
+            <column name="lower((address_line2)::text)"/>
+        </createIndex>
+        <createIndex indexName="client_postal_code_idx" tableName="client">
+            <column name="postal_code"/>
+        </createIndex>
+        <createIndex indexName="client_city_lower_idx" tableName="client">
+            <column name="lower((city)::text)"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

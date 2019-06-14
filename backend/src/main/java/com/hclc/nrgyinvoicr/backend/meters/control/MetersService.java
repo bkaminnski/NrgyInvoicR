@@ -18,6 +18,14 @@ public class MetersService {
         this.metersRepository = metersRepository;
     }
 
+    public Meter createMeter(Meter meter) throws MeterAlreadyRegisteredException {
+        meter.setId(null);
+        if (metersRepository.findBySerialNumber(meter.getSerialNumber()).isPresent()) {
+            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
+        }
+        return metersRepository.save(meter);
+    }
+
     public Optional<Meter> getMeter(Long id) {
         return metersRepository.findById(id);
     }
@@ -35,12 +43,5 @@ public class MetersService {
         return metersRepository
                 .findById(meter.getId())
                 .map(m -> metersRepository.save(meter));
-    }
-
-    public Meter createMeter(Meter meter) throws MeterAlreadyRegisteredException {
-        if (metersRepository.findBySerialNumber(meter.getSerialNumber()).isPresent()) {
-            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
-        }
-        return metersRepository.save(meter);
     }
 }

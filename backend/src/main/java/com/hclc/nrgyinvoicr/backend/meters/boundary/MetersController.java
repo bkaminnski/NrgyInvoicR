@@ -28,7 +28,6 @@ public class MetersController {
     @PostMapping
     @Transactional
     public ResponseEntity<Meter> createMeter(@RequestBody Meter meter) throws MeterAlreadyRegisteredException {
-        meter.setId(null);
         final Meter savedMeter = metersService.createMeter(meter);
         URI uri = MvcUriComponentsBuilder.fromController(getClass()).path("/{id}").buildAndExpand(savedMeter.getId()).toUri();
         return ResponseEntity.created(uri).body(savedMeter);
