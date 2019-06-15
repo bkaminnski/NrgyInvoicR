@@ -33,7 +33,7 @@ public class ClientsService {
     public Page<Client> findClients(ClientsSearchCriteria criteria) {
         Specification<Client> specification = numberLike(criteria.getNumber())
                 .and(firstNameLike(criteria.getFirstName()))
-                .and(lastNameLike(criteria.getFirstName()))
+                .and(lastNameLike(criteria.getLastName()))
                 .and(addressLike(criteria.getAddress()))
                 .and(postalCodeLike(criteria.getPostalCode()))
                 .and(cityLike(criteria.getCity()));

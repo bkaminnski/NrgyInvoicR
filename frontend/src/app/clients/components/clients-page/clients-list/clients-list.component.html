@@ -1,0 +1,69 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <span>
+        List of Clients
+        <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
+      </span>
+      <button mat-button type="button" (click)="registerClient()">
+        <mat-icon>add_circle</mat-icon> Register a Client
+      </button>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let client; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"
+        [class.row-spotlighted]="i === spotlightedRowIndex">
+      </mat-row>
+      <ng-container matColumnDef="number">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Number</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.number}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>First Name</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.firstName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.lastName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="addressLine1">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Address Line 1</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.addressLine1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="addressLine2">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Address Line 2</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.addressLine2}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="postalCode">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Postal Code</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.postalCode}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>City</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.city}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>
+        <mat-cell *matCellDef="let client">{{client.createdDate | date:'mediumDate'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let client; let i = index">
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="editClient(client)">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+    <div [hidden]="dataSource.totalElements === 0">
+      <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"
+        [pageSizeOptions]="paginatorConfig.pageSizeOptions">
+      </mat-paginator>
+    </div>
+    <app-no-records-found [length]="dataSource.totalElements"></app-no-records-found>
+  </mat-card-content>
+</mat-card>

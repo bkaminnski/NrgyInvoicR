@@ -5,7 +5,8 @@
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="Serial Number" name="serialNumber" [(ngModel)]="metersSearchCriteria.serialNumber">
+        <input matInput maxlength="36" placeholder="Serial Number" name="serialNumber"
+          [(ngModel)]="metersSearchCriteria.serialNumber">
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>

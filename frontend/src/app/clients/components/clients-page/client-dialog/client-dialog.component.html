@@ -1,0 +1,48 @@
+<form #clientForm="ngForm" (ngSubmit)="clientForm.form.valid && save()" autocomplete="off" novalidate>
+  <h1 mat-dialog-title>
+    Client Registration
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </h1>
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput readonly maxlength="36" placeholder="Number" name="number" #number="ngModel"
+        [(ngModel)]="client.number">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required maxlength="36" placeholder="First Name" name="firstName" #firstName="ngModel"
+        [(ngModel)]="client.firstName">
+      <mat-error *ngIf="firstName.invalid">First Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput maxlength="36" placeholder="Middle Name" name="middleName" #middleName="ngModel"
+        [(ngModel)]="client.middleName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required maxlength="36" placeholder="Last Name" name="lastName" #lastName="ngModel"
+        [(ngModel)]="client.lastName">
+      <mat-error *ngIf="lastName.invalid">Last Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required maxlength="50" placeholder="Address Line 1" name="addressLine1" #addressLine1="ngModel"
+        [(ngModel)]="client.addressLine1">
+      <mat-error *ngIf="addressLine1.invalid">Address Line 1 is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput maxlength="50" placeholder="Address Line 2" name="addressLine2" #addressLine2="ngModel"
+        [(ngModel)]="client.addressLine2">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required maxlength="10" placeholder="Postal Code" name="postalCode" #postalCode="ngModel"
+        [(ngModel)]="client.postalCode">
+      <mat-error *ngIf="postalCode.invalid">Postal Code is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required maxlength="10" placeholder="City" name="city" #city="ngModel" [(ngModel)]="client.city">
+      <mat-error *ngIf="city.invalid">City is required</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

@@ -7,6 +7,7 @@ import { ReadingsUploadPageComponent } from './readings/components/readings-uplo
 import { CanDeactivateGuard } from './core/can-deactivate.guard';
 import { ReadingsUploadsHistoryPageComponent } from './readings/components/readings-uploads-history-page/readings-uploads-history-page.component';
 import { MetersPageComponent } from './meters/components/meters-page/meters-page.component';
+import { ClientsPageComponent } from './clients/components/clients-page/clients-page.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'readingsUpload', component: ReadingsUploadPageComponent, canDeactivate: [CanDeactivateGuard] },
   { path: 'readingsUploadsHistory', component: ReadingsUploadsHistoryPageComponent },
   { path: 'meters', component: MetersPageComponent },
+  { path: 'clients', component: ClientsPageComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];
 

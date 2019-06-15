@@ -4,11 +4,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ClientsSpecification {
     private static final String NUMBER = "number";
-    private static final String FIRST_NAME = "first_name";
-    private static final String LAST_NAME = "last_name";
-    private static final String ADDRESS_LINE1 = "address_line1";
-    private static final String ADDRESS_LINE2 = "address_line2";
-    private static final String POSTAL_CODE = "postal_code";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String ADDRESS_LINE1 = "addressLine1";
+    private static final String ADDRESS_LINE2 = "addressLine2";
+    private static final String POSTAL_CODE = "postalCode";
     private static final String CITY = "city";
 
     public static Specification<Client> numberLike(String number) {
