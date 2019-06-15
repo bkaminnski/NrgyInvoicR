@@ -7,6 +7,10 @@ table {
   justify-content: space-between;
 }
 
+.mat-column-number {
+  flex: 0 0 300px;
+}
+
 .mat-column-options {
   flex: 0 0 170px;
   justify-content: flex-end;
