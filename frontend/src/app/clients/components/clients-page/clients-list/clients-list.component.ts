@@ -91,7 +91,8 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
       data: client,
       disableClose: true,
       autoFocus: true,
-      minWidth: '33%'
+      minWidth: '50%',
+      maxWidth: '70%'
     };
     return this.dialog.open(ClientDialogComponent, dialogConfig).afterClosed();
   }
