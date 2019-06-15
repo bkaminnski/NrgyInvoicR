@@ -1,13 +1,20 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~material-design-icons/iconfont/material-icons.css';
 
-body {
+body, html {
   margin: 0;
+  height: 100%;
 }
 
 .table-spinner {
   float: right;
   margin-left: 10px;
+}
+
+.mat-card {
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 .mat-card-header-text {
