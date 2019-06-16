@@ -58,7 +58,11 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria(client: Client = null) {
-    this.dataSource.loadClients(this.clientsSearchCriteria, new PageDefinition(this.sort, this.paginator), (page: Page<Client>) => this.spotlightClientOnPage(page, client));
+    this.dataSource.loadClients(
+      this.clientsSearchCriteria,
+      PageDefinition.forSortAndPaginator(this.sort, this.paginator),
+      (page: Page<Client>) => this.spotlightClientOnPage(page, client)
+    );
   }
 
   private spotlightClientOnPage(page: Page<Client>, client: Client) {

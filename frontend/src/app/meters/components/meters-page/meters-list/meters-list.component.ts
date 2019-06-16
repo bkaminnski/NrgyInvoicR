@@ -58,7 +58,11 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria(meter: Meter = null) {
-    this.dataSource.loadMeters(this.metersSearchCriteria, new PageDefinition(this.sort, this.paginator), (page: Page<Meter>) => this.spotlightMeterOnPage(page, meter));
+    this.dataSource.loadMeters(
+      this.metersSearchCriteria,
+      PageDefinition.forSortAndPaginator(this.sort, this.paginator),
+      (page: Page<Meter>) => this.spotlightMeterOnPage(page, meter)
+    );
   }
 
   private spotlightMeterOnPage(page: Page<Meter>, meter: Meter) {

@@ -51,6 +51,6 @@ export class InvoicesListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    this.dataSource.loadInvoices(this.invoicesSearchCriteria, new PageDefinition(this.sort, this.paginator));
+    this.dataSource.loadInvoices(this.invoicesSearchCriteria, PageDefinition.forSortAndPaginator(this.sort, this.paginator));
   }
 }

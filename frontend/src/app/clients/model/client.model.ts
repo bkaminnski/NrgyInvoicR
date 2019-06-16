@@ -1,18 +1,20 @@
 import { Entity } from 'src/app/core/model/entity.model';
 import { ClientsSearchCriteria } from './clients-search-criteria.model';
+import { Meter } from 'src/app/meters/model/meter.model';
 
 export class Client extends Entity {
 
-  public constructor(readonly number?: string,
-    readonly firstName?: string,
-    readonly middleName?: string,
-    readonly lastName?: string,
-    readonly addressLine1?: string,
-    readonly addressLine2?: string,
-    readonly postalCode?: string,
-    readonly city?: string,
-    readonly createdDate?: Date,
-    readonly id: number = null) {
+  public constructor(public number?: string,
+    public firstName?: string,
+    public middleName?: string,
+    public lastName?: string,
+    public addressLine1?: string,
+    public addressLine2?: string,
+    public postalCode?: string,
+    public city?: string,
+    public createdDate?: Date,
+    public meter?: Meter,
+    public id: number = null) {
     super(id);
   }
 
@@ -26,6 +28,7 @@ export class Client extends Entity {
       null,
       criteria.city,
       criteria.postalCode,
+      null,
       null
     );
   }
@@ -41,6 +44,7 @@ export class Client extends Entity {
       client.city,
       client.postalCode,
       client.createdDate,
+      client.meter,
       client.id
     );
   }

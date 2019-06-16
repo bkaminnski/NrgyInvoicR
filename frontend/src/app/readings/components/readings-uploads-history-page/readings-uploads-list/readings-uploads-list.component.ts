@@ -58,6 +58,6 @@ export class ReadingsUploadsListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    this.dataSource.loadReadingsUploads(this.readingsUploadsSearchCriteria, new PageDefinition(this.sort, this.paginator));
+    this.dataSource.loadReadingsUploads(this.readingsUploadsSearchCriteria, PageDefinition.forSortAndPaginator(this.sort, this.paginator));
   }
 }

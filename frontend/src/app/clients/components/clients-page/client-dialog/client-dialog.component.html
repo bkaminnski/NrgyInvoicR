@@ -45,6 +45,16 @@
         <mat-error *ngIf="city.invalid">City is required</mat-error>
       </mat-form-field>
     </div>
+    <mat-form-field>
+      <input matInput placeholder="Meter" name="meter" #meter="ngModel" [(ngModel)]="client.meter"
+        [matAutocomplete]="meterAutocomplete" (ngModelChange)="serialNumberChanged($event)" (blur)="discardNonExistingSerialNumber()">
+      <mat-autocomplete #meterAutocomplete="matAutocomplete" [displayWith]="meterAsString" autoActiveFirstOption
+        (closed)="discardNonExistingSerialNumber()">
+        <mat-option *ngFor="let meter of (meters | async)" [value]="meter">
+          {{meter.serialNumber}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button class="mat-primary" type="submit">Save</button>
