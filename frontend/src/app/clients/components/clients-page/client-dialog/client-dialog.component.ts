@@ -49,6 +49,7 @@ export class ClientDialogComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.serialNumbersSubject.next('');
   }
 
   ngOnDestroy(): void {
