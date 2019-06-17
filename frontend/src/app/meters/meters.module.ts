@@ -9,19 +9,24 @@ import { MetersPageComponent } from './components/meters-page/meters-page.compon
 import { MetersFilterComponent } from './components/meters-page/meters-filter/meters-filter.component';
 import { MetersListComponent } from './components/meters-page/meters-list/meters-list.component';
 import { MeterDialogComponent } from './components/meters-page/meter-dialog/meter-dialog.component';
+import { MeterAutocompleteComponent } from './components/meter-autocomplete/meter-autocomplete.component';
 
 @NgModule({
   declarations: [
     MetersPageComponent,
     MetersFilterComponent,
     MetersListComponent,
-    MeterDialogComponent
+    MeterDialogComponent,
+    MeterAutocompleteComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
     CoreModule
+  ],
+  exports: [
+    MeterAutocompleteComponent
   ]
 })
 export class MetersModule { }

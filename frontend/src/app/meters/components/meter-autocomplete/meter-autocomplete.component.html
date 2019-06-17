@@ -1,0 +1,17 @@
+<div class="spinner-container">
+  <mat-form-field>
+    <input matInput [required]="required" placeholder="Meter" name="meter" #meter="ngModel" [(ngModel)]="selectedMeter"
+      [matAutocomplete]="meterAutocomplete" (ngModelChange)="serialNumberChanged($event)"
+      (blur)="discardNonExistingSerialNumber()">
+    <mat-autocomplete #meterAutocomplete="matAutocomplete" [displayWith]="meterAsString" autoActiveFirstOption
+      (closed)="discardNonExistingSerialNumber()">
+      <mat-option *ngFor="let meter of (meters | async)" [value]="meter">
+        {{meter.serialNumber}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="meter.invalid">Meter is required</mat-error>
+  </mat-form-field>
+  <div class="spinner-container-child">
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </div>
+</div>

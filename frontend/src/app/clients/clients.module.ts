@@ -9,6 +9,7 @@ import { ClientsPageComponent } from './components/clients-page/clients-page.com
 import { ClientsFilterComponent } from './components/clients-page/clients-filter/clients-filter.component';
 import { ClientsListComponent } from './components/clients-page/clients-list/clients-list.component';
 import { ClientDialogComponent } from './components/clients-page/client-dialog/client-dialog.component';
+import { MetersModule } from '../meters/meters.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ClientDialogComponent } from './components/clients-page/client-dialog/c
     CommonModule,
     FormsModule,
     MaterialModule,
-    CoreModule
+    CoreModule,
+    MetersModule
   ]
 })
 export class ClientsModule { }
