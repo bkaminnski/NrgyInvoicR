@@ -30,9 +30,6 @@
             <column name="city" type="varchar(36)">
                 <constraints nullable="false"/>
             </column>
-            <column name="meter_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
             <column name="created_by" type="varchar(255)"/>
             <column name="created_date" type="timestamp with timezone"/>
             <column name="modified_by" type="varchar(255)"/>
@@ -40,9 +37,6 @@
         </createTable>
         <createSequence sequenceName="client_id_seq" startValue="1" minValue="1" incrementBy="50"/>
         <addUniqueConstraint tableName="client" columnNames="number" constraintName="client_number_uk"/>
-        <addForeignKeyConstraint baseTableName="client" baseColumnNames="meter_id"
-                                 constraintName="client_meter_fk"
-                                 referencedTableName="meter" referencedColumnNames="id"/>
         <createIndex indexName="client_first_name_lower_idx" tableName="client">
             <column name="lower((first_name)::text)"/>
         </createIndex>
@@ -64,5 +58,14 @@
         <createIndex indexName="client_created_date_idx" tableName="client">
             <column name="created_date"/>
         </createIndex>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.2_clients_002">
+        <addColumn tableName="meter">
+            <column name="client_id" type="bigint"/>
+        </addColumn>
+        <addUniqueConstraint tableName="meter" columnNames="client_id" constraintName="meter_client_uk"/>
+        <addForeignKeyConstraint baseTableName="meter" baseColumnNames="client_id"
+                                 constraintName="meter_client_fk"
+                                 referencedTableName="client" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

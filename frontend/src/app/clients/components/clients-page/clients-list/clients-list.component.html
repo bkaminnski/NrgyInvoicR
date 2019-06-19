@@ -48,7 +48,7 @@
       </ng-container>
       <ng-container matColumnDef="meter">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Meter</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.meter.serialNumber}}</mat-cell>
+        <mat-cell *matCellDef="let client">{{client.meter?.serialNumber}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>

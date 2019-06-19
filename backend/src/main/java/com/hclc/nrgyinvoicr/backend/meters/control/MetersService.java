@@ -1,5 +1,6 @@
 package com.hclc.nrgyinvoicr.backend.meters.control;
 
+import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.meters.entity.Meter;
 import com.hclc.nrgyinvoicr.backend.meters.entity.MetersSearchCriteria;
 import org.springframework.data.domain.Page;
@@ -43,5 +44,15 @@ public class MetersService {
         return metersRepository
                 .findById(meter.getId())
                 .map(m -> metersRepository.save(meter));
+    }
+
+    public Client toClientWithAssignedMeter(Client client, Meter meter) {
+        Meter assigned = metersRepository.saveAndFlush(meter.withClient(client));
+        return client.withMeter(assigned);
+    }
+
+    public void unassignClientFrom(Meter meter) {
+        meter.setClient(null);
+        metersRepository.saveAndFlush(meter);
     }
 }

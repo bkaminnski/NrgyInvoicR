@@ -1,6 +1,8 @@
 package com.hclc.nrgyinvoicr.backend.meters.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +20,11 @@ public class Meter extends AuditableEntity {
     @NotNull
     @Column(length = 36)
     private String serialNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Client client;
 
     public Meter() {
     }
@@ -40,5 +47,18 @@ public class Meter extends AuditableEntity {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Meter withClient(Client client) {
+        this.client = client;
+        return this;
     }
 }

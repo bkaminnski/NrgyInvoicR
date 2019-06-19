@@ -46,8 +46,7 @@ public class Client extends AuditableEntity {
     @Column(length = 10)
     private String city;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "meter_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "client")
     private Meter meter;
 
     public Client() {
@@ -55,16 +54,6 @@ public class Client extends AuditableEntity {
 
     public Client(@NotNull String number) {
         this.number = number;
-    }
-
-    public Client withNumber(String number) {
-        this.setNumber(number);
-        return this;
-    }
-
-    public Client withMeter(Meter meter) {
-        this.setMeter(meter);
-        return this;
     }
 
     public Long getId() {
@@ -75,12 +64,22 @@ public class Client extends AuditableEntity {
         this.id = id;
     }
 
+    public Client withId(Long id) {
+        setId(id);
+        return this;
+    }
+
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Client withNumber(String number) {
+        setNumber(number);
+        return this;
     }
 
     public String getFirstName() {
@@ -145,5 +144,10 @@ public class Client extends AuditableEntity {
 
     public void setMeter(Meter meter) {
         this.meter = meter;
+    }
+
+    public Client withMeter(Meter meter) {
+        this.setMeter(meter);
+        return this;
     }
 }

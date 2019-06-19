@@ -1,7 +1,9 @@
 package com.hclc.nrgyinvoicr.backend.clients.boundary;
 
 import com.hclc.nrgyinvoicr.backend.EntityNotFoundException;
+import com.hclc.nrgyinvoicr.backend.ErrorResponse;
 import com.hclc.nrgyinvoicr.backend.clients.control.ClientsService;
+import com.hclc.nrgyinvoicr.backend.clients.control.MeterAlreadyAssignedException;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.clients.entity.ClientsSearchCriteria;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.net.URI;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -23,8 +27,8 @@ public class ClientsController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
-        final Client savedClient = clientsService.createClient(client);
+    public ResponseEntity<Client> createClient(@RequestBody Client client) throws MeterAlreadyAssignedException {
+        Client savedClient = clientsService.createClient(client);
         URI uri = MvcUriComponentsBuilder.fromController(getClass()).path("/{id}").buildAndExpand(savedClient.getId()).toUri();
         return ResponseEntity.created(uri).body(savedClient);
     }
@@ -45,10 +49,15 @@ public class ClientsController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client client) {
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client client) throws MeterAlreadyAssignedException {
         client.setId(id);
         return clientsService.updateClient(client)
                 .map(ResponseEntity::ok)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @ExceptionHandler({MeterAlreadyAssignedException.class})
+    protected ResponseEntity<ErrorResponse> handleException(MeterAlreadyAssignedException e) {
+        return ResponseEntity.status(BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 }
