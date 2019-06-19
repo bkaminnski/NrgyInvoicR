@@ -1,6 +1,7 @@
 package com.hclc.nrgyinvoicr.backend.clients.entity;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+import com.hclc.nrgyinvoicr.backend.meters.entity.Meter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,6 +46,10 @@ public class Client extends AuditableEntity {
     @Column(length = 10)
     private String city;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "meter_id", referencedColumnName = "id")
+    private Meter meter;
+
     public Client() {
     }
 
@@ -54,6 +59,11 @@ public class Client extends AuditableEntity {
 
     public Client withNumber(String number) {
         this.setNumber(number);
+        return this;
+    }
+
+    public Client withMeter(Meter meter) {
+        this.setMeter(meter);
         return this;
     }
 
@@ -127,5 +137,13 @@ public class Client extends AuditableEntity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Meter getMeter() {
+        return meter;
+    }
+
+    public void setMeter(Meter meter) {
+        this.meter = meter;
     }
 }
