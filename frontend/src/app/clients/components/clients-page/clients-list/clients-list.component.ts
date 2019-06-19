@@ -19,7 +19,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: ClientsListDataSource;
-  public displayedColumns: string[] = ['number', 'firstName', 'lastName', 'addressLine1', 'postalCode', 'city', 'createdDate', 'options'];
+  public displayedColumns: string[] = ['number', 'firstName', 'lastName', 'addressLine1', 'postalCode', 'city', 'meter', 'createdDate', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
