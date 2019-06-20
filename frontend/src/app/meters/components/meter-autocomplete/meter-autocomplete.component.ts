@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy, forwardRef, Input } from '@angular/core';
 import { MetersService } from '../meters-page/meters.service';
 import { Subject, Subscription, BehaviorSubject, of } from 'rxjs';
 import { Meter } from '../../model/meter.model';
-import { debounceTime, catchError, finalize } from 'rxjs/operators';
+import { debounceTime, catchError, finalize, tap } from 'rxjs/operators';
 import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Page } from 'src/app/core/model/page.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
   selector: 'app-meter-autocomplete',
@@ -30,7 +31,7 @@ export class MeterAutocompleteComponent implements OnInit, OnDestroy, ControlVal
   public meters = this.metersSubject.asObservable();
   @Input() required = false;
 
-  constructor(private metersService: MetersService) { }
+  constructor(private metersService: MetersService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.serialNumbersSubscription = this.serialNumbersSubject
@@ -87,12 +88,19 @@ export class MeterAutocompleteComponent implements OnInit, OnDestroy, ControlVal
 
   private findMeters(serialNumber: string): void {
     this.loading = true;
-    this.metersService.findMeters(new MetersSearchCriteria(serialNumber), new PageDefinition('serialNumber', 'asc', 0, 10))
+    this.metersService.findMeters(new MetersSearchCriteria(serialNumber, true), new PageDefinition('serialNumber', 'asc', 0, 10))
       .pipe(
         catchError(() => of([])),
-        finalize(() => this.loading = false)
+        finalize(() => this.loading = false),
+        tap((page: Page<Meter>) => this.notifyWhenThereIsNoUnassignedMeter(page.totalElements, serialNumber))
       )
       .subscribe((page: Page<Meter>) => this.metersSubject.next(page.content));
+  }
+
+  private notifyWhenThereIsNoUnassignedMeter(totalElements: number, serialNumber: string): void {
+    if (totalElements === 0 && serialNumber === '') {
+      this.notificationService.info('There is no meter that can be assigned to a client.');
+    }
   }
 
   private propagateChange = (_: any) => { };

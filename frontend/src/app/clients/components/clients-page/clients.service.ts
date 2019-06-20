@@ -13,7 +13,7 @@ export class ClientsService {
   constructor(private http: HttpClient) { }
 
   saveClient(client: Client): Observable<Client> {
-    if (client.id === null) {
+    if (client.isNew()) {
       return this.http.post<Client>('/api/clients', client);
     } else {
       return this.http.put<Client>('/api/clients/' + client.id, client);

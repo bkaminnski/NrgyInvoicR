@@ -14,7 +14,6 @@ import { NotificationService } from 'src/app/core/components/notification/notifi
   ]
 })
 export class MeterDialogComponent implements OnInit {
-  private newMeter: boolean;
   public meter: Meter;
   public loading: boolean;
 
@@ -25,7 +24,6 @@ export class MeterDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) meter: Meter
   ) {
     this.meter = Meter.cloned(meter);
-    this.newMeter = (this.meter.id === null);
     this.loading = false;
   }
 
@@ -45,7 +43,7 @@ export class MeterDialogComponent implements OnInit {
   }
 
   private handleSuccess(meter: Meter): void {
-    this.notificationService.success(this.newMeter ? 'A new meter has been successfully registered.' : 'A meter has been successfully updated.');
+    this.notificationService.success(this.meter.isNew() ? 'A new meter has been successfully registered.' : 'A meter has been successfully updated.');
     return this.dialogRef.close(meter);
   }
 

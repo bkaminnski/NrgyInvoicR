@@ -14,7 +14,6 @@ import { NotificationService } from 'src/app/core/components/notification/notifi
   ]
 })
 export class ClientDialogComponent implements OnInit {
-  public newClient: boolean;
   public client: Client;
   public loading: boolean;
 
@@ -25,7 +24,6 @@ export class ClientDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) client: Client
   ) {
     this.client = Client.cloned(client);
-    this.newClient = (this.client.id === null);
     this.loading = false;
   }
 
@@ -45,7 +43,7 @@ export class ClientDialogComponent implements OnInit {
   }
 
   private handleSuccess(client: Client): void {
-    this.notificationService.success(this.newClient ? 'A new client has been successfully registered.' : 'A client has been successfully updated.');
+    this.notificationService.success(this.client.isNew() ? 'A new client has been successfully registered.' : 'A client has been successfully updated.');
     return this.dialogRef.close(client);
   }
 

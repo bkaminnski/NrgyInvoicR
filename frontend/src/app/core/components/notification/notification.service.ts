@@ -32,7 +32,7 @@ export class NotificationService implements OnInit {
       },
       panelClass: type + '-notification-panel',
       verticalPosition: 'top',
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       duration: Math.max(2000, message.length * 90)
     });
   }
