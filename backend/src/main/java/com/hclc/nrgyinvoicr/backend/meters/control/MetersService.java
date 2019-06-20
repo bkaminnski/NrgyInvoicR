@@ -23,7 +23,7 @@ public class MetersService {
     public Meter createMeter(Meter meter) throws MeterAlreadyRegisteredException {
         meter.setId(null);
         if (metersRepository.findBySerialNumber(meter.getSerialNumber()).isPresent()) {
-            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
+            throw new MeterAlreadyRegisteredException(meter.getSerialNumber());
         }
         return metersRepository.save(meter);
     }
@@ -41,7 +41,7 @@ public class MetersService {
 
     public Optional<Meter> updateMeter(Meter meter) throws MeterAlreadyRegisteredException {
         if (metersRepository.findBySerialNumberAndIdNot(meter.getSerialNumber(), meter.getId()).isPresent()) {
-            throw new MeterAlreadyRegisteredException("A meter with serial number " + meter.getSerialNumber() + " has been already registered.");
+            throw new MeterAlreadyRegisteredException(meter.getSerialNumber());
         }
         return metersRepository
                 .findById(meter.getId())

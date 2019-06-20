@@ -51,10 +51,10 @@ public class ReadingsFilesService {
         return fileNameParser.parse(fileName);
     }
 
-    private Meter findMeter(String serialNumber) throws ReadingException {
+    private Meter findMeter(String serialNumber) throws MeterNotFoundException {
         return metersRepository
                 .findBySerialNumber(serialNumber)
-                .orElseThrow(() -> new ReadingException("Meter not found: " + serialNumber));
+                .orElseThrow(() -> new MeterNotFoundException(serialNumber));
     }
 
     private ReadingSpread saveReadingValues(InputStream fileContent, Long readingId) throws IOException, ReadingException {

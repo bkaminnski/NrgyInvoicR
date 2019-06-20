@@ -38,7 +38,7 @@ public class MetersController {
     public ResponseEntity<Meter> getMeter(@PathVariable Long id) {
         return metersService.getMeter(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException(Meter.class, id));
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class MetersController {
         meter.setId(id);
         return metersService.updateMeter(meter)
                 .map(ResponseEntity::ok)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException(Meter.class, id));
     }
 
     @ExceptionHandler({MeterAlreadyRegisteredException.class})

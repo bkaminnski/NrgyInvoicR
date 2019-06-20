@@ -24,36 +24,36 @@ class ReadingLineParser {
         return new ReadingValue(readingId, date, value);
     }
 
-    private void validateEmptyLine(int lineNumber, String line) throws ReadingException {
+    private void validateEmptyLine(int lineNumber, String line) throws EmptyReadingLineException {
         if (line == null || line.isEmpty()) {
-            throw new ReadingException("Line " + lineNumber + " is empty.");
+            throw new EmptyReadingLineException(lineNumber);
         }
     }
 
-    private String[] splitLine(int lineNumber, String line) throws ReadingException {
+    private String[] splitLine(int lineNumber, String line) throws InvalidNumberOfValuesInReadingLine {
         String[] values = line.split(";");
         if (values.length != 2) {
-            throw new ReadingException("Line " + lineNumber + " has " + values.length + " value(s). Line should have exactly two values.");
+            throw new InvalidNumberOfValuesInReadingLine(lineNumber, values.length);
         }
         return values;
     }
 
-    private ZonedDateTime parseDate(int lineNumber, String readingDateAsString) throws ReadingException {
+    private ZonedDateTime parseDate(int lineNumber, String readingDateAsString) throws InvalidDateInReadingLine {
         ZonedDateTime date;
         try {
             date = ZonedDateTime.parse(readingDateAsString, formatter);
         } catch (DateTimeParseException e) {
-            throw new ReadingException("Invalid date in line " + lineNumber + ": " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_OFFSET_DATE_TIME_LESS_PRECISION + ".");
+            throw new InvalidDateInReadingLine(lineNumber, readingDateAsString);
         }
         return date;
     }
 
-    private BigDecimal parseValue(int lineNumber, String valueAsString) throws ReadingException {
+    private BigDecimal parseValue(int lineNumber, String valueAsString) throws InvalidReadingValueInReadingLine {
         BigDecimal value;
         try {
             value = new BigDecimal(valueAsString);
         } catch (NumberFormatException e) {
-            throw new ReadingException("Invalid numeric value in line " + lineNumber + ": " + valueAsString + ".");
+            throw new InvalidReadingValueInReadingLine(lineNumber, valueAsString);
         }
         return value;
     }

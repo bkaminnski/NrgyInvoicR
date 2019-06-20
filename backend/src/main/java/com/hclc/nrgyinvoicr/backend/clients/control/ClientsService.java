@@ -24,7 +24,7 @@ public class ClientsService {
         this.metersService = metersService;
     }
 
-    public Client createClient(Client client) throws MeterAlreadyAssignedException {
+    public Client createClient(Client client) throws MeterAlreadyAssignedToClientException {
         Client newClient = client
                 .withId(null)
                 .withNumber(clientNumberGenerator.generateClientNumber());
@@ -48,7 +48,7 @@ public class ClientsService {
         return clientsRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
     }
 
-    public Optional<Client> updateClient(Client updatedClient) throws MeterAlreadyAssignedException {
+    public Optional<Client> updateClient(Client updatedClient) throws MeterAlreadyAssignedToClientException {
         Meter meter = findMeterFor(updatedClient);
         validateMeterToAssignTo(updatedClient, meter);
         return clientsRepository.findById(updatedClient.getId())
@@ -65,9 +65,9 @@ public class ClientsService {
                 .orElseThrow(() -> new RuntimeException("Meter does not exist, id: " + client.getMeter().getId()));
     }
 
-    private void validateMeterToAssignTo(Client client, Meter meter) throws MeterAlreadyAssignedException {
+    private void validateMeterToAssignTo(Client client, Meter meter) throws MeterAlreadyAssignedToClientException {
         if (meter.getClient() != null && (client.getId() == null || !meter.getClient().getId().equals(client.getId()))) {
-            throw new MeterAlreadyAssignedException("A meter " + meter.getSerialNumber() + " is already assigned to client " + meter.getClient().getNumber() + " and can not be reassigned to client " + client.getNumber());
+            throw new MeterAlreadyAssignedToClientException(meter.getSerialNumber(), meter.getClient().getNumber(), client.getNumber());
         }
     }
 

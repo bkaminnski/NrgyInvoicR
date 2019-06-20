@@ -16,7 +16,7 @@ class FileNameParser {
     private static final Pattern fileNamePattern = Pattern.compile(FILE_NAME_REGEX);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_8601_DATE);
 
-    ParsedFileName parse(String fileName) throws ReadingException {
+    ParsedFileName parse(String fileName) throws InvalidReadingDateInFileName, InvalidReadingFileName {
         Matcher matcher = findGroups(fileName);
         String meterId = matcher.group(1);
         String readingDateAsString = matcher.group(2);
@@ -24,19 +24,19 @@ class FileNameParser {
         return new ParsedFileName(meterId, readingDate);
     }
 
-    private Matcher findGroups(String fileName) throws ReadingException {
+    private Matcher findGroups(String fileName) throws InvalidReadingFileName {
         Matcher matcher = fileNamePattern.matcher(fileName);
         if (!matcher.matches()) {
-            throw new ReadingException("Invalid file name: " + fileName + ". A file name should match the following pattern: mr_[meter UUID]_[reading date " + ISO_8601_DATE + "]_[sequence number].csv.");
+            throw new InvalidReadingFileName(fileName);
         }
         return matcher;
     }
 
-    private LocalDate parseDate(String readingDateAsString) throws ReadingException {
+    private LocalDate parseDate(String readingDateAsString) throws InvalidReadingDateInFileName {
         try {
             return LocalDate.parse(readingDateAsString, formatter);
         } catch (DateTimeException e) {
-            throw new ReadingException("Invalid reading date in the file name: " + readingDateAsString + ". A date should match the following pattern: " + ISO_8601_DATE + ".");
+            throw new InvalidReadingDateInFileName(readingDateAsString);
         }
     }
 }
