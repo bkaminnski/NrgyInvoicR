@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 
 import static com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadStatus.ERROR;
 import static com.hclc.nrgyinvoicr.backend.readings.entity.ReadingUploadStatus.OK;
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -42,7 +41,7 @@ public class ReadingUpload extends AuditableEntity {
     @Column
     private ReadingUploadStatus status;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "reading_id", nullable = false)
     private Reading reading;
 

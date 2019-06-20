@@ -6,7 +6,6 @@ import com.hclc.nrgyinvoicr.backend.meters.entity.Meter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -48,7 +47,7 @@ public class Client extends AuditableEntity {
     @Column(length = 10)
     private String city;
 
-    @OneToOne(mappedBy = "client", fetch = LAZY)
+    @OneToOne(mappedBy = "client")
     private Meter meter;
 
     public Client() {

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -22,7 +21,7 @@ public class Reading extends AuditableEntity {
     private LocalDate date;
 
     @NotNull
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "meter_id", nullable = false)
     private Meter meter;
 
