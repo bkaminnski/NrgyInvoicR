@@ -7,9 +7,12 @@ import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@NamedEntityGraph(name = "meterWithClient", attributeNodes = @NamedAttributeNode("client"))
 public class Meter extends AuditableEntity {
 
     @Id
@@ -21,7 +24,7 @@ public class Meter extends AuditableEntity {
     @Column(length = 36)
     private String serialNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = ALL, fetch = LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @JsonIgnore
     private Client client;
