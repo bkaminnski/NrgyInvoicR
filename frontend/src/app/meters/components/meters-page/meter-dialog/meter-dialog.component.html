@@ -9,6 +9,10 @@
         [(ngModel)]="meter.serialNumber">
       <mat-error *ngIf="serialNumber.invalid">Serial Number is required</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <input matInput disabled maxlength="36" placeholder="Client Number" name="clientNumber" #number="ngModel"
+        [(ngModel)]="meter.clientNumber">
+    </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button class="mat-primary" type="submit">Save</button>

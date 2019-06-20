@@ -25,6 +25,9 @@ export class MetersService {
     if (metersSearchCriteria.serialNumber) {
       params = params.append('serialNumber', metersSearchCriteria.serialNumber);
     }
+    if (metersSearchCriteria.onlyUnassigned) {
+      params = params.append('onlyUnassigned', JSON.stringify(true));
+    }
     params = pageDefinition.appendTo(params);
     return this.http.get<Page<Meter>>('/api/meters', { params: params }).pipe(
       map(Page.cloned)

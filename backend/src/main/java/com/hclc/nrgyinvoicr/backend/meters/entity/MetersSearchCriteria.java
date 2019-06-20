@@ -4,6 +4,7 @@ import com.hclc.nrgyinvoicr.backend.PageDefinition;
 
 public class MetersSearchCriteria {
     private String serialNumber;
+    private boolean onlyUnassigned;
     private PageDefinition pageDefinition;
 
     public String getSerialNumber() {
@@ -12,6 +13,14 @@ public class MetersSearchCriteria {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public boolean isOnlyUnassigned() {
+        return onlyUnassigned;
+    }
+
+    public void setOnlyUnassigned(boolean onlyUnassigned) {
+        this.onlyUnassigned = onlyUnassigned;
     }
 
     public PageDefinition getPageDefinition() {

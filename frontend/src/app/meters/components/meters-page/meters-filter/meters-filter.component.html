@@ -8,6 +8,8 @@
         <input matInput maxlength="36" placeholder="Serial Number" name="serialNumber"
           [(ngModel)]="metersSearchCriteria.serialNumber">
       </mat-form-field>
+      <mat-checkbox name="onlyUnassigned" [(ngModel)]="metersSearchCriteria.onlyUnassigned" color="primary">Show only unassigned
+      </mat-checkbox>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button type="submit">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.hclc.nrgyinvoicr.backend.meters.entity.MetersSpecification.onlyUnassigned;
 import static com.hclc.nrgyinvoicr.backend.meters.entity.MetersSpecification.serialNumberLike;
 
 @Service
@@ -33,7 +34,8 @@ public class MetersService {
 
     public Page<Meter> findMeters(MetersSearchCriteria criteria) {
         String serialNumber = criteria.getSerialNumber();
-        Specification<Meter> specification = serialNumberLike(serialNumber);
+        Specification<Meter> specification = serialNumberLike(serialNumber)
+                .and(onlyUnassigned(criteria.isOnlyUnassigned()));
         return metersRepository.findAll(specification, criteria.getPageDefinition().asPageRequest());
     }
 
@@ -43,7 +45,8 @@ public class MetersService {
         }
         return metersRepository
                 .findById(meter.getId())
-                .map(m -> metersRepository.save(meter));
+                .map(m -> meter.withClient(m.getClient()))
+                .map(m -> metersRepository.save(m));
     }
 
     public Client toClientWithAssignedMeter(Client client, Meter meter) {

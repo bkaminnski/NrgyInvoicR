@@ -61,4 +61,11 @@ public class Meter extends AuditableEntity {
         this.client = client;
         return this;
     }
+
+    public String getClientNumber() {
+        if (client != null) {
+            return client.getNumber();
+        }
+        return null;
+    }
 }

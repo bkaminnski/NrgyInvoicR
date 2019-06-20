@@ -1,15 +1,18 @@
 import { Entity } from 'src/app/core/model/entity.model';
 
 export class Meter extends Entity {
-  readonly serialNumber: string;
-  readonly createdDate: Date;
 
-  constructor(serialNumber: string, id: number = null) {
+  constructor(
+    public serialNumber: string,
+    public clientNumber?: string,
+    public createdDate?: Date,
+    id?: number
+  ) {
     super(id);
     this.serialNumber = serialNumber;
   }
 
   static cloned(meter: Meter): Meter {
-    return new Meter(meter.serialNumber, meter.id);
+    return new Meter(meter.serialNumber, meter.clientNumber, meter.createdDate, meter.id);
   }
 }
