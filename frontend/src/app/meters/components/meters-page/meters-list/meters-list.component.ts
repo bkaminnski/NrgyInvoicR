@@ -19,7 +19,7 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: MetersListDataSource;
-  public displayedColumns: string[] = ['serialNumber', 'clientNumber', 'createdDate', 'options'];
+  public displayedColumns: string[] = ['serialNumber', 'client.number', 'createdDate', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
