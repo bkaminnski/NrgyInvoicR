@@ -7,5 +7,6 @@
     <include file="db.changelog-1.0_invoice.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.1_readings_upload.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.2_clients.xml" relativeToChangelogFile="true"/>
-    <include file="db.changelog-sample-data.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-1.3_plans.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-1.4_plans_initial_data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

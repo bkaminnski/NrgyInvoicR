@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="1.3_plans_001">
+        <createTable tableName="marketing_name">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="name" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2000)"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="marketing_name_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addUniqueConstraint tableName="marketing_name" columnNames="name" constraintName="marketing_name_name_uk"/>
+        <createIndex indexName="marketing_name_name_lower_idx" tableName="marketing_name">
+            <column name="lower((name)::text)"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.3_plans_002">
+        <createTable tableName="plan">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="marketing_name_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_since" type="timestamp with timezone"/>
+            <column name="description" type="varchar(2000)"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="plan_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addUniqueConstraint tableName="plan" columnNames="marketing_name_id, valid_since"
+                             constraintName="plan_name_valid_since_uk"/>
+        <addForeignKeyConstraint baseTableName="plan" baseColumnNames="marketing_name_id"
+                                 constraintName="plan_marketing_name_fk"
+                                 referencedTableName="marketing_name" referencedColumnNames="id"/>
+        <createIndex indexName="plan_description_idx" tableName="plan">
+            <column name="lower((description)::text)"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.3_plans_003">
+        <createTable tableName="plan_version">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="plan_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_since" type="timestamp with timezone"/>
+            <column name="subscription_fee" type="number(11,2)"/>
+            <column name="network_fee" type="number(11,2)"/>
+            <column name="expression" type="varchar(2000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2000)"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="plan_version_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="plan_version" baseColumnNames="plan_id"
+                                 constraintName="plan_version_plan_fk"
+                                 referencedTableName="plan" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
