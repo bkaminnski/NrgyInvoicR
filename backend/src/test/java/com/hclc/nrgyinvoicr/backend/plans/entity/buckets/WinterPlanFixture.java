@@ -18,17 +18,17 @@ class WinterPlanFixture {
         ).collect(toList());
     }
 
-    static String[] expectedFlattenedWinterDescriptions() {
-        return new String[]{
-                "04.01 - 10.31, Monday - Sunday, 0h - 23h",
-                "11.01 - 03.31, Monday - Sunday, 0h - 23h"
-        };
+    static List<ExpectedFlattened> winterFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("04.01 - 10.31, Monday - Sunday, 0h - 23h", reference.getSummer()),
+                new ExpectedFlattened("11.01 - 03.31, Monday - Sunday, 0h - 23h", reference.getWinter())
+        ).collect(toList());
     }
 
-    static String[] expectedOptimizedFlattenedWinterDescriptions() {
-        return new String[]{
-                "04.01 - 10.31",
-                "11.01 - 03.31"
-        };
+    static List<ExpectedFlattened> winterOptimizedFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("04.01 - 10.31", reference.getSummer()),
+                new ExpectedFlattened("11.01 - 03.31", reference.getWinter())
+        ).collect(toList());
     }
 }

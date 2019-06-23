@@ -26,29 +26,20 @@ class WinterWeekendNightPlanFixture {
         ).collect(toList());
     }
 
-    static String[] expectedFlattenedWinterWeekendNightDescriptions() {
-        return new String[]{
-                "04.01 - 10.31, Monday - Friday, 8h - 22h",
-                "04.01 - 10.31, Monday - Friday, 23h - 7h",
-                "04.01 - 10.31, Saturday - Sunday, 8h - 22h",
-                "04.01 - 10.31, Saturday - Sunday, 23h - 7h",
-                "11.01 - 03.31, Monday - Friday, 8h - 22h",
-                "11.01 - 03.31, Monday - Friday, 23h - 7h",
-                "11.01 - 03.31, Saturday - Sunday, 8h - 22h",
-                "11.01 - 03.31, Saturday - Sunday, 23h - 7h"
-        };
+    static List<ExpectedFlattened> winterWeekendNightFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("04.01 - 10.31, Monday - Friday, 8h - 22h", reference.getSummerWeekDayDay()),
+                new ExpectedFlattened("04.01 - 10.31, Monday - Friday, 23h - 7h", reference.getSummerWeekDayNight()),
+                new ExpectedFlattened("04.01 - 10.31, Saturday - Sunday, 8h - 22h", reference.getSummerWeekendDay()),
+                new ExpectedFlattened("04.01 - 10.31, Saturday - Sunday, 23h - 7h", reference.getSummerWeekendNight()),
+                new ExpectedFlattened("11.01 - 03.31, Monday - Friday, 8h - 22h", reference.getWinterWeekDayDay()),
+                new ExpectedFlattened("11.01 - 03.31, Monday - Friday, 23h - 7h", reference.getWinterWeekDayNight()),
+                new ExpectedFlattened("11.01 - 03.31, Saturday - Sunday, 8h - 22h", reference.getWinterWeekendDay()),
+                new ExpectedFlattened("11.01 - 03.31, Saturday - Sunday, 23h - 7h", reference.getWinterWeekendNight())
+        ).collect(toList());
     }
 
-    static String[] expectedOptimizedFlattenedWinterWeekendNightDescriptions() {
-        return new String[]{
-                "04.01 - 10.31, Monday - Friday, 8h - 22h",
-                "04.01 - 10.31, Monday - Friday, 23h - 7h",
-                "04.01 - 10.31, Saturday - Sunday, 8h - 22h",
-                "04.01 - 10.31, Saturday - Sunday, 23h - 7h",
-                "11.01 - 03.31, Monday - Friday, 8h - 22h",
-                "11.01 - 03.31, Monday - Friday, 23h - 7h",
-                "11.01 - 03.31, Saturday - Sunday, 8h - 22h",
-                "11.01 - 03.31, Saturday - Sunday, 23h - 7h"
-        };
+    static List<ExpectedFlattened> winterWeekendNightOptimizedFlattened(ReferenceNumberOfValues reference) {
+        return winterWeekendNightFlattened(reference);
     }
 }

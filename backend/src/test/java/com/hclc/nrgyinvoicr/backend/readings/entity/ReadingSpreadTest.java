@@ -12,7 +12,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 
 class ReadingSpreadTest {
 
-    @ParameterizedTest(name = "{index} {0}")
+    @ParameterizedTest(name = "{0}")
     @MethodSource("parameters")
     void shouldProperlyCalculateNumberOfExpectedReadings(String description, String firstReadingDateAsString, String lastReadingDateAsString, long numberOfExpectedReadings) {
         ZonedDateTime firstReadingDate = ZonedDateTime.parse(firstReadingDateAsString);

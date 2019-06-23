@@ -17,17 +17,17 @@ class WeekendPlanFixture {
         ).collect(toList());
     }
 
-    static String[] expectedFlattenedWeekendDescriptions() {
-        return new String[]{
-                "01.01 - 12.31, Monday - Friday, 0h - 23h",
-                "01.01 - 12.31, Saturday - Sunday, 0h - 23h"
-        };
+    static List<ExpectedFlattened> weekendFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("01.01 - 12.31, Monday - Friday, 0h - 23h", reference.getWeekDay()),
+                new ExpectedFlattened("01.01 - 12.31, Saturday - Sunday, 0h - 23h", reference.getWeekend())
+        ).collect(toList());
     }
 
-    static String[] expectedOptimizedFlattenedWeekendDescriptions() {
-        return new String[]{
-                "Monday - Friday",
-                "Saturday - Sunday"
-        };
+    static List<ExpectedFlattened> weekendOptimizedFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("Monday - Friday", reference.getWeekDay()),
+                new ExpectedFlattened("Saturday - Sunday", reference.getWeekend())
+        ).collect(toList());
     }
 }

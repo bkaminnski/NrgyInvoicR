@@ -15,15 +15,15 @@ class StablePlanFixture {
         ).collect(toList());
     }
 
-    static String[] expectedFlattenedStableDescriptions() {
-        return new String[]{
-                "01.01 - 12.31, Monday - Sunday, 0h - 23h"
-        };
+    static List<ExpectedFlattened> stableFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 0h - 23h", reference.getAll())
+        ).collect(toList());
     }
 
-    static String[] expectedOptimizedFlattenedStableDescriptions() {
-        return new String[]{
-                "Stable"
-        };
+    static List<ExpectedFlattened> stableOptimizedFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("Stable", reference.getAll())
+        ).collect(toList());
     }
 }

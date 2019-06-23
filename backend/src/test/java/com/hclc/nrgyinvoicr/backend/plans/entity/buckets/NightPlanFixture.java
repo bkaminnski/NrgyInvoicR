@@ -16,17 +16,17 @@ class NightPlanFixture {
         ).collect(toList());
     }
 
-    static String[] expectedFlattenedNightDescriptions() {
-        return new String[]{
-                "01.01 - 12.31, Monday - Sunday, 8h - 22h",
-                "01.01 - 12.31, Monday - Sunday, 23h - 7h"
-        };
+    static List<ExpectedFlattened> nightFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 8h - 22h", reference.getDay()),
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 23h - 7h", reference.getNight())
+        ).collect(toList());
     }
 
-    static String[] expectedOptimizedFlattenedNightDescriptions() {
-        return new String[]{
-                "8h - 22h",
-                "23h - 7h"
-        };
+    static List<ExpectedFlattened> nightOptimizedFlattened(ReferenceNumberOfValues reference) {
+        return Stream.of(
+                new ExpectedFlattened("8h - 22h", reference.getDay()),
+                new ExpectedFlattened("23h - 7h", reference.getNight())
+        ).collect(toList());
     }
 }

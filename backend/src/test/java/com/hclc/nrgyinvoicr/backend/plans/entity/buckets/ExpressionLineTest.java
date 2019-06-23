@@ -12,7 +12,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 
 class ExpressionLineTest {
 
-    @ParameterizedTest(name = "{index} {0}")
+    @ParameterizedTest(name = "{0}")
     @MethodSource("parameters")
     void shouldParseLine(String description, String line, int level, String rangeStart, String rangeEnd, BigDecimal value) {
         ExpressionLine expressionLine = new ExpressionLine(0, line);
