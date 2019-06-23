@@ -32,10 +32,17 @@ class DateBucket extends Bucket {
     @Override
     boolean accept(ReadingValue readingValue) {
         int date = parseDate(readingValue.getDate());
-        if (since <= date && date <= until) {
-            return super.accept(readingValue);
+        if ((since <= until) && (date < since || until < date)) {
+            // |---<date>--<since>/////////<until>----<date>--|----------------------------------------------|
+            // 01.01 02.13  05.01           10.31     11.15   12.31
+            return false;
         }
-        return false;
+        if ((since > until) && (until < date && date < since)) {
+            // |///////////////<until>---<date>--<since>//////|///////////////<until>---<date>--<since>//////|
+            // 01.01            06.30    09.01    11.01       12.31            06.30    09.01    11.01       01.01
+            return false;
+        }
+        return super.accept(readingValue);
     }
 
     @Override

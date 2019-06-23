@@ -9,14 +9,14 @@ class Flattened {
     private Integer dayOfWeekUntil;
     private Integer hourSince;
     private Integer hourUntil;
-    private BigDecimal value;
+    private BigDecimal total;
 
     Flattened(UnconditionalBucket unconditionalBucket) {
-        value = unconditionalBucket.getTotal();
+        total = unconditionalBucket.getTotal();
     }
 
     Flattened(HourBucket hourBucket) {
-        value = hourBucket.getTotal();
+        total = hourBucket.getTotal();
         hourSince = hourBucket.getSince();
         hourUntil = hourBucket.getUntil();
     }
@@ -33,7 +33,7 @@ class Flattened {
         return this;
     }
 
-    String getDescription() {
+    public String getDescription() {
         StringBuffer description = new StringBuffer();
         if (dateSince != null && dateUntil != null) {
             appendDatePeriod(description);
@@ -50,8 +50,8 @@ class Flattened {
         return description.toString();
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getTotal() {
+        return total;
     }
 
     private void appendDatePeriod(StringBuffer description) {

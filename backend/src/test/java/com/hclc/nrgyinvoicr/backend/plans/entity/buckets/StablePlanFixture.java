@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class StablePlanFixture {
+class StablePlanFixture {
 
-    static List<ExpressionLine> arrangeStablePlan() {
+    static List<ExpressionLine> stablePlan() {
         return Stream.of(
                 new ExpressionLine(1, ".01.01-12.31"),
                 new ExpressionLine(2, "..1-7"),

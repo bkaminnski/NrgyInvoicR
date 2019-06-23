@@ -9,6 +9,8 @@ import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.singletonList;
 
 class HourBucket extends Bucket {
+    private static final int FIRST_HOUR = 0;
+    private static final int LAST_HOUR = 23;
     private final int since;
     private final int until;
     private BigDecimal total = ZERO;
@@ -21,11 +23,18 @@ class HourBucket extends Bucket {
     @Override
     boolean accept(ReadingValue readingValue) {
         int hour = readingValue.getDate().getHour();
-        if (since <= hour && hour <= until) {
-            total = total.add(readingValue.getValue());
-            return true;
+        if ((since <= until) && (hour < since || until < hour)) {
+            // |---<hour>--<since>/////////<until>----<hour>--|----------------------------------------------|
+            // 0      7       14              19        21    23
+            return false;
         }
-        return false;
+        if ((since > until) && (until < hour && hour < since)) {
+            // |///////////////<until>---<hour>--<since>//////|///////////////<until>---<hour>--<since>//////|
+            // 0                 15        17      20         23                15        17      20         23
+            return false;
+        }
+        total = total.add(readingValue.getValue());
+        return true;
     }
 
     @Override
@@ -37,7 +46,7 @@ class HourBucket extends Bucket {
     }
 
     private boolean coversFullPeriod() {
-        return since == 0 && until == 23;
+        return since == FIRST_HOUR && until == LAST_HOUR;
     }
 
     @Override

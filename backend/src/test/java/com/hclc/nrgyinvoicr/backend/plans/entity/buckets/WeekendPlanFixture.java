@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class WeekendPlanFixture {
+class WeekendPlanFixture {
 
-    static List<ExpressionLine> arrangeWeekendPlan() {
+    static List<ExpressionLine> weekendPlan() {
         return Stream.of(
                 new ExpressionLine(1, ".01.01-12.31"),
                 new ExpressionLine(2, "..1-5"),

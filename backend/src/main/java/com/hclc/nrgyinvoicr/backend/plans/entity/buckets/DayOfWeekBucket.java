@@ -25,10 +25,17 @@ class DayOfWeekBucket extends Bucket {
     @Override
     boolean accept(ReadingValue readingValue) {
         int dayOfWeek = readingValue.getDate().getDayOfWeek().getValue();
-        if (since <= dayOfWeek && dayOfWeek <= until) {
-            return super.accept(readingValue);
+        if ((since <= until) && (dayOfWeek < since || until < dayOfWeek)) {
+            // |----<dow>--<since>/////////<until>-----<dow>--|----------------------------------------------|
+            // 1      2       3               5          6    7
+            return false;
         }
-        return false;
+        if ((since > until) && (until < dayOfWeek && dayOfWeek < since)) {
+            // |///////////////<until>----<dow>--<since>//////|///////////////<until>----<dow>--<since>//////|
+            // 1                  3         5       6         7                  3         5       6         1
+            return false;
+        }
+        return super.accept(readingValue);
     }
 
     @Override
