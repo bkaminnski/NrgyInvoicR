@@ -4,18 +4,30 @@ import java.math.BigDecimal;
 
 class ExpectedFlattened {
     private final String description;
-    private final BigDecimal total;
+    private final BigDecimal price;
+    private final BigDecimal totalUsage;
+    private final BigDecimal totalPrice;
 
-    ExpectedFlattened(String description, BigDecimal total) {
+    ExpectedFlattened(String description, BigDecimal price, BigDecimal totalUsage, BigDecimal totalPrice) {
         this.description = description;
-        this.total = total;
+        this.price = price;
+        this.totalUsage = totalUsage;
+        this.totalPrice = totalPrice;
     }
 
     String getDescription() {
         return description;
     }
 
-    BigDecimal getTotal() {
-        return total;
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    BigDecimal getTotalUsage() {
+        return totalUsage;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 }

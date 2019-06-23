@@ -1,11 +1,14 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity.buckets;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
 class WeekendPlanFixture {
+    private static final BigDecimal WEEK_DAY_PRICE = new BigDecimal("0.19131");
+    private static final BigDecimal WEEKEND_PRICE = new BigDecimal("0.17617");
 
     static List<ExpressionLine> weekendPlan() {
         return Stream.of(
@@ -19,15 +22,15 @@ class WeekendPlanFixture {
 
     static List<ExpectedFlattened> weekendFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Friday, 0h - 23h", reference.getWeekDay()),
-                new ExpectedFlattened("01.01 - 12.31, Saturday - Sunday, 0h - 23h", reference.getWeekend())
+                new ExpectedFlattened("01.01 - 12.31, Monday - Friday, 0h - 23h", WEEK_DAY_PRICE, reference.getWeekDay(), WEEK_DAY_PRICE.multiply(reference.getWeekDay())),
+                new ExpectedFlattened("01.01 - 12.31, Saturday - Sunday, 0h - 23h", WEEKEND_PRICE, reference.getWeekend(), WEEKEND_PRICE.multiply(reference.getWeekend()))
         ).collect(toList());
     }
 
     static List<ExpectedFlattened> weekendOptimizedFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("Monday - Friday", reference.getWeekDay()),
-                new ExpectedFlattened("Saturday - Sunday", reference.getWeekend())
+                new ExpectedFlattened("Monday - Friday", WEEK_DAY_PRICE, reference.getWeekDay(), WEEK_DAY_PRICE.multiply(reference.getWeekDay())),
+                new ExpectedFlattened("Saturday - Sunday", WEEKEND_PRICE, reference.getWeekend(), WEEKEND_PRICE.multiply(reference.getWeekend()))
         ).collect(toList());
     }
 }

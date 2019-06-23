@@ -18,7 +18,6 @@ import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WeekendPlanFixtu
 import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterPlanFixture.*;
 import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterWeekendNightPlanFixture.*;
 import static java.math.BigDecimal.ONE;
-import static java.math.BigDecimal.ZERO;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -36,8 +35,9 @@ class BucketsTest {
         List<Flattened> flatteneds = bucket.flatten();
 
         assertDescriptionsAreAsExpected(flatteneds, expected);
-        assertTotalsAreAsExpected(flatteneds, expected);
-        assertSumOfTotalsIsAsExpected(flatteneds, expected);
+        assertPricesAreAsExpected(flatteneds, expected);
+        assertTotalUsagesAreAsExpected(flatteneds, expected);
+        assertTotalPricesAreAsExpected(flatteneds, expected);
     }
 
     private Bucket arrangeBucket(List<ExpressionLine> lines, boolean optimized) {
@@ -61,16 +61,22 @@ class BucketsTest {
         assertThat(actualDescriptions).containsExactly(expectedDescriptions);
     }
 
-    private void assertTotalsAreAsExpected(List<Flattened> flatteneds, List<ExpectedFlattened> expected) {
-        List<BigDecimal> actualTotals = flatteneds.stream().map(Flattened::getTotal).collect(toList());
-        BigDecimal[] expectedTotals = expected.stream().map(ExpectedFlattened::getTotal).toArray(BigDecimal[]::new);
-        assertThat(actualTotals).containsExactly(expectedTotals);
+    private void assertPricesAreAsExpected(List<Flattened> flatteneds, List<ExpectedFlattened> expected) {
+        List<BigDecimal> actualPrice = flatteneds.stream().map(Flattened::getPrice).collect(toList());
+        BigDecimal[] expectedPrice = expected.stream().map(ExpectedFlattened::getPrice).toArray(BigDecimal[]::new);
+        assertThat(actualPrice).containsExactly(expectedPrice);
     }
 
-    private void assertSumOfTotalsIsAsExpected(List<Flattened> flatteneds, List<ExpectedFlattened> expected) {
-        BigDecimal actualSumOfTotals = flatteneds.stream().map(Flattened::getTotal).reduce(ZERO, BigDecimal::add);
-        BigDecimal expectedSumOfTotals = expected.stream().map(ExpectedFlattened::getTotal).reduce(ZERO, BigDecimal::add);
-        assertThat(actualSumOfTotals).isEqualByComparingTo(expectedSumOfTotals);
+    private void assertTotalUsagesAreAsExpected(List<Flattened> flatteneds, List<ExpectedFlattened> expected) {
+        List<BigDecimal> actualTotalUsage = flatteneds.stream().map(Flattened::getTotalUsage).collect(toList());
+        BigDecimal[] expectedTotalUsage = expected.stream().map(ExpectedFlattened::getTotalUsage).toArray(BigDecimal[]::new);
+        assertThat(actualTotalUsage).containsExactly(expectedTotalUsage);
+    }
+
+    private void assertTotalPricesAreAsExpected(List<Flattened> flatteneds, List<ExpectedFlattened> expected) {
+        List<BigDecimal> actualTotalPrice = flatteneds.stream().map(Flattened::getTotalPrice).collect(toList());
+        BigDecimal[] expectedTotalPrice = expected.stream().map(ExpectedFlattened::getTotalPrice).toArray(BigDecimal[]::new);
+        assertThat(actualTotalPrice).containsExactly(expectedTotalPrice);
     }
 
     private static Stream<Arguments> parameters() {

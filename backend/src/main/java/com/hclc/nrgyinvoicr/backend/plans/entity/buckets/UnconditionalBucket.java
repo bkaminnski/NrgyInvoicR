@@ -5,15 +5,20 @@ import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingValue;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.singletonList;
 
 public class UnconditionalBucket extends Bucket {
-    private BigDecimal total = ZERO;
+    private final BigDecimal price;
+    private BigDecimal totalUsage;
+
+    public UnconditionalBucket(BigDecimal price, BigDecimal totalUsage) {
+        this.price = price;
+        this.totalUsage = totalUsage;
+    }
 
     @Override
     boolean accept(ReadingValue readingValue) {
-        total = total.add(readingValue.getValue());
+        totalUsage = totalUsage.add(readingValue.getValue());
         return true;
     }
 
@@ -27,7 +32,15 @@ public class UnconditionalBucket extends Bucket {
         return singletonList(new Flattened(this));
     }
 
-    BigDecimal getTotal() {
-        return total;
+    BigDecimal getPrice() {
+        return price;
+    }
+
+    BigDecimal getTotalUsage() {
+        return totalUsage;
+    }
+
+    BigDecimal getTotalPrice() {
+        return totalUsage.multiply(price);
     }
 }

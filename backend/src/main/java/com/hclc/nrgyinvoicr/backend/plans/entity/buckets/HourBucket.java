@@ -13,11 +13,13 @@ class HourBucket extends Bucket {
     private static final int LAST_HOUR = 23;
     private final int since;
     private final int until;
-    private BigDecimal total = ZERO;
+    private final BigDecimal price;
+    private BigDecimal totalUsage = ZERO;
 
     HourBucket(ExpressionLine bucketStart, List<ExpressionLine> bucketContent) {
         this.since = Integer.valueOf(bucketStart.getRangeStart());
         this.until = Integer.valueOf(bucketStart.getRangeEnd());
+        this.price = bucketStart.getPrice();
     }
 
     @Override
@@ -33,14 +35,14 @@ class HourBucket extends Bucket {
             // 0                 15        17      20         23                15        17      20         23
             return false;
         }
-        total = total.add(readingValue.getValue());
+        totalUsage = totalUsage.add(readingValue.getValue());
         return true;
     }
 
     @Override
     public Bucket optimized() {
         if (coversFullPeriod()) {
-            return new UnconditionalBucket();
+            return new UnconditionalBucket(price, totalUsage);
         }
         return this;
     }
@@ -62,7 +64,15 @@ class HourBucket extends Bucket {
         return until;
     }
 
-    BigDecimal getTotal() {
-        return total;
+    BigDecimal getPrice() {
+        return price;
+    }
+
+    BigDecimal getTotalUsage() {
+        return totalUsage;
+    }
+
+    BigDecimal getTotalPrice() {
+        return totalUsage.multiply(price);
     }
 }

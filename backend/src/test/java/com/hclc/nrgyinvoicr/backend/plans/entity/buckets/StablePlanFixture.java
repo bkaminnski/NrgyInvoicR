@@ -1,11 +1,13 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity.buckets;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
 class StablePlanFixture {
+    private static final BigDecimal STABLE_PRICE = new BigDecimal("0.18692");
 
     static List<ExpressionLine> stablePlan() {
         return Stream.of(
@@ -17,13 +19,13 @@ class StablePlanFixture {
 
     static List<ExpectedFlattened> stableFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 0h - 23h", reference.getAll())
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 0h - 23h", STABLE_PRICE, reference.getAll(), STABLE_PRICE.multiply(reference.getAll()))
         ).collect(toList());
     }
 
     static List<ExpectedFlattened> stableOptimizedFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("Stable", reference.getAll())
+                new ExpectedFlattened("Stable", STABLE_PRICE, reference.getAll(), STABLE_PRICE.multiply(reference.getAll()))
         ).collect(toList());
     }
 }

@@ -1,11 +1,14 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity.buckets;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
 class NightPlanFixture {
+    private static final BigDecimal DAY_PRICE = new BigDecimal("0.19288");
+    private static final BigDecimal NIGHT_PRICE = new BigDecimal("0.17531");
 
     static List<ExpressionLine> nightPlan() {
         return Stream.of(
@@ -18,15 +21,15 @@ class NightPlanFixture {
 
     static List<ExpectedFlattened> nightFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 8h - 22h", reference.getDay()),
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 23h - 7h", reference.getNight())
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 8h - 22h", DAY_PRICE, reference.getDay(), DAY_PRICE.multiply(reference.getDay())),
+                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 23h - 7h", NIGHT_PRICE, reference.getNight(), NIGHT_PRICE.multiply(reference.getNight()))
         ).collect(toList());
     }
 
     static List<ExpectedFlattened> nightOptimizedFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("8h - 22h", reference.getDay()),
-                new ExpectedFlattened("23h - 7h", reference.getNight())
+                new ExpectedFlattened("8h - 22h", DAY_PRICE, reference.getDay(), DAY_PRICE.multiply(reference.getDay())),
+                new ExpectedFlattened("23h - 7h", NIGHT_PRICE, reference.getNight(), NIGHT_PRICE.multiply(reference.getNight()))
         ).collect(toList());
     }
 }

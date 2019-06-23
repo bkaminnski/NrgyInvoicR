@@ -22,7 +22,7 @@ class ExpressionLineTest {
         assertThat(expressionLine.isLevel(level + 1)).isEqualTo(false);
         assertThat(expressionLine.getRangeStart()).isEqualTo(rangeStart);
         assertThat(expressionLine.getRangeEnd()).isEqualTo(rangeEnd);
-        assertThat(expressionLine.getValue()).isEqualTo(value);
+        assertThat(expressionLine.getPrice()).isEqualTo(value);
     }
 
     private static Stream<Arguments> parameters() {

@@ -7,16 +7,16 @@ class ExpressionLine {
     private final String line;
     private final String rangeStart;
     private final String rangeEnd;
-    private final BigDecimal value;
+    private final BigDecimal price;
 
     ExpressionLine(int lineNumber, String line) {
         this.lineNumber = lineNumber;
         this.line = line;
         String[] rangeAndValue = lineWithoutLeadingDots().split(":");
         if (rangeAndValue.length == 2) {
-            this.value = new BigDecimal(rangeAndValue[1]);
+            this.price = new BigDecimal(rangeAndValue[1]);
         } else {
-            this.value = null;
+            this.price = null;
         }
         String[] range = rangeAndValue[0].split("-");
         this.rangeStart = range[0];
@@ -43,7 +43,7 @@ class ExpressionLine {
         return rangeEnd;
     }
 
-    BigDecimal getValue() {
-        return value;
+    BigDecimal getPrice() {
+        return price;
     }
 }
