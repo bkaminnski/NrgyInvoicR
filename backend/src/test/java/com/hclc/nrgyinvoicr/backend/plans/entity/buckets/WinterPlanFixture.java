@@ -23,13 +23,6 @@ class WinterPlanFixture {
 
     static List<ExpectedFlattened> winterFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("04.01 - 10.31, Monday - Sunday, 0h - 23h", SUMMER_PRICE, reference.getSummer(), SUMMER_PRICE.multiply(reference.getSummer())),
-                new ExpectedFlattened("11.01 - 03.31, Monday - Sunday, 0h - 23h", WINTER_PRICE, reference.getWinter(), WINTER_PRICE.multiply(reference.getWinter()))
-        ).collect(toList());
-    }
-
-    static List<ExpectedFlattened> winterOptimizedFlattened(ReferenceNumberOfValues reference) {
-        return Stream.of(
                 new ExpectedFlattened("04.01 - 10.31", SUMMER_PRICE, reference.getSummer(), SUMMER_PRICE.multiply(reference.getSummer())),
                 new ExpectedFlattened("11.01 - 03.31", WINTER_PRICE, reference.getWinter(), WINTER_PRICE.multiply(reference.getWinter()))
         ).collect(toList());

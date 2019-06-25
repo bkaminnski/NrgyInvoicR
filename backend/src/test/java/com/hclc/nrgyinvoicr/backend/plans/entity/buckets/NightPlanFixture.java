@@ -21,13 +21,6 @@ class NightPlanFixture {
 
     static List<ExpectedFlattened> nightFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 8h - 22h", DAY_PRICE, reference.getDay(), DAY_PRICE.multiply(reference.getDay())),
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 23h - 7h", NIGHT_PRICE, reference.getNight(), NIGHT_PRICE.multiply(reference.getNight()))
-        ).collect(toList());
-    }
-
-    static List<ExpectedFlattened> nightOptimizedFlattened(ReferenceNumberOfValues reference) {
-        return Stream.of(
                 new ExpectedFlattened("8h - 22h", DAY_PRICE, reference.getDay(), DAY_PRICE.multiply(reference.getDay())),
                 new ExpectedFlattened("23h - 7h", NIGHT_PRICE, reference.getNight(), NIGHT_PRICE.multiply(reference.getNight()))
         ).collect(toList());

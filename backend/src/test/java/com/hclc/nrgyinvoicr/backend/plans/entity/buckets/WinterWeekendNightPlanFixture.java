@@ -47,8 +47,4 @@ class WinterWeekendNightPlanFixture {
                 new ExpectedFlattened("11.01 - 03.31, Saturday - Sunday, 23h - 7h", WINTER_WEEKEND_NIGHT_PRICE, reference.getWinterWeekendNight(), WINTER_WEEKEND_NIGHT_PRICE.multiply(reference.getWinterWeekendNight()))
         ).collect(toList());
     }
-
-    static List<ExpectedFlattened> winterWeekendNightOptimizedFlattened(ReferenceNumberOfValues reference) {
-        return winterWeekendNightFlattened(reference);
-    }
 }

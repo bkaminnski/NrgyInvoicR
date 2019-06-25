@@ -40,7 +40,12 @@ class HourBucket extends Bucket {
     }
 
     @Override
-    public Bucket optimized() {
+    public List<Flattened> flatten() {
+        return singletonList(new Flattened(this));
+    }
+
+    @Override
+    Bucket optimized() {
         if (coversFullPeriod()) {
             return new UnconditionalBucket(price, totalUsage);
         }
@@ -49,11 +54,6 @@ class HourBucket extends Bucket {
 
     private boolean coversFullPeriod() {
         return since == FIRST_HOUR && until == LAST_HOUR;
-    }
-
-    @Override
-    public List<Flattened> flatten() {
-        return singletonList(new Flattened(this));
     }
 
     int getSince() {

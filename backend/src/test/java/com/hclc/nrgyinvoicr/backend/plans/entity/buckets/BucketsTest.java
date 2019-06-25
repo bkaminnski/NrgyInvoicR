@@ -12,11 +12,16 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.NightPlanFixture.*;
-import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.StablePlanFixture.*;
-import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WeekendPlanFixture.*;
-import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterPlanFixture.*;
-import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterWeekendNightPlanFixture.*;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.NightPlanFixture.nightFlattened;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.NightPlanFixture.nightPlan;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.StablePlanFixture.stableFlattened;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.StablePlanFixture.stablePlan;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WeekendPlanFixture.weekendFlattened;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WeekendPlanFixture.weekendPlan;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterPlanFixture.winterFlattened;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterPlanFixture.winterPlan;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterWeekendNightPlanFixture.winterWeekendNightFlattened;
+import static com.hclc.nrgyinvoicr.backend.plans.entity.buckets.WinterWeekendNightPlanFixture.winterWeekendNightPlan;
 import static java.math.BigDecimal.ONE;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.stream.Collectors.toList;
@@ -29,8 +34,8 @@ class BucketsTest {
 
     @ParameterizedTest(name = "for {0}")
     @MethodSource("parameters")
-    void shouldFlattenBuckets(String description, List<ExpressionLine> lines, boolean optimized, List<ExpectedFlattened> expected) {
-        Bucket bucket = arrangeBucket(lines, optimized);
+    void shouldFlattenBuckets(String description, List<ExpressionLine> lines, List<ExpectedFlattened> expected) {
+        Bucket bucket = arrangeBucket(lines);
 
         List<Flattened> flatteneds = bucket.flatten();
 
@@ -40,9 +45,8 @@ class BucketsTest {
         assertTotalPricesAreAsExpected(flatteneds, expected);
     }
 
-    private Bucket arrangeBucket(List<ExpressionLine> lines, boolean optimized) {
+    private Bucket arrangeBucket(List<ExpressionLine> lines) {
         Bucket bucket = Buckets.forExpressionLines(lines);
-        bucket = optimized ? bucket.optimized() : bucket;
         addToBucketAValueForEachQuarterOfAnHourIn2019(bucket);
         return bucket;
     }
@@ -82,16 +86,11 @@ class BucketsTest {
     private static Stream<Arguments> parameters() {
         ReferenceNumberOfValues reference = new ReferenceNumberOfValues();
         return Stream.of(
-                of("Stable Plan, unoptimized", stablePlan(), false, stableFlattened(reference)),
-                of("Night Plan, unoptimized", nightPlan(), false, nightFlattened(reference)),
-                of("Winter Plan, unoptimized", winterPlan(), false, winterFlattened(reference)),
-                of("Weekend Plan, unoptimized", weekendPlan(), false, weekendFlattened(reference)),
-                of("Winter/Weekend/Night Plan, unoptimized", winterWeekendNightPlan(), false, winterWeekendNightFlattened(reference)),
-                of("Stable Plan, optimized", stablePlan(), true, stableOptimizedFlattened(reference)),
-                of("Night Plan, optimized", nightPlan(), true, nightOptimizedFlattened(reference)),
-                of("Winter Plan, optimized", winterPlan(), true, winterOptimizedFlattened(reference)),
-                of("Weekend Plan, optimized", weekendPlan(), true, weekendOptimizedFlattened(reference)),
-                of("Winter/Weekend/Night Plan, optimized", winterWeekendNightPlan(), true, winterWeekendNightOptimizedFlattened(reference))
+                of("Stable Plan", stablePlan(), stableFlattened(reference)),
+                of("Night Plan", nightPlan(), nightFlattened(reference)),
+                of("Winter Plan", winterPlan(), winterFlattened(reference)),
+                of("Weekend Plan", weekendPlan(), weekendFlattened(reference)),
+                of("Winter/Weekend/Night Plan", winterWeekendNightPlan(), winterWeekendNightFlattened(reference))
         );
     }
 }

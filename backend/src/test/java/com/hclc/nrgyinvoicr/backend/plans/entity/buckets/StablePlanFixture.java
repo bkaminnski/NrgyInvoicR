@@ -19,12 +19,6 @@ class StablePlanFixture {
 
     static List<ExpectedFlattened> stableFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Sunday, 0h - 23h", STABLE_PRICE, reference.getAll(), STABLE_PRICE.multiply(reference.getAll()))
-        ).collect(toList());
-    }
-
-    static List<ExpectedFlattened> stableOptimizedFlattened(ReferenceNumberOfValues reference) {
-        return Stream.of(
                 new ExpectedFlattened("Stable", STABLE_PRICE, reference.getAll(), STABLE_PRICE.multiply(reference.getAll()))
         ).collect(toList());
     }

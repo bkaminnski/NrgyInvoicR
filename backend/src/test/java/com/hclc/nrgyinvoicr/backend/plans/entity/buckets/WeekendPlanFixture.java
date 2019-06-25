@@ -22,13 +22,6 @@ class WeekendPlanFixture {
 
     static List<ExpectedFlattened> weekendFlattened(ReferenceNumberOfValues reference) {
         return Stream.of(
-                new ExpectedFlattened("01.01 - 12.31, Monday - Friday, 0h - 23h", WEEK_DAY_PRICE, reference.getWeekDay(), WEEK_DAY_PRICE.multiply(reference.getWeekDay())),
-                new ExpectedFlattened("01.01 - 12.31, Saturday - Sunday, 0h - 23h", WEEKEND_PRICE, reference.getWeekend(), WEEKEND_PRICE.multiply(reference.getWeekend()))
-        ).collect(toList());
-    }
-
-    static List<ExpectedFlattened> weekendOptimizedFlattened(ReferenceNumberOfValues reference) {
-        return Stream.of(
                 new ExpectedFlattened("Monday - Friday", WEEK_DAY_PRICE, reference.getWeekDay(), WEEK_DAY_PRICE.multiply(reference.getWeekDay())),
                 new ExpectedFlattened("Saturday - Sunday", WEEKEND_PRICE, reference.getWeekend(), WEEKEND_PRICE.multiply(reference.getWeekend()))
         ).collect(toList());

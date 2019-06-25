@@ -9,10 +9,10 @@ public class Buckets extends Bucket {
     private Buckets() {
     }
 
-    public static Buckets forExpressionLines(List<ExpressionLine> expressionLines) {
+    public static Bucket forExpressionLines(List<ExpressionLine> expressionLines) {
         Buckets buckets = new Buckets();
         buckets.addToBuckets(new BucketsCreator(expressionLines, 1, DateBucket::new).create());
-        return buckets;
+        return buckets.optimized();
     }
 
     static Bucket forBuckets(List<Bucket> bucketsList) {
@@ -32,7 +32,7 @@ public class Buckets extends Bucket {
     }
 
     @Override
-    public Bucket optimized() {
+    Bucket optimized() {
         return Buckets.forBuckets(getOptimizedBuckets());
     }
 }

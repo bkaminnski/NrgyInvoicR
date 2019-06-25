@@ -39,19 +39,19 @@ class DayOfWeekBucket extends Bucket {
     }
 
     @Override
-    public Bucket optimized() {
-        if (this.coversFullPeriod()) {
-            return Buckets.forBuckets(getOptimizedBuckets());
-        }
-        return new DayOfWeekBucket(since, until, getOptimizedBuckets());
-    }
-
-    @Override
     public List<Flattened> flatten() {
         return getBuckets().stream()
                 .flatMap(b -> b.flatten().stream())
                 .map(f -> f.accept(this))
                 .collect(toList());
+    }
+
+    @Override
+    Bucket optimized() {
+        if (this.coversFullPeriod()) {
+            return Buckets.forBuckets(getOptimizedBuckets());
+        }
+        return new DayOfWeekBucket(since, until, getOptimizedBuckets());
     }
 
     private boolean coversFullPeriod() {

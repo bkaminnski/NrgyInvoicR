@@ -23,9 +23,9 @@ abstract class Bucket {
         return false;
     }
 
-    public abstract Bucket optimized();
-
     public abstract List<Flattened> flatten();
+
+    abstract Bucket optimized();
 
     List<Bucket> getBuckets() {
         return buckets;

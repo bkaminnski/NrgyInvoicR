@@ -23,13 +23,13 @@ public class UnconditionalBucket extends Bucket {
     }
 
     @Override
-    public Bucket optimized() {
-        return this;
+    public List<Flattened> flatten() {
+        return singletonList(new Flattened(this));
     }
 
     @Override
-    public List<Flattened> flatten() {
-        return singletonList(new Flattened(this));
+    Bucket optimized() {
+        return this;
     }
 
     BigDecimal getPrice() {
