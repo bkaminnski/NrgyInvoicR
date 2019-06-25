@@ -33,7 +33,7 @@ class ReadingValueLineParserTest {
         assertThat(readingValue.getValue()).isEqualByComparingTo(new BigDecimal("123.45"));
     }
 
-    @ParameterizedTest(name = "{index} {0}")
+    @ParameterizedTest(name = "{0}")
     @MethodSource("parameters")
     void whenLineIsIncorrect_shouldThrowException(String description, String line, String expectedMessage) {
         assertThatThrownBy(() -> readingLineParser.parse(line, 2, 1L)).hasMessage(expectedMessage);
