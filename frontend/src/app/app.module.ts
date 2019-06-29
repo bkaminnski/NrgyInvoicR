@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { InvoicesModule } from './invoices/invoices.module';
+import { PlansModule } from './plans/plans.module';
 import { ReadingsModule } from './readings/readings.module';
 import { MetersModule } from './meters/meters.module';
 import { ClientsModule } from './clients/clients.module';
@@ -28,6 +29,7 @@ import { ClientDialogComponent } from './clients/components/clients-page/client-
     AppRoutingModule,
     DashboardModule,
     InvoicesModule,
+    PlansModule,
     ReadingsModule,
     MetersModule,
     ClientsModule

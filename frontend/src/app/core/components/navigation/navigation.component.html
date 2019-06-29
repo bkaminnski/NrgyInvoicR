@@ -4,7 +4,7 @@
   <button mat-button [routerLink]="['/dashboard']">Dashboard</button>
   <button mat-button [matMenuTriggerFor]="registriesMenu">Registries</button>
   <button mat-button [matMenuTriggerFor]="meterReadingsMenu">Meter Readings</button>
-  <button mat-button [routerLink]="['/invoices']">Invoices</button>
+  <button mat-button [matMenuTriggerFor]="invoicingMenu">Invoicing</button>
   <span class="space"></span>
   <mat-icon>account_circle</mat-icon>
   <span class="user">Bartosz Kaminski</span>
@@ -18,4 +18,9 @@
 <mat-menu #meterReadingsMenu>
   <button mat-menu-item [routerLink]="['/readingsUpload']">New Upload</button>
   <button mat-menu-item [routerLink]="['/readingsUploadsHistory']">History of Uploads</button>
+</mat-menu>
+
+<mat-menu #invoicingMenu>
+  <button mat-menu-item [routerLink]="['/invoices']">Invoices</button>
+  <button mat-menu-item [routerLink]="['/plans']">Plans</button>
 </mat-menu>

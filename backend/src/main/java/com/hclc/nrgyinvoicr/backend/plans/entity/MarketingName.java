@@ -1,12 +1,10 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+@Entity
 public class MarketingName {
 
     @Id
@@ -19,4 +17,16 @@ public class MarketingName {
 
     @Column(length = 2000)
     private String description;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
