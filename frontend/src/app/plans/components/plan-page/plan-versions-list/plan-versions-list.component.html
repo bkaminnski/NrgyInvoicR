@@ -1,0 +1,52 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <span>
+        {{plan?.name}} Versions
+        <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
+      </span>
+      <button mat-button type="button" (click)="back()">
+          <mat-icon>chevron_left</mat-icon> Back
+        </button>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let planVersion; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex">
+      </mat-row>
+      <ng-container matColumnDef="validSince">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Valid Since</mat-header-cell>
+        <mat-cell *matCellDef="let planVersion">{{planVersion.validSince | date:'shortDate'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fixedFees.subscriptionFee">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Subscription Fee</mat-header-cell>
+        <mat-cell *matCellDef="let planVersion">{{planVersion.fixedFees.subscriptionFee}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fixedFees.networkFee">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Network Fee</mat-header-cell>
+        <mat-cell *matCellDef="let planVersion">{{planVersion.fixedFees.networkFee}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let planVersion">{{planVersion.description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let planVersion; let i = index">
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button">
+            <mat-icon>schedule</mat-icon> Expression
+          </button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+    <div [hidden]="dataSource.totalElements === 0">
+      <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"
+        [pageSizeOptions]="paginatorConfig.pageSizeOptions">
+      </mat-paginator>
+    </div>
+    <app-no-records-found [length]="dataSource.totalElements"></app-no-records-found>
+  </mat-card-content>
+</mat-card>

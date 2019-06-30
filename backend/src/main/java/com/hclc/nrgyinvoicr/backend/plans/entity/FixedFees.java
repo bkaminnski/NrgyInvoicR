@@ -7,4 +7,12 @@ import java.math.BigDecimal;
 public class FixedFees {
     private BigDecimal subscriptionFee;
     private BigDecimal networkFee;
+
+    public BigDecimal getSubscriptionFee() {
+        return subscriptionFee;
+    }
+
+    public BigDecimal getNetworkFee() {
+        return networkFee;
+    }
 }

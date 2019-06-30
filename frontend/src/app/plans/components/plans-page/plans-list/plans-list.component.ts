@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { PlansListService } from './plans-list.service';
-import { PlansListDataSource } from './plans-list.datasource';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
+import { PlansService } from '../../plans.service';
+import { PlansListDataSource } from './plans-list.datasource';
 
 @Component({
   selector: 'app-plans-list',
@@ -28,8 +28,8 @@ export class PlansListComponent implements OnInit, AfterViewInit {
     pageSizeOptions: [10, 100, 1000]
   };
 
-  constructor(private plansListService: PlansListService) {
-    this.dataSource = new PlansListDataSource(this.plansListService);
+  constructor(private plansService: PlansService) {
+    this.dataSource = new PlansListDataSource(this.plansService);
   }
 
   ngOnInit() { }

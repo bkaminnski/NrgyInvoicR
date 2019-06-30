@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+
+.mat-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-column-options {
+  flex: 0 0 170px;
+  justify-content: flex-end;
+}

@@ -13,6 +13,9 @@ public class PlanVersion {
     @GeneratedValue(strategy = SEQUENCE, generator = "plan_version_id_seq")
     private Long id;
 
+    @Column(name = "plan_id")
+    private Long planId;
+
     private ZonedDateTime validSince;
 
     @Embedded
