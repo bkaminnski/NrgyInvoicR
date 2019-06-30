@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { MarketingNamesListService } from './marketing-names-list.service';
-import { MarketingNamesListDataSource } from './marketing-names-list.datasource';
+import { PlansListService } from './plans-list.service';
+import { PlansListDataSource } from './plans-list.datasource';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
 @Component({
-  selector: 'app-marketing-names-list',
-  templateUrl: './marketing-names-list.component.html',
-  styleUrls: ['./marketing-names-list.component.scss']
+  selector: 'app-plans-list',
+  templateUrl: './plans-list.component.html',
+  styleUrls: ['./plans-list.component.scss']
 })
-export class MarketingNamesListComponent implements OnInit, AfterViewInit {
-  dataSource: MarketingNamesListDataSource;
+export class PlansListComponent implements OnInit, AfterViewInit {
+  dataSource: PlansListDataSource;
   displayedColumns: string[] = ['name', 'description'];
 
   @ViewChild(MatSort) sort: MatSort;
@@ -27,8 +27,8 @@ export class MarketingNamesListComponent implements OnInit, AfterViewInit {
     pageSizeOptions: [10, 100, 1000]
   };
 
-  constructor(private marketingNamesListService: MarketingNamesListService) {
-    this.dataSource = new MarketingNamesListDataSource(this.marketingNamesListService);
+  constructor(private plansListService: PlansListService) {
+    this.dataSource = new PlansListDataSource(this.plansListService);
   }
 
   ngOnInit() { }
@@ -49,6 +49,6 @@ export class MarketingNamesListComponent implements OnInit, AfterViewInit {
   }
 
   private searchWithCriteria() {
-    this.dataSource.loadMarketingNames(PageDefinition.forSortAndPaginator(this.sort, this.paginator));
+    this.dataSource.loadPlans(PageDefinition.forSortAndPaginator(this.sort, this.paginator));
   }
 }

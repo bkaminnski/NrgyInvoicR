@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MarketingNamesListService } from './marketing-names-list/marketing-names-list.service';
+import { PlansListService } from './plans-list/plans-list.service';
 
 @Component({
-  selector: 'app-plans-page',
   templateUrl: './plans-page.component.html',
   providers: [
-    MarketingNamesListService
+    PlansListService
   ]
 })
 export class PlansPageComponent implements OnInit {

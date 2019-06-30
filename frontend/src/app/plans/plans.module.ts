@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../core/material.module';
 
 import { PlansPageComponent } from './components/plans-page/plans-page.component';
-import { MarketingNamesListComponent } from './components/plans-page/marketing-names-list/marketing-names-list.component';
+import { PlansListComponent } from './components/plans-page/plans-list/plans-list.component';
 import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
     PlansPageComponent,
-    MarketingNamesListComponent
+    PlansListComponent
   ],
   imports: [
     CommonModule,
