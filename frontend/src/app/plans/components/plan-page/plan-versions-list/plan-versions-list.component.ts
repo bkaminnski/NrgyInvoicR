@@ -6,7 +6,6 @@ import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersionsListService } from './plan-versions-list.service';
 import { PlanVersionsListDataSource } from './plan-versions-list.datasource';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
-import { PlansService } from '../../plans.service';
 
 @Component({
   selector: 'app-plan-versions-list',
@@ -36,16 +35,13 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private plansService: PlansService,
     private planVersionsListService: PlanVersionsListService
   ) {
     this.dataSource = new PlanVersionsListDataSource(this.planVersionsListService);
   }
 
   ngOnInit() {
-    this.plansService
-      .getPlan(Number(this.route.snapshot.paramMap.get('id')))
-      .subscribe(plan => { this.plan = plan; this.search(); });
+    this.route.data.subscribe((data: { plan: Plan }) => { this.plan = data.plan; setTimeout(() => this.search()); });
   }
 
   ngAfterViewInit() {

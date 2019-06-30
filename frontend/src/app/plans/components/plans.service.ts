@@ -5,7 +5,9 @@ import { Plan } from '../model/plan.model';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PlansService {
 
   constructor(private http: HttpClient) { }

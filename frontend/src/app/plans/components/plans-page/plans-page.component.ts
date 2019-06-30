@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PlansService } from '../plans.service';
 
 @Component({
-  templateUrl: './plans-page.component.html',
-  providers: [
-    PlansService
-  ]
+  templateUrl: './plans-page.component.html'
 })
 export class PlansPageComponent implements OnInit {
 
