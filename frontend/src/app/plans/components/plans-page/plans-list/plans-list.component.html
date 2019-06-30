@@ -11,7 +11,9 @@
     <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let plan; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex">
+      </mat-row>
       <ng-container matColumnDef="name">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let plan">{{plan.name}}</mat-cell>
@@ -19,6 +21,14 @@
       <ng-container matColumnDef="description">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Description</mat-header-cell>
         <mat-cell *matCellDef="let plan">{{plan.description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let plan; let i = index">
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button" [routerLink]="['/plans/' + plan.id]">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+        </mat-cell>
       </ng-container>
     </mat-table>
     <div [hidden]="dataSource.totalElements === 0">

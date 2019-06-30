@@ -10,8 +10,9 @@ import { PageDefinition } from 'src/app/core/model/page-definition.model';
   styleUrls: ['./plans-list.component.scss']
 })
 export class PlansListComponent implements OnInit, AfterViewInit {
+  public highlightedRowIndex: number;
   dataSource: PlansListDataSource;
-  displayedColumns: string[] = ['name', 'description'];
+  displayedColumns: string[] = ['name', 'description', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,5 +51,13 @@ export class PlansListComponent implements OnInit, AfterViewInit {
 
   private searchWithCriteria() {
     this.dataSource.loadPlans(PageDefinition.forSortAndPaginator(this.sort, this.paginator));
+  }
+
+  mouseEnter(highlightedRowIndex: number) {
+    this.highlightedRowIndex = highlightedRowIndex;
+  }
+
+  mouseLeave() {
+    this.highlightedRowIndex = null;
   }
 }
