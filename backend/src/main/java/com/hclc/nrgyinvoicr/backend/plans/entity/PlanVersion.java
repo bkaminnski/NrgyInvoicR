@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+@Entity
 public class PlanVersion {
 
     @Id
@@ -22,4 +23,24 @@ public class PlanVersion {
 
     @Column(length = 2000)
     private String description;
+
+    public Long getId() {
+        return id;
+    }
+
+    public ZonedDateTime getValidSince() {
+        return validSince;
+    }
+
+    public FixedFees getFixedFees() {
+        return fixedFees;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

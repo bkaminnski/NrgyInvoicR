@@ -1,11 +1,11 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+@Entity
 public class Plan {
 
     @Id
@@ -13,16 +13,25 @@ public class Plan {
     @GeneratedValue(strategy = SEQUENCE, generator = "plan_id_seq")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "marketing_name_id", referencedColumnName = "id")
-    private MarketingName marketingName;
+    @Column(length = 25)
+    private String name;
 
-    private ZonedDateTime validSince;
+    @Column(length = 2000)
+    private String description;
 
     @OneToMany
     @JoinColumn(name = "plan_id")
     private List<PlanVersion> versions;
 
-    @Column(length = 2000)
-    private String description;
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

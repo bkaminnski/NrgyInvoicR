@@ -5,70 +5,37 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet author="bkaminnski" id="sample-data-0001">
-        <insert tableName="marketing_name">
-            <column name="id" valueSequenceNext="marketing_name_id_seq"/>
+        <insert tableName="plan">
+            <column name="id" valueSequenceNext="plan_id_seq"/>
             <column name="name" value="Stable Plan"/>
             <column name="description" value="Pay the same price all day."/>
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2019-01-01T00:00:00"/>
         </insert>
-        <insert tableName="marketing_name">
-            <column name="id" valueSequenceNext="marketing_name_id_seq"/>
+        <insert tableName="plan">
+            <column name="id" valueSequenceNext="plan_id_seq"/>
             <column name="name" value="Night Plan"/>
             <column name="description" value="Save on your electricity consumption during the night."/>
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2019-01-01T00:00:00"/>
         </insert>
-        <insert tableName="marketing_name">
-            <column name="id" valueSequenceNext="marketing_name_id_seq"/>
+        <insert tableName="plan">
+            <column name="id" valueSequenceNext="plan_id_seq"/>
             <column name="name" value="Weekend Plan"/>
             <column name="description" value="Save on your electricity consumption over the weekend."/>
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2019-01-01T00:00:00"/>
         </insert>
-        <insert tableName="marketing_name">
-            <column name="id" valueSequenceNext="marketing_name_id_seq"/>
+        <insert tableName="plan">
+            <column name="id" valueSequenceNext="plan_id_seq"/>
             <column name="name" value="Winter Plan"/>
             <column name="description" value="Save on your electricity consumption during the winter time."/>
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2019-01-01T00:00:00"/>
         </insert>
-        <insert tableName="plan">
-            <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="marketing_name_id" valueComputed="(select id from marketing_name where name='Stable Plan')"/>
-            <column name="valid_since" value="2019-01-01T00:00:00"/>
-            <column name="description" value="Stable Plan valid since the beginning of 2019."/>
-            <column name="created_by" value="SYSTEM"/>
-            <column name="created_date" value="2019-01-01T00:00:00"/>
-        </insert>
-        <insert tableName="plan">
-            <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="marketing_name_id" valueComputed="(select id from marketing_name where name='Night Plan')"/>
-            <column name="valid_since" value="2019-01-01T00:00:00"/>
-            <column name="description" value="Night Plan valid since the beginning of 2019."/>
-            <column name="created_by" value="SYSTEM"/>
-            <column name="created_date" value="2019-01-01T00:00:00"/>
-        </insert>
-        <insert tableName="plan">
-            <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="marketing_name_id" valueComputed="(select id from marketing_name where name='Weekend Plan')"/>
-            <column name="valid_since" value="2019-01-01T00:00:00"/>
-            <column name="description" value="Weekend Plan valid since the beginning of 2019."/>
-            <column name="created_by" value="SYSTEM"/>
-            <column name="created_date" value="2019-01-01T00:00:00"/>
-        </insert>
-        <insert tableName="plan">
-            <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="marketing_name_id" valueComputed="(select id from marketing_name where name='Winter Plan')"/>
-            <column name="valid_since" value="2019-01-01T00:00:00"/>
-            <column name="description" value="Winter Plan valid since the beginning of 2019."/>
-            <column name="created_by" value="SYSTEM"/>
-            <column name="created_date" value="2019-01-01T00:00:00"/>
-        </insert>
         <insert tableName="plan_version">
             <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="plan_id"
-                    valueComputed="(select id from plan where marketing_name_id = (select id from marketing_name where name='Stable Plan'))"/>
+            <column name="plan_id" valueComputed="(select id from plan where name='Stable Plan')"/>
             <column name="subscription_fee" value="0.50"/>
             <column name="network_fee" value="2.30"/>
             <column name="expression"><![CDATA[.01.01-12.31
@@ -80,8 +47,7 @@
         </insert>
         <insert tableName="plan_version">
             <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="plan_id"
-                    valueComputed="(select id from plan where marketing_name_id = (select id from marketing_name where name='Night Plan'))"/>
+            <column name="plan_id" valueComputed="(select id from plan where name='Night Plan')"/>
             <column name="subscription_fee" value="0.50"/>
             <column name="network_fee" value="2.30"/>
             <column name="expression"><![CDATA[.01.01-12.31
@@ -94,8 +60,7 @@
         </insert>
         <insert tableName="plan_version">
             <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="plan_id"
-                    valueComputed="(select id from plan where marketing_name_id = (select id from marketing_name where name='Weekend Plan'))"/>
+            <column name="plan_id" valueComputed="(select id from plan where name='Weekend Plan')"/>
             <column name="subscription_fee" value="0.50"/>
             <column name="network_fee" value="2.30"/>
             <column name="expression"><![CDATA[.01.01-12.31
@@ -109,8 +74,7 @@
         </insert>
         <insert tableName="plan_version">
             <column name="id" valueSequenceNext="plan_id_seq"/>
-            <column name="plan_id"
-                    valueComputed="(select id from plan where marketing_name_id = (select id from marketing_name where name='Winter Plan'))"/>
+            <column name="plan_id" valueComputed="(select id from plan where name='Winter Plan')"/>
             <column name="subscription_fee" value="0.50"/>
             <column name="network_fee" value="2.30"/>
             <column name="expression"><![CDATA[.04.01-10.31

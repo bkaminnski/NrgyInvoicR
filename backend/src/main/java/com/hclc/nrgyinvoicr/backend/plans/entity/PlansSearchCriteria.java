@@ -2,7 +2,7 @@ package com.hclc.nrgyinvoicr.backend.plans.entity;
 
 import com.hclc.nrgyinvoicr.backend.PageDefinition;
 
-public class MarketingNamesSearchCriteria {
+public class PlansSearchCriteria {
     private PageDefinition pageDefinition;
 
     public PageDefinition getPageDefinition() {
