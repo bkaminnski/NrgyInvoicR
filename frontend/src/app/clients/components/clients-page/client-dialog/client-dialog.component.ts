@@ -6,7 +6,6 @@ import { finalize } from 'rxjs/operators';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
-  selector: 'app-client-dialog',
   templateUrl: './client-dialog.component.html',
   styleUrls: ['./client-dialog.component.scss'],
   providers: [

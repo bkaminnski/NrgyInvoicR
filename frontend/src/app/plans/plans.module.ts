@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../core/material.module';
 
@@ -9,19 +10,24 @@ import { PlansListComponent } from './components/plans-page/plans-list/plans-lis
 import { CoreModule } from '../core/core.module';
 import { PlanVersionsListComponent } from './components/plan-page/plan-versions-list/plan-versions-list.component';
 import { PlanPageComponent } from './components/plan-page/plan-page.component';
+import { PlanVersionDialogComponent } from './components/plan-page/plan-version-dialog/plan-version-dialog.component';
+import { FlattenedBucketsListComponent } from './components/plan-page/flattened-buckets-list/flattened-buckets-list.component';
 
 @NgModule({
   declarations: [
     PlansPageComponent,
     PlansListComponent,
     PlanVersionsListComponent,
-    PlanPageComponent
+    PlanPageComponent,
+    PlanVersionDialogComponent,
+    FlattenedBucketsListComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule,
-    CoreModule
+    CoreModule,
+    FormsModule
   ]
 })
 export class PlansModule { }

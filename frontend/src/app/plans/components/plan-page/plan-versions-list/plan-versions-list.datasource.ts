@@ -5,7 +5,7 @@ import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersion } from 'src/app/plans/model/plan-version.model';
-import { PlanVersionsListService } from './plan-versions-list.service';
+import { PlanVersionsService } from '../plan-versions.service';
 
 export class PlanVersionsListDataSource implements DataSource<PlanVersion> {
   private plansSubject = new BehaviorSubject<PlanVersion[]>([]);
@@ -13,7 +13,7 @@ export class PlanVersionsListDataSource implements DataSource<PlanVersion> {
   public totalElements = 0;
   public loading = false;
 
-  constructor(private planVersionsListService: PlanVersionsListService) { }
+  constructor(private planVersionsService: PlanVersionsService) { }
 
   connect(collectionViewer: CollectionViewer): Observable<PlanVersion[]> {
     return this.plans;
@@ -23,13 +23,14 @@ export class PlanVersionsListDataSource implements DataSource<PlanVersion> {
     this.plansSubject.complete();
   }
 
-  loadPlanVersions(plan: Plan, pageDefinition: PageDefinition) {
+  loadPlanVersions(plan: Plan, pageDefinition: PageDefinition, callback: (page: Page<PlanVersion>) => void = () => { }) {
     this.loading = true;
-    this.planVersionsListService.findPlanVersions(plan, pageDefinition)
+    this.planVersionsService.findPlanVersions(plan, pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),
-        tap<Page<PlanVersion>>(page => this.totalElements = page.totalElements)
+        tap<Page<PlanVersion>>(page => this.totalElements = page.totalElements),
+        tap<Page<PlanVersion>>(page => callback(page))
       )
       .subscribe(page => this.plansSubject.next(page.content));
   }

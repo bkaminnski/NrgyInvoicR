@@ -46,7 +46,7 @@ public class MetersService {
         return metersRepository
                 .findById(meter.getId())
                 .map(m -> meter.withClient(m.getClient()))
-                .map(m -> metersRepository.save(m));
+                .map(metersRepository::save);
     }
 
     public Client toClientWithAssignedMeter(Client client, Meter meter) {

@@ -5,9 +5,14 @@
         {{plan?.name}} Versions
         <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
       </span>
-      <button mat-button type="button" (click)="back()">
+      <span>
+        <button mat-button type="button" (click)="registerPlanVersion()">
+          <mat-icon>add_circle</mat-icon> Define a New Plan Version
+        </button>
+        <button mat-button type="button" (click)="back()">
           <mat-icon>chevron_left</mat-icon> Back
         </button>
+      </span>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -15,7 +20,8 @@
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let planVersion; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
-        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex">
+        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"
+        [class.row-spotlighted]="i === spotlightedRowIndex">
       </mat-row>
       <ng-container matColumnDef="validSince">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Valid Since</mat-header-cell>
@@ -36,8 +42,8 @@
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let planVersion; let i = index">
-          <button *ngIf="i === highlightedRowIndex" mat-button type="button">
-            <mat-icon>schedule</mat-icon> Expression
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="editPlanVersion(planVersion)">
+            <mat-icon>edit</mat-icon> Edit
           </button>
         </mat-cell>
       </ng-container>

@@ -21,6 +21,9 @@ export class NotificationService implements OnInit {
   }
 
   public error(message: string) {
+    if (message == null) {
+      message = 'Unknown error occured.';
+    }
     this.open(message, 'error', 'error');
   }
 

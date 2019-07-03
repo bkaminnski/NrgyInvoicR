@@ -20,8 +20,9 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 
 class ExpressionParserTest {
     private static final String VALID_EXPRESSION = ".01.01-12.31\r\n..1-7\r\n...0-23:0.18692";
-    private static final String LINE_ERROR_MISSING_DATE_RANGE_1 = "";
-    private static final String LINE_ERROR_MISSING_DATE_RANGE_2 = "..1-7\r\n...0-23:0.18692";
+    private static final String LINE_ERROR_MISSING_DATE_RANGE_1 = null;
+    private static final String LINE_ERROR_MISSING_DATE_RANGE_2 = "";
+    private static final String LINE_ERROR_MISSING_DATE_RANGE_3 = "..1-7\r\n...0-23:0.18692";
     private static final String LINE_ERROR_DATE_MISSING_DAY_OF_WEEK_RANGE = ".01.01-12.31";
     private static final String LINE_ERROR_DATE_PRICE_DECLARED = ".01.01-12.31:0.18692\r\n..1-7\r\n...0-23";
     private static final String LINE_ERROR_DATE_START_1 = ".x.01-12.31\r\n..1-7\r\n...0-23:0.18692";
@@ -69,6 +70,7 @@ class ExpressionParserTest {
         return Stream.of(
                 of("LINE_ERROR_MISSING_DATE_RANGE_1", LINE_ERROR_MISSING_DATE_RANGE_1, 1, "No date range was found. A date range should start with \".\"."),
                 of("LINE_ERROR_MISSING_DATE_RANGE_2", LINE_ERROR_MISSING_DATE_RANGE_2, 1, "No date range was found. A date range should start with \".\"."),
+                of("LINE_ERROR_MISSING_DATE_RANGE_3", LINE_ERROR_MISSING_DATE_RANGE_3, 1, "No date range was found. A date range should start with \".\"."),
                 of("LINE_ERROR_DATE_MISSING_DAY_OF_WEEK_RANGE", LINE_ERROR_DATE_MISSING_DAY_OF_WEEK_RANGE, 1, "No day of week range was found for a date range. A day of week range should start with \"..\"."),
                 of("LINE_ERROR_DATE_PRICE_DECLARED", LINE_ERROR_DATE_PRICE_DECLARED, 1, "Price cannot be declared for a date range: 0.18692."),
                 of("LINE_ERROR_DATE_START_1", LINE_ERROR_DATE_START_1, 1, "Invalid start of date range: \"x.01\". Date should match a pattern \"MM.DD\"."),

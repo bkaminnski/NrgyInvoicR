@@ -6,7 +6,6 @@ import { finalize } from 'rxjs/operators';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
-  selector: 'app-meter-dialog',
   templateUrl: './meter-dialog.component.html',
   styleUrls: ['./meter-dialog.component.scss'],
   providers: [

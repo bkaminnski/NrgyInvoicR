@@ -1,0 +1,24 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <span>
+        Invoice Positions
+      </span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource">
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let flattenedBucket; columns: displayedColumns;">
+      </mat-row>
+      <ng-container matColumnDef="description">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let flattenedBucket">{{flattenedBucket.description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Price</mat-header-cell>
+        <mat-cell *matCellDef="let flattenedBucket">{{flattenedBucket.price}}</mat-cell>
+      </ng-container>
+    </mat-table>
+  </mat-card-content>
+</mat-card>

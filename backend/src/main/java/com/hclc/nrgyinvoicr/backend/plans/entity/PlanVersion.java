@@ -31,19 +31,47 @@ public class PlanVersion {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(Long planId) {
+        this.planId = planId;
+    }
+
     public ZonedDateTime getValidSince() {
         return validSince;
+    }
+
+    public void setValidSince(ZonedDateTime validSince) {
+        this.validSince = validSince;
     }
 
     public FixedFees getFixedFees() {
         return fixedFees;
     }
 
+    public void setFixedFees(FixedFees fixedFees) {
+        this.fixedFees = fixedFees;
+    }
+
     public String getExpression() {
         return expression;
     }
 
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

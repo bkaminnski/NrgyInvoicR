@@ -1,11 +1,15 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatSort, MatPaginator } from '@angular/material';
+import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { Plan } from 'src/app/plans/model/plan.model';
-import { PlanVersionsListService } from './plan-versions-list.service';
+import { PlanVersionsService } from '../plan-versions.service';
 import { PlanVersionsListDataSource } from './plan-versions-list.datasource';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
+import { PlanVersionDialogComponent } from '../plan-version-dialog/plan-version-dialog.component';
+import { PlanVersion } from 'src/app/plans/model/plan-version.model';
+import { Page } from 'src/app/core/model/page.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-plan-versions-list',
@@ -14,6 +18,7 @@ import { PageDefinition } from 'src/app/core/model/page-definition.model';
 })
 export class PlanVersionsListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
+  public spotlightedRowIndex: number;
   public dataSource: PlanVersionsListDataSource;
   public displayedColumns: string[] = ['validSince', 'fixedFees.subscriptionFee', 'fixedFees.networkFee', 'description', 'options'];
   public plan: Plan;
@@ -35,9 +40,10 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private planVersionsListService: PlanVersionsListService
+    private planVersionsService: PlanVersionsService,
+    private dialog: MatDialog
   ) {
-    this.dataSource = new PlanVersionsListDataSource(this.planVersionsListService);
+    this.dataSource = new PlanVersionsListDataSource(this.planVersionsService);
   }
 
   ngOnInit() {
@@ -53,13 +59,52 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
     this.resetPaginatorAndSearchWithCriteria();
   }
 
-  private resetPaginatorAndSearchWithCriteria() {
+  private resetPaginatorAndSearchWithCriteria(planVersion: PlanVersion = null) {
     this.paginator.pageIndex = 0;
-    this.searchWithCriteria();
+    this.searchWithCriteria(planVersion);
   }
 
-  private searchWithCriteria() {
-    this.dataSource.loadPlanVersions(this.plan, PageDefinition.forSortAndPaginator(this.sort, this.paginator));
+  private searchWithCriteria(planVersion: PlanVersion = null) {
+    this.dataSource.loadPlanVersions(
+      this.plan,
+      PageDefinition.forSortAndPaginator(this.sort, this.paginator),
+      (page: Page<PlanVersion>) => this.spotlightClientOnPage(page, planVersion)
+    );
+  }
+
+  private spotlightClientOnPage(page: Page<PlanVersion>, planVersion: PlanVersion) {
+    if (planVersion !== null) {
+      this.spotlightedRowIndex = page.indexOf(planVersion);
+      setTimeout(() => this.spotlightedRowIndex = null, 1000);
+    }
+  }
+
+  registerPlanVersion() {
+    const planVersion = new PlanVersion(null);
+    this.openPlanVersionDialog(planVersion).subscribe(d => {
+      if (d) {
+        this.resetPaginatorAndSearchWithCriteria(d);
+      }
+    });
+  }
+
+  editPlanVersion(planVersion: PlanVersion) {
+    this.openPlanVersionDialog(planVersion).subscribe(d => {
+      if (d) {
+        this.searchWithCriteria(d);
+      }
+    });
+  }
+
+  openPlanVersionDialog(planVersion: PlanVersion): Observable<PlanVersion> {
+    const dialogConfig: MatDialogConfig<{ plan: Plan, planVersion: PlanVersion }> = {
+      data: { plan: this.plan, planVersion: planVersion },
+      disableClose: true,
+      autoFocus: true,
+      minWidth: '50%',
+      maxWidth: '70%'
+    };
+    return this.dialog.open(PlanVersionDialogComponent, dialogConfig).afterClosed();
   }
 
   mouseEnter(highlightedRowIndex: number) {

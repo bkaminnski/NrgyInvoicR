@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { NotificationComponent } from './core/components/notification/notification.component';
 import { MeterDialogComponent } from './meters/components/meters-page/meter-dialog/meter-dialog.component';
 import { ClientDialogComponent } from './clients/components/clients-page/client-dialog/client-dialog.component';
+import { PlanVersionDialogComponent } from './plans/components/plan-page/plan-version-dialog/plan-version-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ClientDialogComponent } from './clients/components/clients-page/client-
   entryComponents: [
     NotificationComponent,
     MeterDialogComponent,
-    ClientDialogComponent
+    ClientDialogComponent,
+    PlanVersionDialogComponent
   ]
 })
 export class AppModule { }
