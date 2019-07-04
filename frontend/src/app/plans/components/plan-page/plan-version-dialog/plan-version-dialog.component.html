@@ -30,7 +30,9 @@
     </mat-form-field>
     <mat-form-field>
       <textarea matInput maxlength="2000" rows="6" placeholder="Expression" name="expression" #expression="ngModel"
-        [(ngModel)]="planVersion.expression" class="code" (ngModelChange)="expressionChanged($event)"></textarea>
+        [(ngModel)]="planVersion.expression" class="code" (ngModelChange)="expressionChanged($event)"
+        [errorStateMatcher]="errorStateMatcher" appValidExpression></textarea>
+      <mat-error *ngIf="expression.errors?.validExpression">{{expression.errors?.validExpression}}</mat-error>
     </mat-form-field>
     <app-flattened-buckets-list [flattenedBucketsObservable]="flattenedBucketsObservable"></app-flattened-buckets-list>
   </mat-dialog-content>

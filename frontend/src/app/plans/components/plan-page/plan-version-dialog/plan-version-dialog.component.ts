@@ -1,13 +1,14 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { finalize, tap, debounceTime } from 'rxjs/operators';
+import { finalize, debounceTime } from 'rxjs/operators';
 import { PlanVersion } from 'src/app/plans/model/plan-version.model';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersionsService } from '../plan-versions.service';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 import { ExpressionService } from './expression.service';
 import { FlattenedBucket } from 'src/app/plans/model/flattened-bucket.model';
+import { NgModel } from '@angular/forms';
 
 @Component({
   templateUrl: './plan-version-dialog.component.html',
@@ -25,6 +26,7 @@ export class PlanVersionDialogComponent implements OnInit, OnDestroy {
   private expressionSubscription: Subscription;
   private flattenedBucketsSubject: Subject<FlattenedBucket[]>;
   public flattenedBucketsObservable: Observable<FlattenedBucket[]>;
+  public errorStateMatcher = new ShowOnDirtyErrorStateMatcher();
 
   constructor(
     private dialogRef: MatDialogRef<PlanVersionDialogComponent>,
@@ -62,14 +64,7 @@ export class PlanVersionDialogComponent implements OnInit, OnDestroy {
   private testExpression() {
     this.expressionService
       .testExpression(this.planVersion.expression)
-      .pipe(
-        tap(r => this.flattenedBucketsSubject.next(r.flattenedBuckets))
-      )
-      .subscribe(e => this.showError());
-  }
-
-  private showError() {
-    // TODO: show error
+      .subscribe(e => this.flattenedBucketsSubject.next(e.flattenedBuckets));
   }
 
   save() {

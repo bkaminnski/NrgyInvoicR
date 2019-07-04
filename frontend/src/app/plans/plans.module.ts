@@ -12,6 +12,7 @@ import { PlanVersionsListComponent } from './components/plan-page/plan-versions-
 import { PlanPageComponent } from './components/plan-page/plan-page.component';
 import { PlanVersionDialogComponent } from './components/plan-page/plan-version-dialog/plan-version-dialog.component';
 import { FlattenedBucketsListComponent } from './components/plan-page/flattened-buckets-list/flattened-buckets-list.component';
+import { ExpressionTestResultValidatorDirective } from './components/plan-page/plan-version-dialog/expression-test-result.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FlattenedBucketsListComponent } from './components/plan-page/flattened-
     PlanVersionsListComponent,
     PlanPageComponent,
     PlanVersionDialogComponent,
-    FlattenedBucketsListComponent
+    FlattenedBucketsListComponent,
+    ExpressionTestResultValidatorDirective
   ],
   imports: [
     CommonModule,
