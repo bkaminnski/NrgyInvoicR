@@ -1,6 +1,7 @@
 <form #planVersionForm="ngForm" (ngSubmit)="planVersionForm.form.valid && save()" autocomplete="off" novalidate>
   <h1 mat-dialog-title>
-    Plan Version
+    <span *ngIf="planVersion.isNew() === true">Define a New Plan Version</span>
+    <span *ngIf="planVersion.isNew() === false">Edit Plan Version Data</span>
     <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
   </h1>
   <mat-dialog-content>

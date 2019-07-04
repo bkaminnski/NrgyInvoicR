@@ -1,10 +1,11 @@
 <form #clientForm="ngForm" (ngSubmit)="clientForm.form.valid && save()" autocomplete="off" novalidate>
   <h1 mat-dialog-title>
-    Client Registration
+    <span *ngIf="client.isNew() === true">Register a New Client</span>
+    <span *ngIf="client.isNew() === false">Edit Client Data</span>
     <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
   </h1>
   <mat-dialog-content>
-    <mat-form-field *ngIf="newClient === false">
+    <mat-form-field *ngIf="client.isNew() === false">
       <input matInput disabled maxlength="36" placeholder="Number" name="number" #number="ngModel"
         [(ngModel)]="client.number">
     </mat-form-field>

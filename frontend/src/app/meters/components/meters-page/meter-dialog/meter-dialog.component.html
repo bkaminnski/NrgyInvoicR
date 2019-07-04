@@ -1,6 +1,7 @@
 <form #meterForm="ngForm" (ngSubmit)="meterForm.form.valid && save()" autocomplete="off" novalidate>
   <h1 mat-dialog-title>
-    Meter Registration
+    <span *ngIf="meter.isNew() === true">Register a New Meter</span>
+    <span *ngIf="meter.isNew() === false">Edit Meter Data</span>
     <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
   </h1>
   <mat-dialog-content>
