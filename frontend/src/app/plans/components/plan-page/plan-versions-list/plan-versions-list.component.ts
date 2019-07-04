@@ -102,7 +102,8 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
       disableClose: true,
       autoFocus: true,
       minWidth: '50%',
-      maxWidth: '70%'
+      maxWidth: '70%',
+      position: { top: '100px' }
     };
     return this.dialog.open(PlanVersionDialogComponent, dialogConfig).afterClosed();
   }

@@ -1,35 +1,76 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { PlanVersion } from 'src/app/plans/model/plan-version.model';
-import { ExpressionTestResult } from 'src/app/plans/model/expression-test-result.model';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { finalize, tap, debounceTime } from 'rxjs/operators';
+import { PlanVersion } from 'src/app/plans/model/plan-version.model';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersionsService } from '../plan-versions.service';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
-import { finalize } from 'rxjs/operators';
+import { ExpressionService } from './expression.service';
+import { FlattenedBucket } from 'src/app/plans/model/flattened-bucket.model';
 
 @Component({
   templateUrl: './plan-version-dialog.component.html',
   styleUrls: ['./plan-version-dialog.component.scss'],
   providers: [
-    PlanVersionsService
+    PlanVersionsService,
+    ExpressionService
   ]
 })
-export class PlanVersionDialogComponent implements OnInit {
+export class PlanVersionDialogComponent implements OnInit, OnDestroy {
   public loading: boolean;
   private plan: Plan;
   public planVersion: PlanVersion;
-  public expressionTestResult: ExpressionTestResult;
+  private expressionSubject = new Subject<string>();
+  private expressionSubscription: Subscription;
+  private flattenedBucketsSubject: Subject<FlattenedBucket[]>;
+  public flattenedBucketsObservable: Observable<FlattenedBucket[]>;
+
   constructor(
     private dialogRef: MatDialogRef<PlanVersionDialogComponent>,
     private planVersionsService: PlanVersionsService,
     private notificationService: NotificationService,
+    private expressionService: ExpressionService,
     @Inject(MAT_DIALOG_DATA) data: { plan: Plan, planVersion: PlanVersion }
   ) {
     this.plan = data.plan;
     this.planVersion = PlanVersion.cloned(data.planVersion);
     this.loading = false;
+    this.expressionSubscription = this.expressionSubject
+      .asObservable()
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(e => this.testExpression());
+    this.flattenedBucketsSubject = new Subject();
+    this.flattenedBucketsObservable = this.flattenedBucketsSubject.asObservable();
   }
-  ngOnInit() { }
+
+  ngOnInit() {
+    this.expressionSubject.next(this.planVersion.expression);
+  }
+
+  ngOnDestroy(): void {
+    this.flattenedBucketsSubject.complete();
+    this.expressionSubscription.unsubscribe();
+  }
+
+  expressionChanged(expression: string) {
+    this.expressionSubject.next(expression);
+  }
+
+  private testExpression() {
+    this.expressionService
+      .testExpression(this.planVersion.expression)
+      .pipe(
+        tap(r => this.flattenedBucketsSubject.next(r.flattenedBuckets))
+      )
+      .subscribe(e => this.showError());
+  }
+
+  private showError() {
+    // TODO: show error
+  }
 
   save() {
     this.loading = true;

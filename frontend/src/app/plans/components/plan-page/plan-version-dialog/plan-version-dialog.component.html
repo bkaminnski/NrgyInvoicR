@@ -5,6 +5,34 @@
     <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
   </h1>
   <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field>
+        <input matInput required [matDatepicker]="validSinceDatepicker" placeholder="Valid Since" name="validSince"
+          #validSinceInput="ngModel" [(ngModel)]="planVersion.validSince">
+        <mat-datepicker-toggle matSuffix [for]="validSinceDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #validSinceDatepicker></mat-datepicker>
+        <mat-error *ngIf="validSinceInput.invalid">Valid Since is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Subscription Fee" name="subscriptionFee" #subscriptionFee="ngModel"
+          [(ngModel)]="planVersion.fixedFees.subscriptionFee" type="number" step="0.01" min="0.00" max="999999999.99">
+        <mat-error *ngIf="subscriptionFee.invalid">Subscription Fee is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Network Fee" name="networkFee" #networkFee="ngModel"
+          [(ngModel)]="planVersion.fixedFees.networkFee" type="number" step="0.01" min="0.00" max="999999999.99">
+        <mat-error *ngIf="networkFee.invalid">Network Fee is required</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <textarea matInput maxlength="2000" rows="3" placeholder="Description" name="description" #description="ngModel"
+        [(ngModel)]="planVersion.description"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput maxlength="2000" rows="6" placeholder="Expression" name="expression" #expression="ngModel"
+        [(ngModel)]="planVersion.expression" class="code" (ngModelChange)="expressionChanged($event)"></textarea>
+    </mat-form-field>
+    <app-flattened-buckets-list [flattenedBucketsObservable]="flattenedBucketsObservable"></app-flattened-buckets-list>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button class="mat-primary" type="submit">Save</button>
