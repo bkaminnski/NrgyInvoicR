@@ -1,17 +1,20 @@
-import { Directive, Injectable, forwardRef } from '@angular/core';
+import { Directive, Injectable, forwardRef, Input } from '@angular/core';
 import { AbstractControl, ValidationErrors, AsyncValidator, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { Observable, of, timer } from 'rxjs';
-import { map, catchError, mergeMap } from 'rxjs/operators';
+import { Observable, of, timer, Subject } from 'rxjs';
+import { map, catchError, mergeMap, tap } from 'rxjs/operators';
 import { ExpressionService } from './expression.service';
 import { ExpressionTestResult } from 'src/app/plans/model/expression-test-result.model';
+import { FlattenedBucket } from 'src/app/plans/model/flattened-bucket.model';
 
 @Injectable()
-export class ExpressionTestResultValidator implements AsyncValidator {
+export class ExpressionTestResultValidator {
   constructor(private expressionService: ExpressionService) { }
 
-  validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+  validate(control: AbstractControl, flattenedBucketsSubject: Subject<FlattenedBucket[]>): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return timer(300).pipe(
       mergeMap(() => this.expressionService.testExpression(control.value)),
+      tap(e => console.log(e)),
+      tap(e => flattenedBucketsSubject.next(e.flattenedBuckets)),
       map(e => (e.valid ? null : { validExpression: this.toErrorMessage(e) })),
       catchError(() => of({ validExpression: 'Expression is invalid.' }))
     );
@@ -38,10 +41,12 @@ export class ExpressionTestResultValidator implements AsyncValidator {
     ExpressionService
   ]
 })
-export class ExpressionTestResultValidatorDirective {
+export class ExpressionTestResultValidatorDirective implements AsyncValidator {
+  @Input('appValidExpression') flattenedBucketsSubject: Subject<FlattenedBucket[]>;
+
   constructor(private validator: ExpressionTestResultValidator) { }
 
-  validate(control: AbstractControl) {
-    return this.validator.validate(control);
+  validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    return this.validator.validate(control, this.flattenedBucketsSubject);
   }
 }

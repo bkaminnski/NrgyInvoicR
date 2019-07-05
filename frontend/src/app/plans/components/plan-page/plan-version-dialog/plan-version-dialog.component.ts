@@ -22,9 +22,7 @@ export class PlanVersionDialogComponent implements OnInit, OnDestroy {
   public loading: boolean;
   private plan: Plan;
   public planVersion: PlanVersion;
-  private expressionSubject = new Subject<string>();
-  private expressionSubscription: Subscription;
-  private flattenedBucketsSubject: Subject<FlattenedBucket[]>;
+  public flattenedBucketsSubject: Subject<FlattenedBucket[]>;
   public flattenedBucketsObservable: Observable<FlattenedBucket[]>;
   public errorStateMatcher = new ShowOnDirtyErrorStateMatcher();
 
@@ -32,39 +30,19 @@ export class PlanVersionDialogComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<PlanVersionDialogComponent>,
     private planVersionsService: PlanVersionsService,
     private notificationService: NotificationService,
-    private expressionService: ExpressionService,
     @Inject(MAT_DIALOG_DATA) data: { plan: Plan, planVersion: PlanVersion }
   ) {
     this.plan = data.plan;
     this.planVersion = PlanVersion.cloned(data.planVersion);
     this.loading = false;
-    this.expressionSubscription = this.expressionSubject
-      .asObservable()
-      .pipe(
-        debounceTime(300)
-      )
-      .subscribe(e => this.testExpression());
     this.flattenedBucketsSubject = new Subject();
     this.flattenedBucketsObservable = this.flattenedBucketsSubject.asObservable();
   }
 
-  ngOnInit() {
-    this.expressionSubject.next(this.planVersion.expression);
-  }
+  ngOnInit() { }
 
   ngOnDestroy(): void {
     this.flattenedBucketsSubject.complete();
-    this.expressionSubscription.unsubscribe();
-  }
-
-  expressionChanged(expression: string) {
-    this.expressionSubject.next(expression);
-  }
-
-  private testExpression() {
-    this.expressionService
-      .testExpression(this.planVersion.expression)
-      .subscribe(e => this.flattenedBucketsSubject.next(e.flattenedBuckets));
   }
 
   save() {
