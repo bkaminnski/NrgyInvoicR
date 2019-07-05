@@ -11,8 +11,6 @@ export class ExpressionTestResultValidator implements AsyncValidator {
 
   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return this.expressionService.testExpression(control.value).pipe(
-      tap(e => console.log(e)),
-      first(e => e !== null),
       map(e => (e.valid ? null : { validExpression: this.toErrorMessage(e) })),
       catchError(() => of({ validExpression: 'Expression is invalid.' }))
     );

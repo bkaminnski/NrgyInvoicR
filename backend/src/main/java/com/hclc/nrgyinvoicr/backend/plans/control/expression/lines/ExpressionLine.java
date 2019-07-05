@@ -13,10 +13,14 @@ public class ExpressionLine {
         this.lineNumber = lineNumber;
         this.line = line;
         String[] rangeAndValue = lineWithoutLeadingDots().split(":");
-        if (rangeAndValue.length == 2) {
-            this.price = new BigDecimal(rangeAndValue[1]);
-        } else {
-            this.price = null;
+        try {
+            if (rangeAndValue.length == 2) {
+                this.price = new BigDecimal(rangeAndValue[1]);
+            } else {
+                this.price = null;
+            }
+        } catch (NumberFormatException e) {
+            throw new ExpressionLineInvalidPriceException(lineNumber, rangeAndValue[1]);
         }
         try {
             String[] range = rangeAndValue[0].split("-");

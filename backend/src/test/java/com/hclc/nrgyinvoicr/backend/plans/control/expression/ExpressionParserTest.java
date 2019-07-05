@@ -35,6 +35,7 @@ class ExpressionParserTest {
     private static final String LINE_ERROR_DAY_OF_WEEK_START_2 = ".01.01-12.31\r\n..0-7\r\n...0-23:0.18692";
     private static final String LINE_ERROR_DAY_OF_WEEK_END_1 = ".01.01-12.31\r\n..1-x\r\n...0-23:0.18692";
     private static final String LINE_ERROR_DAY_OF_WEEK_END_2 = ".01.01-12.31\r\n..1-8\r\n...0-23:0.18692";
+    private static final String LINE_ERROR_HOUR_INVALID_PRICE = ".01.01-12.31\r\n..1-7\r\n...0-23:x";
     private static final String LINE_ERROR_HOUR_MISSING_PRICE = ".01.01-12.31\r\n..1-7\r\n...0-23";
     private static final String LINE_ERROR_HOUR_START_1 = ".01.01-12.31\r\n..1-7\r\n...x-23:0.18692";
     private static final String LINE_ERROR_HOUR_START_2 = ".01.01-12.31\r\n..1-7\r\n...50-23:0.18692";
@@ -83,6 +84,7 @@ class ExpressionParserTest {
                 of("LINE_ERROR_DAY_OF_WEEK_START_2", LINE_ERROR_DAY_OF_WEEK_START_2, 2, "Invalid start of day of week range: \"0\". The value should be a number between 1 (Monday) and 7 (Sunday)."),
                 of("LINE_ERROR_DAY_OF_WEEK_END_1", LINE_ERROR_DAY_OF_WEEK_END_1, 2, "Invalid end of day of week range: \"x\". The value should be a number between 1 (Monday) and 7 (Sunday)."),
                 of("LINE_ERROR_DAY_OF_WEEK_END_2", LINE_ERROR_DAY_OF_WEEK_END_2, 2, "Invalid end of day of week range: \"8\". The value should be a number between 1 (Monday) and 7 (Sunday)."),
+                of("LINE_ERROR_HOUR_INVALID_PRICE", LINE_ERROR_HOUR_INVALID_PRICE, 3, "Invalid price: \"x\"."),
                 of("LINE_ERROR_HOUR_MISSING_PRICE", LINE_ERROR_HOUR_MISSING_PRICE, 3, "Price is missing in hour range."),
                 of("LINE_ERROR_HOUR_START_1", LINE_ERROR_HOUR_START_1, 3, "Invalid start of hour range: \"x\". The value should be a number between 0 (inclusive) and 23 (inclusive)."),
                 of("LINE_ERROR_HOUR_START_2", LINE_ERROR_HOUR_START_2, 3, "Invalid start of hour range: \"50\". The value should be a number between 0 (inclusive) and 23 (inclusive)."),
