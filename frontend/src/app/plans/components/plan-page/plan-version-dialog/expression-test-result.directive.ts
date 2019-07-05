@@ -1,7 +1,7 @@
 import { Directive, Injectable, forwardRef } from '@angular/core';
 import { AbstractControl, ValidationErrors, AsyncValidator, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { map, catchError, first, tap } from 'rxjs/operators';
+import { Observable, of, timer } from 'rxjs';
+import { map, catchError, mergeMap } from 'rxjs/operators';
 import { ExpressionService } from './expression.service';
 import { ExpressionTestResult } from 'src/app/plans/model/expression-test-result.model';
 
@@ -10,7 +10,8 @@ export class ExpressionTestResultValidator implements AsyncValidator {
   constructor(private expressionService: ExpressionService) { }
 
   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return this.expressionService.testExpression(control.value).pipe(
+    return timer(300).pipe(
+      mergeMap(() => this.expressionService.testExpression(control.value)),
       map(e => (e.valid ? null : { validExpression: this.toErrorMessage(e) })),
       catchError(() => of({ validExpression: 'Expression is invalid.' }))
     );
