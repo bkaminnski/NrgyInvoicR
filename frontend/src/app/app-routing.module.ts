@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardPageComponent } from './dashboard/components/dashboard-page/dashboard-page.component';
 import { InvoicesPageComponent } from './invoices/components/invoices-page/invoices-page.component';
 import { PlanPageComponent } from './plans/components/plan-page/plan-page.component';
-import { PlanVersionsListResolverService } from './plans/components/plan-page/plan-versions-list/plan-versions-list-resolver.service';
+import { PlanResolverService } from './plans/components/plan-page/plan-resolver.service';
 import { PlansPageComponent } from './plans/components/plans-page/plans-page.component';
 import { ReadingsUploadPageComponent } from './readings/components/readings-upload-page/readings-upload-page.component';
 import { CanDeactivateGuard } from './core/can-deactivate.guard';
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'invoices', component: InvoicesPageComponent },
   {
     path: 'plans/:id', component: PlanPageComponent, resolve: {
-      plan: PlanVersionsListResolverService
+      plan: PlanResolverService
     }
   },
   { path: 'plans', component: PlansPageComponent },
