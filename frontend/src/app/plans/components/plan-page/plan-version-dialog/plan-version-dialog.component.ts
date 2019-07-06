@@ -1,14 +1,13 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, ShowOnDirtyErrorStateMatcher } from '@angular/material';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { finalize, debounceTime } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { PlanVersion } from 'src/app/plans/model/plan-version.model';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersionsService } from '../plan-versions.service';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 import { ExpressionService } from './expression.service';
 import { FlattenedBucket } from 'src/app/plans/model/flattened-bucket.model';
-import { NgModel } from '@angular/forms';
 
 @Component({
   templateUrl: './plan-version-dialog.component.html',

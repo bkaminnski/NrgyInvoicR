@@ -9,4 +9,5 @@
     <include file="db.changelog-1.2_clients.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.3_plans.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.4_plans_initial_data.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-1.5_client_plans.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

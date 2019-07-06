@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="1.5_client_plans_001">
+        <createTable tableName="client_plan_assignment">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="valid_since" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plan_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="client_plan_assignment_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="client_plan_assignment" baseColumnNames="client_id"
+                                 constraintName="client_plan_assignment_clie_fk"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="client_plan_assignment" baseColumnNames="plan_id"
+                                 constraintName="client_plan_assignment_plan_fk"
+                                 referencedTableName="plan" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
