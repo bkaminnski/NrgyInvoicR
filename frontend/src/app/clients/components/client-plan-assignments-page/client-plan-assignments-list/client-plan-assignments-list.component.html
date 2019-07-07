@@ -1,3 +1,52 @@
-<p>
-  client-plan-assignments-list works!
-</p>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <span>
+        Plans Assigned to the Client: {{client?.firstName}} {{client?.lastName}}, {{client?.number}}
+        <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
+      </span>
+      <span>
+        <button mat-button type="button" (click)="assignPlan()">
+          <mat-icon>add_circle</mat-icon> Assign a Plan
+        </button>
+        <button mat-button type="button" (click)="back()">
+          <mat-icon>chevron_left</mat-icon> Back
+        </button>
+      </span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let clientPlanAssignment; columns: displayedColumns; let i = index"
+        (mouseenter)="mouseEnter(i)" (mouseleave)="mouseLeave()" onclick=""
+        [class.row-highlighted]="i === highlightedRowIndex" [class.row-spotlighted]="i === spotlightedRowIndex">
+      </mat-row>
+      <ng-container matColumnDef="validSince">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Valid Since</mat-header-cell>
+        <mat-cell *matCellDef="let clientPlanAssignment">{{clientPlanAssignment.validSince | date:'shortDate'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="plan.name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Plan</mat-header-cell>
+        <mat-cell *matCellDef="let clientPlanAssignment">{{clientPlanAssignment.plan.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let clientPlanAssignment; let i = index">
+          <button *ngIf="i === highlightedRowIndex" mat-button type="button"
+            (click)="editClientPlanAssignment(clientPlanAssignment)">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+    <div [hidden]="dataSource.totalElements === 0">
+      <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"
+        [pageSizeOptions]="paginatorConfig.pageSizeOptions">
+      </mat-paginator>
+    </div>
+    <app-no-records-found [length]="dataSource.totalElements"></app-no-records-found>
+  </mat-card-content>
+</mat-card>

@@ -4,7 +4,6 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { ClientsService } from './clients.service';
 import { Client } from '../model/client.model';
 
-
 @Injectable({
   providedIn: 'root'
 })

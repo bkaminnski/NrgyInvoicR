@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ClientPlanAssignmentsService } from './client-plan-assignments.service';
 
 @Component({
   templateUrl: './client-plan-assignments-page.component.html',
-  styleUrls: ['./client-plan-assignments-page.component.scss']
+  providers: [
+    ClientPlanAssignmentsService
+  ]
 })
 export class ClientPlanAssignmentsPageComponent implements OnInit {
 

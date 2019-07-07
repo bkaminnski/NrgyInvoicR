@@ -8,19 +8,19 @@ import { PlanVersion } from 'src/app/plans/model/plan-version.model';
 import { PlanVersionsService } from '../plan-versions.service';
 
 export class PlanVersionsListDataSource implements DataSource<PlanVersion> {
-  private plansSubject = new BehaviorSubject<PlanVersion[]>([]);
-  public plans = this.plansSubject.asObservable();
+  private planVersionsSubject = new BehaviorSubject<PlanVersion[]>([]);
+  public planVersions = this.planVersionsSubject.asObservable();
   public totalElements = 0;
   public loading = false;
 
   constructor(private planVersionsService: PlanVersionsService) { }
 
   connect(collectionViewer: CollectionViewer): Observable<PlanVersion[]> {
-    return this.plans;
+    return this.planVersions;
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.plansSubject.complete();
+    this.planVersionsSubject.complete();
   }
 
   loadPlanVersions(plan: Plan, pageDefinition: PageDefinition, callback: (page: Page<PlanVersion>) => void = () => { }) {
@@ -32,6 +32,6 @@ export class PlanVersionsListDataSource implements DataSource<PlanVersion> {
         tap<Page<PlanVersion>>(page => this.totalElements = page.totalElements),
         tap<Page<PlanVersion>>(page => callback(page))
       )
-      .subscribe(page => this.plansSubject.next(page.content));
+      .subscribe(page => this.planVersionsSubject.next(page.content));
   }
 }

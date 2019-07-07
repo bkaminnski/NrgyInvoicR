@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'meters', component: MetersPageComponent },
   {
     path: 'clients/:id/planAssignments', component: ClientPlanAssignmentsPageComponent, resolve: {
-      plan: ClientResolverService
+      client: ClientResolverService
     }
   },
   { path: 'clients', component: ClientsPageComponent },
