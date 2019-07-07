@@ -1,6 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlanVersionsService } from '../plan-versions.service';
@@ -39,7 +38,7 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private planVersionsService: PlanVersionsService,
     private dialog: MatDialog
   ) {
@@ -117,6 +116,6 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['/plans']);
   }
 }

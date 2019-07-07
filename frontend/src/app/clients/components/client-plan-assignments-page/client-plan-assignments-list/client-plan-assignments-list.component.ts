@@ -1,7 +1,6 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { Client } from 'src/app/clients/model/client.model';
 import { ClientPlanAssignment } from 'src/app/clients/model/client-plan-assignment.model';
@@ -38,7 +37,7 @@ export class ClientPlanAssignmentsListComponent implements OnInit, AfterViewInit
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private clientPlanAssignmentsService: ClientPlanAssignmentsService,
     private dialog: MatDialog
   ) {
@@ -117,6 +116,6 @@ export class ClientPlanAssignmentsListComponent implements OnInit, AfterViewInit
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['/clients']);
   }
 }
