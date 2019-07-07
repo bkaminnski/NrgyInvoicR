@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Client } from '../../model/client.model';
-import { ClientsSearchCriteria } from '../../model/clients-search-criteria.model';
+import { Client } from '../model/client.model';
+import { ClientsSearchCriteria } from '../model/clients-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ClientsService {
 
   constructor(private http: HttpClient) { }
@@ -44,5 +46,9 @@ export class ClientsService {
     return this.http.get<Page<Client>>('/api/clients', { params: params }).pipe(
       map(Page.cloned)
     );
+  }
+
+  getClient(id: number): Observable<Client> {
+    return this.http.get<Client>('/api/clients/' + id);
   }
 }

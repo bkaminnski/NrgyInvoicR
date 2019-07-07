@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
-import { ClientsService } from '../clients.service';
+import { ClientsService } from '../../clients.service';
 import { ClientsListDataSource } from './clients-list.datasource';
 import { ClientsSearchCriteria } from 'src/app/clients/model/clients-search-criteria.model';
 import { Client } from 'src/app/clients/model/client.model';

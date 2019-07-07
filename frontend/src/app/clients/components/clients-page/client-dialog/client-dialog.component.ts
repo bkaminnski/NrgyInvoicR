@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Client } from 'src/app/clients/model/client.model';
-import { ClientsService } from '../clients.service';
 import { finalize } from 'rxjs/operators';
+import { Client } from 'src/app/clients/model/client.model';
+import { ClientsService } from '../../clients.service';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({

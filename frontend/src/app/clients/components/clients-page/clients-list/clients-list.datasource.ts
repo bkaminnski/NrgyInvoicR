@@ -4,7 +4,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Client } from 'src/app/clients/model/client.model';
-import { ClientsService } from '../clients.service';
+import { ClientsService } from '../../clients.service';
 import { ClientsSearchCriteria } from 'src/app/clients/model/clients-search-criteria.model';
 
 export class ClientsListDataSource implements DataSource<Client> {
