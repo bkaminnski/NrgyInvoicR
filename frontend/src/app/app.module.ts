@@ -17,6 +17,7 @@ import { NotificationComponent } from './core/components/notification/notificati
 import { MeterDialogComponent } from './meters/components/meters-page/meter-dialog/meter-dialog.component';
 import { ClientDialogComponent } from './clients/components/clients-page/client-dialog/client-dialog.component';
 import { PlanVersionDialogComponent } from './plans/components/plan-versions-page/plan-version-dialog/plan-version-dialog.component';
+import { ClientPlanAssignmentDialogComponent } from './clients/components/client-plan-assignments-page/client-plan-assignment-dialog/client-plan-assignment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PlanVersionDialogComponent } from './plans/components/plan-versions-pag
     NotificationComponent,
     MeterDialogComponent,
     ClientDialogComponent,
-    PlanVersionDialogComponent
+    PlanVersionDialogComponent,
+    ClientPlanAssignmentDialogComponent
   ]
 })
 export class AppModule { }

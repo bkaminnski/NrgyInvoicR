@@ -1,0 +1,21 @@
+<form #clientPlanAssignmentForm="ngForm" (ngSubmit)="clientPlanAssignmentForm.form.valid && save()" autocomplete="off"
+  novalidate>
+  <h1 mat-dialog-title>
+    <span *ngIf="clientPlanAssignment.isNew() === true">Assign a Plan</span>
+    <span *ngIf="clientPlanAssignment.isNew() === false">Edit Plan Assignment</span>
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </h1>
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput required [matDatepicker]="validSinceDatepicker" placeholder="Valid Since" name="validSince"
+        #validSinceInput="ngModel" [(ngModel)]="clientPlanAssignment.validSince">
+      <mat-datepicker-toggle matSuffix [for]="validSinceDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #validSinceDatepicker></mat-datepicker>
+      <mat-error *ngIf="validSinceInput.invalid">Valid Since is required</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

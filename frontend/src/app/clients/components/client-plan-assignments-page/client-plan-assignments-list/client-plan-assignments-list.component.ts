@@ -6,6 +6,7 @@ import { Client } from 'src/app/clients/model/client.model';
 import { ClientPlanAssignment } from 'src/app/clients/model/client-plan-assignment.model';
 import { ClientPlanAssignmentsService } from '../client-plan-assignments.service';
 import { ClientPlanAssignmentsListDataSource } from './client-plan-assignments-list.datasource';
+import { ClientPlanAssignmentDialogComponent } from '../client-plan-assignment-dialog/client-plan-assignment-dialog.component';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 
@@ -77,7 +78,7 @@ export class ClientPlanAssignmentsListComponent implements OnInit, AfterViewInit
     }
   }
 
-  registerClientPlanAssignment() {
+  assignPlan() {
     const clientPlanAssignment = new ClientPlanAssignment(null);
     this.openClientPlanAssignmentDialog(clientPlanAssignment).subscribe(d => {
       if (d) {
@@ -99,12 +100,9 @@ export class ClientPlanAssignmentsListComponent implements OnInit, AfterViewInit
       data: { client: this.client, clientPlanAssignment: clientPlanAssignment },
       disableClose: true,
       autoFocus: true,
-      minWidth: '50%',
-      maxWidth: '70%',
-      position: { top: '100px' }
+      minWidth: '33%'
     };
-    // return this.dialog.open(ClientPlanAssignmentDialogComponent, dialogConfig).afterClosed();
-    return null;
+    return this.dialog.open(ClientPlanAssignmentDialogComponent, dialogConfig).afterClosed();
   }
 
   mouseEnter(highlightedRowIndex: number) {

@@ -13,6 +13,7 @@ import { ClientDialogComponent } from './components/clients-page/client-dialog/c
 import { MetersModule } from '../meters/meters.module';
 import { ClientPlanAssignmentsPageComponent } from './components/client-plan-assignments-page/client-plan-assignments-page.component';
 import { ClientPlanAssignmentsListComponent } from './components/client-plan-assignments-page/client-plan-assignments-list/client-plan-assignments-list.component';
+import { ClientPlanAssignmentDialogComponent } from './components/client-plan-assignments-page/client-plan-assignment-dialog/client-plan-assignment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ClientPlanAssignmentsListComponent } from './components/client-plan-ass
     ClientsListComponent,
     ClientDialogComponent,
     ClientPlanAssignmentsPageComponent,
-    ClientPlanAssignmentsListComponent
+    ClientPlanAssignmentsListComponent,
+    ClientPlanAssignmentDialogComponent
   ],
   imports: [
     CommonModule,

@@ -15,8 +15,8 @@ export class ClientPlanAssignment extends Entity {
   public static cloned(clientPlanAssignment: ClientPlanAssignment): ClientPlanAssignment {
     return new ClientPlanAssignment(
       clientPlanAssignment.validSince,
-      clientPlanAssignment.client === null ? null : Client.cloned(clientPlanAssignment.client),
-      clientPlanAssignment.plan === null ? null : Plan.cloned(clientPlanAssignment.plan),
+      clientPlanAssignment.client == null ? null : Client.cloned(clientPlanAssignment.client),
+      clientPlanAssignment.plan == null ? null : Plan.cloned(clientPlanAssignment.plan),
       clientPlanAssignment.id
     );
   }
