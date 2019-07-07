@@ -4,7 +4,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Meter } from 'src/app/meters/model/meter.model';
-import { MetersService } from '../meters.service';
+import { MetersService } from '../../meters.service';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 
 export class MetersListDataSource implements DataSource<Meter> {

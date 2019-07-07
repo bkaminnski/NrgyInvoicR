@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.hclc.nrgyinvoicr.backend.plans.entity.PlansSpecification.nameLike;
+
 @Service
 public class PlansService {
     private final PlansRepository plansRepository;
@@ -20,6 +22,7 @@ public class PlansService {
     }
 
     public Page<Plan> findPlans(PlansSearchCriteria criteria) {
-        return this.plansRepository.findAll(criteria.getPageDefinition().asPageRequest());
+        String name = criteria.getName();
+        return this.plansRepository.findAll(nameLike(name), criteria.getPageDefinition().asPageRequest());
     }
 }

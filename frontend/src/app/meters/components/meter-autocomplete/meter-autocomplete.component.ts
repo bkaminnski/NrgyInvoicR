@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, forwardRef, Input } from '@angular/core';
-import { MetersService } from '../meters-page/meters.service';
-import { Subject, Subscription, BehaviorSubject, of } from 'rxjs';
-import { Meter } from '../../model/meter.model';
-import { debounceTime, catchError, finalize, tap } from 'rxjs/operators';
-import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
-import { PageDefinition } from 'src/app/core/model/page-definition.model';
-import { Page } from 'src/app/core/model/page.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subject, Subscription, BehaviorSubject, of } from 'rxjs';
+import { debounceTime, catchError, finalize, tap } from 'rxjs/operators';
+import { Meter } from '../../model/meter.model';
+import { MetersService } from '../meters.service';
+import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
+import { Page } from 'src/app/core/model/page.model';
+import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({

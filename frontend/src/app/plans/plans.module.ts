@@ -13,6 +13,7 @@ import { PlanVersionsListComponent } from './components/plan-versions-page/plan-
 import { PlanVersionDialogComponent } from './components/plan-versions-page/plan-version-dialog/plan-version-dialog.component';
 import { FlattenedBucketsListComponent } from './components/plan-versions-page/flattened-buckets-list/flattened-buckets-list.component';
 import { ExpressionTestResultValidatorDirective } from './components/plan-versions-page/plan-version-dialog/expression-test-result.directive';
+import { PlanAutocompleteComponent } from './components/plan-autocomplete/plan-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ExpressionTestResultValidatorDirective } from './components/plan-versio
     PlanVersionsListComponent,
     PlanVersionDialogComponent,
     FlattenedBucketsListComponent,
-    ExpressionTestResultValidatorDirective
+    ExpressionTestResultValidatorDirective,
+    PlanAutocompleteComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,9 @@ import { ExpressionTestResultValidatorDirective } from './components/plan-versio
     MaterialModule,
     CoreModule,
     FormsModule
+  ],
+  exports: [
+    PlanAutocompleteComponent
   ]
 })
 export class PlansModule { }

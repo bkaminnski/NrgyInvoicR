@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Meter } from 'src/app/meters/model/meter.model';
-import { MetersService } from '../meters.service';
+import { MetersService } from '../../meters.service';
 import { finalize } from 'rxjs/operators';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 

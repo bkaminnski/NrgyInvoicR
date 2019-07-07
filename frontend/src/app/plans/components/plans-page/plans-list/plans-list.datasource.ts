@@ -5,6 +5,7 @@ import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { Plan } from 'src/app/plans/model/plan.model';
 import { PlansService } from '../../plans.service';
+import { PlansSearchCriteria } from 'src/app/plans/model/plans-search-criteria.model';
 
 export class PlansListDataSource implements DataSource<Plan> {
   private plansSubject = new BehaviorSubject<Plan[]>([]);
@@ -24,7 +25,7 @@ export class PlansListDataSource implements DataSource<Plan> {
 
   loadPlans(pageDefinition: PageDefinition) {
     this.loading = true;
-    this.plansService.findPlans(pageDefinition)
+    this.plansService.findPlans(new PlansSearchCriteria(), pageDefinition)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loading = false),

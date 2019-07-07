@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Meter } from '../../model/meter.model';
-import { MetersSearchCriteria } from '../../model/meters-search-criteria.model';
+import { map } from 'rxjs/operators';
+import { Meter } from '../model/meter.model';
+import { MetersSearchCriteria } from '../model/meters-search-criteria.model';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MetersService {

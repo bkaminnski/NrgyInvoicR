@@ -1,0 +1,16 @@
+<div class="spinner-container">
+  <mat-form-field>
+    <input matInput [required]="required" placeholder="Plan" name="plan" #plan="ngModel" [(ngModel)]="selectedPlan"
+      [matAutocomplete]="planAutocomplete" (ngModelChange)="nameChanged($event)" (blur)="discardNonExistingName()">
+    <mat-autocomplete #planAutocomplete="matAutocomplete" [displayWith]="planAsString" autoActiveFirstOption
+      (closed)="discardNonExistingName()">
+      <mat-option *ngFor="let plan of (plans | async)" [value]="plan">
+        {{plan.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="plan.invalid">Plan is required</mat-error>
+  </mat-form-field>
+  <div class="spinner-container-child">
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </div>
+</div>

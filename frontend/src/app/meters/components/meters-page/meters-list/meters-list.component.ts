@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
-import { MetersService } from '../meters.service';
+import { MetersService } from '../../meters.service';
 import { MetersListDataSource } from './meters-list.datasource';
 import { MetersSearchCriteria } from 'src/app/meters/model/meters-search-criteria.model';
 import { Meter } from 'src/app/meters/model/meter.model';

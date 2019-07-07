@@ -13,6 +13,7 @@
       <mat-datepicker #validSinceDatepicker></mat-datepicker>
       <mat-error *ngIf="validSinceInput.invalid">Valid Since is required</mat-error>
     </mat-form-field>
+    <app-plan-autocomplete required name="plan" [(ngModel)]="clientPlanAssignment.plan"></app-plan-autocomplete>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button class="mat-primary" type="submit">Save</button>

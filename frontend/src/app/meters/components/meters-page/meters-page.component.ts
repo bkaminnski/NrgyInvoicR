@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetersService } from './meters.service';
+import { MetersService } from '../meters.service';
 
 @Component({
   templateUrl: './meters-page.component.html',
