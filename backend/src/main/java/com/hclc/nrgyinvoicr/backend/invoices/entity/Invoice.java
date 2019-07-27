@@ -23,6 +23,9 @@ public class Invoice extends AuditableEntity {
     @NotNull
     private ZonedDateTime issueDate;
 
+    @Column(name = "invoice_run_id")
+    private Long invoiceRunId;
+
     public Long getId() {
         return id;
     }

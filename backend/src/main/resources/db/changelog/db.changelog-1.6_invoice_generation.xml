@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="bkaminnski" id="1.6_invoice_generation_001">
+        <createTable tableName="invoice_run">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="issue_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="since_closed" type="timestamp with timezone"/>
+            <column name="until_open" type="timestamp with timezone"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="invoice_run_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.6_invoice_generation_002">
+        <addColumn tableName="invoice">
+            <column name="invoice_run_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="invoice_run_id"
+                                 constraintName="invoice_invoice_run_fk"
+                                 referencedTableName="invoice_run" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
