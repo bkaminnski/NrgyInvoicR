@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardPageComponent } from './dashboard/components/dashboard-page/dashboard-page.component';
+import { InvoiceRunsPageComponent } from './invoices/components/invoice-runs-page/invoice-runs-page.component';
 import { InvoicesPageComponent } from './invoices/components/invoices-page/invoices-page.component';
 import { PlansPageComponent } from './plans/components/plans-page/plans-page.component';
 import { PlanVersionsPageComponent } from './plans/components/plan-versions-page/plan-versions-page.component';
@@ -16,6 +17,7 @@ import { ClientResolverService } from './clients/components/client-resolver.serv
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
+  { path: 'invoiceRuns', component: InvoiceRunsPageComponent },
   { path: 'invoices', component: InvoicesPageComponent },
   {
     path: 'plans/:id/versions', component: PlanVersionsPageComponent, resolve: {

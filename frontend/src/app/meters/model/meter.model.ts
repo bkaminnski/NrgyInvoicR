@@ -9,7 +9,6 @@ export class Meter extends Entity {
     id?: number
   ) {
     super(id);
-    this.serialNumber = serialNumber;
   }
 
   static cloned(meter: Meter): Meter {

@@ -18,6 +18,7 @@ import { MeterDialogComponent } from './meters/components/meters-page/meter-dial
 import { ClientDialogComponent } from './clients/components/clients-page/client-dialog/client-dialog.component';
 import { PlanVersionDialogComponent } from './plans/components/plan-versions-page/plan-version-dialog/plan-version-dialog.component';
 import { ClientPlanAssignmentDialogComponent } from './clients/components/client-plan-assignments-page/client-plan-assignment-dialog/client-plan-assignment-dialog.component';
+import { InvoiceRunDialogComponent } from './invoices/components/invoice-runs-page/invoice-run-dialog/invoice-run-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ClientPlanAssignmentDialogComponent } from './clients/components/client
     MeterDialogComponent,
     ClientDialogComponent,
     PlanVersionDialogComponent,
-    ClientPlanAssignmentDialogComponent
+    ClientPlanAssignmentDialogComponent,
+    InvoiceRunDialogComponent
   ]
 })
 export class AppModule { }

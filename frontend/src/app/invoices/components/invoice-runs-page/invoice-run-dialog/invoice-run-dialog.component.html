@@ -1,0 +1,36 @@
+<form #invoiceRunForm="ngForm" (ngSubmit)="invoiceRunForm.form.valid && save()" autocomplete="off" novalidate>
+  <h1 mat-dialog-title>
+    <span *ngIf="invoiceRun.isNew() === true">Create a New Invoice Run</span>
+    <span *ngIf="invoiceRun.isNew() === false">Edit Invoice Run</span>
+    <mat-spinner *ngIf="loading" [diameter]="20" class="table-spinner"></mat-spinner>
+  </h1>
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field>
+        <input matInput required [matDatepicker]="sinceClosedDatepicker" placeholder="Since" name="sinceClosed"
+          #sinceClosedInput="ngModel" [(ngModel)]="invoiceRun.sinceClosed">
+        <mat-datepicker-toggle matSuffix [for]="sinceClosedDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #sinceClosedDatepicker></mat-datepicker>
+        <mat-error *ngIf="sinceClosedInput.invalid">Since is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [matDatepicker]="untilOpenDatepicker" placeholder="Until" name="untilOpen"
+          #untilOpenInput="ngModel" [(ngModel)]="invoiceRun.untilOpen">
+        <mat-datepicker-toggle matSuffix [for]="untilOpenDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #untilOpenDatepicker></mat-datepicker>
+        <mat-error *ngIf="untilOpenInput.invalid">Until is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [matDatepicker]="issueDateDatepicker" placeholder="Issue Date" name="issueDate"
+          #issueDateInput="ngModel" [(ngModel)]="invoiceRun.issueDate">
+        <mat-datepicker-toggle matSuffix [for]="issueDateDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #issueDateDatepicker></mat-datepicker>
+        <mat-error *ngIf="issueDateInput.invalid">Issue Date is required</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>
