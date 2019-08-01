@@ -72,11 +72,12 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   }
 
   createInvoiceRun() {
-    const invoiceRun = new InvoiceRun();
-    this.openInvoiceRunDialog(invoiceRun).subscribe(d => {
-      if (d) {
-        this.resetPaginatorAndSearchWithCriteria(d);
-      }
+    this.invoiceRunsService.prepareNewInvoiceRun().subscribe(newInvoiceRun => {
+      this.openInvoiceRunDialog(newInvoiceRun).subscribe(i => {
+        if (i) {
+          this.resetPaginatorAndSearchWithCriteria(i);
+        }
+      });
     });
   }
 

@@ -27,4 +27,8 @@ export class InvoiceRunsService {
       map(Page.cloned)
     );
   }
+
+  prepareNewInvoiceRun(): Observable<InvoiceRun> {
+    return this.http.get<InvoiceRun>('/api/invoiceRuns/new');
+  }
 }
