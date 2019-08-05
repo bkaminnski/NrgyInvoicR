@@ -14,7 +14,7 @@ class HourBucket extends Bucket {
     private static final int LAST_HOUR = 23;
     private final int since;
     private final int until;
-    private final BigDecimal price;
+    private final BigDecimal unitPrice;
     private BigDecimal totalUsage = ZERO;
 
     HourBucket(ExpressionLine bucketStart, List<ExpressionLine> bucketContent) {
@@ -28,10 +28,10 @@ class HourBucket extends Bucket {
         } catch (IllegalArgumentException e) {
             throw new HourBucketRangeEndException(bucketStart.getLineNumber(), bucketStart.getRangeEnd());
         }
-        if (bucketStart.getPrice() == null) {
-            throw new HourBucketMissingPriceException(bucketStart.getLineNumber());
+        if (bucketStart.getUnitPrice() == null) {
+            throw new HourBucketMissingUnitPriceException(bucketStart.getLineNumber());
         }
-        this.price = bucketStart.getPrice();
+        this.unitPrice = bucketStart.getUnitPrice();
     }
 
     private int parseHour(String hourString) throws IllegalArgumentException {
@@ -67,7 +67,7 @@ class HourBucket extends Bucket {
     @Override
     Bucket optimized() {
         if (coversFullPeriod()) {
-            return new UnconditionalBucket(price, totalUsage);
+            return new UnconditionalBucket(unitPrice, totalUsage);
         }
         return this;
     }
@@ -84,8 +84,8 @@ class HourBucket extends Bucket {
         return until;
     }
 
-    BigDecimal getPrice() {
-        return price;
+    BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
     BigDecimal getTotalUsage() {
@@ -93,6 +93,6 @@ class HourBucket extends Bucket {
     }
 
     BigDecimal getTotalPrice() {
-        return totalUsage.multiply(price);
+        return totalUsage.multiply(unitPrice);
     }
 }

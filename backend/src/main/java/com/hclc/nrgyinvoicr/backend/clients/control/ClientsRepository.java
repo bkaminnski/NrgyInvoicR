@@ -9,9 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.lang.Nullable;
 
-interface ClientsRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
+import java.util.List;
+
+public interface ClientsRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
 
     @Override
     @EntityGraph("clientWithMeter")
     Page<Client> findAll(@Nullable Specification<Client> spec, Pageable pageable);
+
+    @Override
+    @EntityGraph("clientWithMeter")
+    List<Client> findAll();
 }

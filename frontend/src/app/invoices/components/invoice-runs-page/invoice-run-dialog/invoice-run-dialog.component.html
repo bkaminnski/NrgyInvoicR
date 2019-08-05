@@ -28,6 +28,19 @@
         <mat-error *ngIf="issueDateInput.invalid">Issue Date is required</mat-error>
       </mat-form-field>
     </div>
+    <div class="form-row">
+      <mat-form-field>
+        <input matInput required placeholder="First Invoice Number" name="firstInvoiceNumber"
+          #firstInvoiceNumber="ngModel" [(ngModel)]="invoiceRun.firstInvoiceNumber" type="number" step="1" min="1"
+          max="999999999">
+        <mat-error *ngIf="firstInvoiceNumber.invalid">First Invoice Number is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required maxlength="50" placeholder="Invoice Number Template" name="numberTemplate"
+          #numberTemplate="ngModel" [(ngModel)]="invoiceRun.numberTemplate">
+        <mat-error *ngIf="numberTemplate.invalid">Number Template is required</mat-error>
+      </mat-form-field>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button class="mat-primary" type="submit">Save</button>

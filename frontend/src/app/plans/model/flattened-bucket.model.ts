@@ -1,4 +1,4 @@
 export class FlattenedBucket {
-  public price: number;
+  public unitPrice: number;
   public description: string;
 }

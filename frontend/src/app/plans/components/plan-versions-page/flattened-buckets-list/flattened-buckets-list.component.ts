@@ -11,7 +11,7 @@ import { FlattenedBucket } from 'src/app/plans/model/flattened-bucket.model';
 export class FlattenedBucketsListComponent implements OnInit {
   @Input() flattenedBucketsObservable: Observable<FlattenedBucket[]>;
   public dataSource: FlattenedBucketsListDataSource;
-  public displayedColumns: string[] = ['description', 'price'];
+  public displayedColumns: string[] = ['description', 'unitPrice'];
 
   constructor() { }
 

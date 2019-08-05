@@ -22,8 +22,8 @@ class DayOfWeekBucket extends Bucket {
         } catch (IllegalArgumentException e) {
             throw new DayOfWeekBucketRangeEndException(bucketStart.getLineNumber(), bucketStart.getRangeEnd());
         }
-        if (bucketStart.getPrice() != null) {
-            throw new DayOfWeekBucketRangePriceDeclaredException(bucketStart.getLineNumber(), bucketStart.getPrice());
+        if (bucketStart.getUnitPrice() != null) {
+            throw new DayOfWeekBucketRangePriceDeclaredException(bucketStart.getLineNumber(), bucketStart.getUnitPrice());
         }
         List<Bucket> hourBuckets = new BucketsCreator(bucketContent, 3, HourBucket::new).create();
         if (hourBuckets.isEmpty()) {

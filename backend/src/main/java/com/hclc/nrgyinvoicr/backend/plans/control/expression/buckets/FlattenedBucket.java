@@ -9,18 +9,18 @@ public class FlattenedBucket {
     private Integer dayOfWeekUntil;
     private Integer hourSince;
     private Integer hourUntil;
-    private final BigDecimal price;
+    private final BigDecimal unitPrice;
     private final BigDecimal totalUsage;
     private final BigDecimal totalPrice;
 
     FlattenedBucket(UnconditionalBucket unconditionalBucket) {
-        price = unconditionalBucket.getPrice();
+        unitPrice = unconditionalBucket.getPrice();
         totalUsage = unconditionalBucket.getTotalUsage();
         totalPrice = unconditionalBucket.getTotalPrice();
     }
 
     FlattenedBucket(HourBucket hourBucket) {
-        price = hourBucket.getPrice();
+        unitPrice = hourBucket.getUnitPrice();
         totalUsage = hourBucket.getTotalUsage();
         totalPrice = hourBucket.getTotalPrice();
         hourSince = hourBucket.getSince();
@@ -56,8 +56,8 @@ public class FlattenedBucket {
         return description.toString();
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
     public BigDecimal getTotalUsage() {

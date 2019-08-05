@@ -6,11 +6,20 @@ export class InvoiceRun extends Entity {
     public sinceClosed?: Date,
     public untilOpen?: Date,
     public issueDate?: Date,
+    public firstInvoiceNumber?: number,
+    public numberTemplate?: string,
     public id: number = null) {
     super(id);
   }
 
   static cloned(invoiceRun: InvoiceRun): InvoiceRun {
-    return new InvoiceRun(invoiceRun.sinceClosed, invoiceRun.untilOpen, invoiceRun.issueDate, invoiceRun.id);
+    return new InvoiceRun(
+      invoiceRun.sinceClosed,
+      invoiceRun.untilOpen,
+      invoiceRun.issueDate,
+      invoiceRun.firstInvoiceNumber,
+      invoiceRun.numberTemplate,
+      invoiceRun.id
+    );
   }
 }

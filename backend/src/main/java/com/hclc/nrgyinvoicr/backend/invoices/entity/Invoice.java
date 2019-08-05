@@ -1,10 +1,13 @@
 package com.hclc.nrgyinvoicr.backend.invoices.entity;
 
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
+import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -25,6 +28,28 @@ public class Invoice extends AuditableEntity {
 
     @Column(name = "invoice_run_id")
     private Long invoiceRunId;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @NotNull
+    private BigDecimal grossTotal;
+
+    @OneToMany
+    @JoinColumn(name = "invoice_id")
+    private List<InvoiceLine> invoiceLines;
+
+    protected Invoice() {
+    }
+
+    public Invoice(String number, ZonedDateTime issueDate, Long invoiceRunId, Client client, BigDecimal grossTotal) {
+        this.number = number;
+        this.issueDate = issueDate;
+        this.invoiceRunId = invoiceRunId;
+        this.client = client;
+        this.grossTotal = grossTotal;
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +73,13 @@ public class Invoice extends AuditableEntity {
 
     public void setIssueDate(ZonedDateTime issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public BigDecimal getGrossTotal() {
+        return grossTotal;
+    }
+
+    public void setGrossTotal(BigDecimal grossTotal) {
+        this.grossTotal = grossTotal;
     }
 }

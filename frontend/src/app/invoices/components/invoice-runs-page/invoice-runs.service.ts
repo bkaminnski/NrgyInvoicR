@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
-import { Plan } from 'src/app/plans/model/plan.model';
 import { InvoiceRun } from '../../model/invoice-run.model';
 import { map } from 'rxjs/operators';
 
@@ -30,5 +29,9 @@ export class InvoiceRunsService {
 
   prepareNewInvoiceRun(): Observable<InvoiceRun> {
     return this.http.get<InvoiceRun>('/api/invoiceRuns/new');
+  }
+
+  startInvoiceRun(invoiceRun: InvoiceRun): Observable<InvoiceRun> {
+    return this.http.post<InvoiceRun>('/api/invoiceRuns/' + invoiceRun.id + '/start', invoiceRun);
   }
 }

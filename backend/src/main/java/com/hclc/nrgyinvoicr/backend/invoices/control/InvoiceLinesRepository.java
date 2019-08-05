@@ -1,8 +1,8 @@
 package com.hclc.nrgyinvoicr.backend.invoices.control;
 
-import com.hclc.nrgyinvoicr.backend.invoices.entity.Invoice;
+import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceLine;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-public interface InvoicesRepository extends CrudRepository<Invoice, Long>, JpaSpecificationExecutor<Invoice> {
+public interface InvoiceLinesRepository extends CrudRepository<InvoiceLine, Long>, JpaSpecificationExecutor<InvoiceLine> {
 }

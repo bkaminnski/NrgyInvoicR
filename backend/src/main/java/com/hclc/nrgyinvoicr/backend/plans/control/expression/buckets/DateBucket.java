@@ -25,8 +25,8 @@ class DateBucket extends Bucket {
         }
         this.since = parseDate(sinceAsString);
         this.until = parseDate(untilAsString);
-        if (bucketStart.getPrice() != null) {
-            throw new DateBucketRangePriceDeclaredException(bucketStart.getLineNumber(), bucketStart.getPrice());
+        if (bucketStart.getUnitPrice() != null) {
+            throw new DateBucketRangePriceDeclaredException(bucketStart.getLineNumber(), bucketStart.getUnitPrice());
         }
         List<Bucket> dayOfWeekBuckets = new BucketsCreator(bucketContent, 2, DayOfWeekBucket::new).create();
         if (dayOfWeekBuckets.isEmpty()) {

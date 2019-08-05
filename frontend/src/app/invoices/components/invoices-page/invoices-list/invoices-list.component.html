@@ -20,6 +20,10 @@
         <mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</mat-header-cell>
         <mat-cell *matCellDef="let invoice">{{invoice.issueDate | date:'shortDate'}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="grossTotal">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Gross Total</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.grossTotal}}</mat-cell>
+      </ng-container>
     </mat-table>
     <div [hidden]="dataSource.totalElements === 0">
       <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"

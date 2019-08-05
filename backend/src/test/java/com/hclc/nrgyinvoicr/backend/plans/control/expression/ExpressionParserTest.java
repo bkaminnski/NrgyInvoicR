@@ -54,7 +54,7 @@ class ExpressionParserTest {
 
         assertThat(flattenedBuckets).hasSize(1);
         assertThat(flattenedBuckets.get(0).getDescription()).isEqualTo("Stable");
-        assertThat(flattenedBuckets.get(0).getPrice()).isEqualByComparingTo("0.18692");
+        assertThat(flattenedBuckets.get(0).getUnitPrice()).isEqualByComparingTo("0.18692");
         assertThat(flattenedBuckets.get(0).getTotalUsage()).isEqualByComparingTo(ZERO);
         assertThat(flattenedBuckets.get(0).getTotalPrice()).isEqualByComparingTo(ZERO);
     }
@@ -85,7 +85,7 @@ class ExpressionParserTest {
                 of("LINE_ERROR_DAY_OF_WEEK_END_1", LINE_ERROR_DAY_OF_WEEK_END_1, 2, "Invalid end of day of week range: \"x\". The value should be a number between 1 (Monday) and 7 (Sunday)."),
                 of("LINE_ERROR_DAY_OF_WEEK_END_2", LINE_ERROR_DAY_OF_WEEK_END_2, 2, "Invalid end of day of week range: \"8\". The value should be a number between 1 (Monday) and 7 (Sunday)."),
                 of("LINE_ERROR_HOUR_INVALID_PRICE", LINE_ERROR_HOUR_INVALID_PRICE, 3, "Invalid price: \"x\"."),
-                of("LINE_ERROR_HOUR_MISSING_PRICE", LINE_ERROR_HOUR_MISSING_PRICE, 3, "Price is missing in hour range."),
+                of("LINE_ERROR_HOUR_MISSING_PRICE", LINE_ERROR_HOUR_MISSING_PRICE, 3, "Unit price is missing in hour range."),
                 of("LINE_ERROR_HOUR_START_1", LINE_ERROR_HOUR_START_1, 3, "Invalid start of hour range: \"x\". The value should be a number between 0 (inclusive) and 23 (inclusive)."),
                 of("LINE_ERROR_HOUR_START_2", LINE_ERROR_HOUR_START_2, 3, "Invalid start of hour range: \"50\". The value should be a number between 0 (inclusive) and 23 (inclusive)."),
                 of("LINE_ERROR_HOUR_END_1", LINE_ERROR_HOUR_END_1, 3, "Invalid end of hour range: \"x\". The value should be a number between 0 (inclusive) and 23 (inclusive)."),

@@ -9,8 +9,8 @@
     <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
     <mat-cell *matCellDef="let flattenedBucket">{{flattenedBucket.description}}</mat-cell>
   </ng-container>
-  <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-    <mat-cell *matCellDef="let flattenedBucket">{{flattenedBucket.price}}</mat-cell>
+  <ng-container matColumnDef="unitPrice">
+    <mat-header-cell *matHeaderCellDef>Unit Price</mat-header-cell>
+    <mat-cell *matCellDef="let flattenedBucket">{{flattenedBucket.unitPrice}}</mat-cell>
   </ng-container>
 </mat-table>

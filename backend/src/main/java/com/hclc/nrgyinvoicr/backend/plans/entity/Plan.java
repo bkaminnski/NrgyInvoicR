@@ -1,8 +1,11 @@
 package com.hclc.nrgyinvoicr.backend.plans.entity;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import static java.util.Comparator.comparing;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -33,5 +36,11 @@ public class Plan {
 
     public String getDescription() {
         return description;
+    }
+
+    public Optional<PlanVersion> getVersionValidOn(ZonedDateTime validOnDate) {
+        return versions.stream()
+                .filter(p -> !p.getValidSince().isAfter(validOnDate))
+                .max(comparing(PlanVersion::getValidSince));
     }
 }

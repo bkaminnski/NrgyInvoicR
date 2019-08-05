@@ -1,6 +1,5 @@
 package com.hclc.nrgyinvoicr.backend.plans.control.expression.lines;
 
-import com.hclc.nrgyinvoicr.backend.plans.control.expression.lines.ExpressionLine;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,7 +22,7 @@ class ExpressionLineTest {
         assertThat(expressionLine.isLevel(level + 1)).isEqualTo(false);
         assertThat(expressionLine.getRangeStart()).isEqualTo(rangeStart);
         assertThat(expressionLine.getRangeEnd()).isEqualTo(rangeEnd);
-        assertThat(expressionLine.getPrice()).isEqualTo(value);
+        assertThat(expressionLine.getUnitPrice()).isEqualTo(value);
     }
 
     private static Stream<Arguments> parameters() {

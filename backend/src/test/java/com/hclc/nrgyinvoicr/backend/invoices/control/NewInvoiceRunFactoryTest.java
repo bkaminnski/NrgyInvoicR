@@ -15,24 +15,31 @@ import static java.time.Clock.fixed;
 import static java.time.LocalDate.parse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.of;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class NewInvoiceRunFactoryTest {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_8601_DATE);
     private static final NrgyInvoicRConfig config = new NrgyInvoicRConfig() {{
         setTimeZone("Europe/Berlin");
+        setInvoiceNumberTemplate("XYZ");
     }};
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("parameters")
     void shouldCreateNewInvoiceRun(String description, String today, String issueDate, String sinceClosed, String untilOpen) {
         Clock clock = fixed(parse(today, formatter).atStartOfDay().atZone(config.getTimeZoneAsZoneId()).toInstant(), config.getTimeZoneAsZoneId());
-        NewInvoiceRunFactory newInvoiceRunFactory = new NewInvoiceRunFactory(clock, config);
+        InvoicesRepository invoicesRepository = mock(InvoicesRepository.class);
+        when(invoicesRepository.count()).thenReturn(1000L);
+        NewInvoiceRunFactory newInvoiceRunFactory = new NewInvoiceRunFactory(clock, config, invoicesRepository);
 
         InvoiceRun newInvoiceRun = newInvoiceRunFactory.createNewInvoiceRun();
 
-        assertThat(newInvoiceRun.getIssueDate()).isEqualTo(issueDate);
+        assertThat(newInvoiceRun.getIssueDate()).isEqualTo(parse(issueDate, formatter).atStartOfDay().atZone(config.getTimeZoneAsZoneId()));
         assertThat(newInvoiceRun.getSinceClosed()).isEqualTo(parse(sinceClosed, formatter).atStartOfDay().atZone(config.getTimeZoneAsZoneId()));
         assertThat(newInvoiceRun.getUntilOpen()).isEqualTo(parse(untilOpen, formatter).atStartOfDay().atZone(config.getTimeZoneAsZoneId()));
+        assertThat(newInvoiceRun.getFirstInvoiceNumber()).isEqualTo(1001);
+        assertThat(newInvoiceRun.getNumberTemplate()).isEqualTo("XYZ");
     }
 
     private static Stream<Arguments> parameters() {

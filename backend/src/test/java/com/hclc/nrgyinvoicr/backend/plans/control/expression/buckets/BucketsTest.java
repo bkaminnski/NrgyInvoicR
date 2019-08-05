@@ -67,7 +67,7 @@ class BucketsTest {
     }
 
     private void assertPricesAreAsExpected(List<FlattenedBucket> flattenedBuckets, List<ExpectedFlattenedBucket> expected) {
-        List<BigDecimal> actualPrice = flattenedBuckets.stream().map(FlattenedBucket::getPrice).collect(toList());
+        List<BigDecimal> actualPrice = flattenedBuckets.stream().map(FlattenedBucket::getUnitPrice).collect(toList());
         BigDecimal[] expectedPrice = expected.stream().map(ExpectedFlattenedBucket::getPrice).toArray(BigDecimal[]::new);
         assertThat(actualPrice).containsExactly(expectedPrice);
     }

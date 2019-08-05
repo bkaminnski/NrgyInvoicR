@@ -7,7 +7,7 @@ public class ExpressionLine {
     private final String line;
     private final String rangeStart;
     private final String rangeEnd;
-    private final BigDecimal price;
+    private final BigDecimal unitPrice;
 
     public ExpressionLine(int lineNumber, String line) throws ExpressionLineRangeException {
         this.lineNumber = lineNumber;
@@ -15,9 +15,9 @@ public class ExpressionLine {
         String[] rangeAndValue = lineWithoutLeadingDots().split(":");
         try {
             if (rangeAndValue.length == 2) {
-                this.price = new BigDecimal(rangeAndValue[1]);
+                this.unitPrice = new BigDecimal(rangeAndValue[1]);
             } else {
-                this.price = null;
+                this.unitPrice = null;
             }
         } catch (NumberFormatException e) {
             throw new ExpressionLineInvalidPriceException(lineNumber, rangeAndValue[1]);
@@ -51,7 +51,7 @@ public class ExpressionLine {
         return rangeEnd;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 }

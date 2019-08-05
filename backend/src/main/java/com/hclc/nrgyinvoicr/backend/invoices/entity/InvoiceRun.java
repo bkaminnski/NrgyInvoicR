@@ -27,7 +27,13 @@ public class InvoiceRun extends AuditableEntity {
     private ZonedDateTime untilOpen;
 
     @NotNull
-    private LocalDate issueDate;
+    private ZonedDateTime issueDate;
+
+    @NotNull
+    private String numberTemplate;
+
+    @NotNull
+    private Integer firstInvoiceNumber;
 
     public Long getId() {
         return id;
@@ -53,11 +59,27 @@ public class InvoiceRun extends AuditableEntity {
         this.untilOpen = untilOpen;
     }
 
-    public LocalDate getIssueDate() {
+    public ZonedDateTime getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
+    public void setIssueDate(ZonedDateTime issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public String getNumberTemplate() {
+        return numberTemplate;
+    }
+
+    public void setNumberTemplate(String numberTemplate) {
+        this.numberTemplate = numberTemplate;
+    }
+
+    public Integer getFirstInvoiceNumber() {
+        return firstInvoiceNumber;
+    }
+
+    public void setFirstInvoiceNumber(Integer firstInvoiceNumber) {
+        this.firstInvoiceNumber = firstInvoiceNumber;
     }
 }

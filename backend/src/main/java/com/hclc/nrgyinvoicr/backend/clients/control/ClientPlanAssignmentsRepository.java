@@ -6,7 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-interface ClientPlanAssignmentsRepository extends JpaRepository<ClientPlanAssignment, Long>, JpaSpecificationExecutor<ClientPlanAssignment> {
+import java.time.ZonedDateTime;
+import java.util.Optional;
+
+public interface ClientPlanAssignmentsRepository extends JpaRepository<ClientPlanAssignment, Long>, JpaSpecificationExecutor<ClientPlanAssignment> {
 
     Page<ClientPlanAssignment> findByClientId(Long clientId, Pageable pageable);
+
+    Optional<ClientPlanAssignment> findFirstByClientIdAndValidSinceLessThanEqualOrderByValidSinceAscIdDesc(Long clientId, ZonedDateTime validOnDate);
 }

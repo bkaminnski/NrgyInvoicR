@@ -82,6 +82,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Database: JPA, Postgres, Liquibase -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

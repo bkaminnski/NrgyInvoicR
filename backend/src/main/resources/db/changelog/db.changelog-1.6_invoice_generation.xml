@@ -9,7 +9,13 @@
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="issue_date" type="date">
+            <column name="issue_date" type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number_template" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_invoice_number" type="number">
                 <constraints nullable="false"/>
             </column>
             <column name="since_closed" type="timestamp with timezone"/>
@@ -28,5 +34,41 @@
         <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="invoice_run_id"
                                  constraintName="invoice_invoice_run_fk"
                                  referencedTableName="invoice_run" referencedColumnNames="id"/>
+        <addColumn tableName="invoice">
+            <column name="client_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="client_id"
+                                 constraintName="invoice_client_fk"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <addColumn tableName="invoice">
+            <column name="gross_total" type="number(11,2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.6_invoice_generation_003">
+        <createTable tableName="invoice_line">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="invoice_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_price" type="number(11,2)"/>
+            <column name="quantity" type="number(11,4)"/>
+            <column name="unit" type="varchar(10)"/>
+            <column name="net_total" type="number(11,2)"/>
+            <column name="vat" type="number(11,2)"/>
+            <column name="gross_total" type="number(11,2)"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="invoice_line_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="invoice_line" baseColumnNames="invoice_id"
+                                 constraintName="invoice_line_invoice_fk"
+                                 referencedTableName="invoice" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

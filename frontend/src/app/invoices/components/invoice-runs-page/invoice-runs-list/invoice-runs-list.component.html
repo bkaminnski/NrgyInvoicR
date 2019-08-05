@@ -32,6 +32,14 @@
         <mat-header-cell mat-sort-header *matHeaderCellDef>Until</mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.untilOpen | date:'shortDate'}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="firstInvoiceNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>First Invoice Number</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.firstInvoiceNumber}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="numberTemplate">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Number Template</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.numberTemplate}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun; let i = index">

@@ -7,6 +7,7 @@ import { InvoiceRunDialogComponent } from '../invoice-run-dialog/invoice-run-dia
 import { InvoiceRun } from 'src/app/invoices/model/invoice-run.model';
 import { Page } from 'src/app/core/model/page.model';
 import { Observable } from 'rxjs';
+import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
   selector: 'app-invoice-runs-list',
@@ -17,7 +18,7 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: InvoiceRunsListDataSource;
-  public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'options'];
+  public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,7 +36,8 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private invoiceRunsService: InvoiceRunsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.dataSource = new InvoiceRunsListDataSource(this.invoiceRunsService);
   }
@@ -82,7 +84,15 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   }
 
   startInvoiceRun(invoiceRun: InvoiceRun) {
-    console.log(invoiceRun);
+    this.invoiceRunsService.startInvoiceRun(invoiceRun)
+      .subscribe(
+        () => { },
+        errorResponse => this.handleError(errorResponse)
+      );
+  }
+
+  private handleError(errorResponse: any): void {
+    return this.notificationService.error(errorResponse.error.errorMessage);
   }
 
   openInvoiceRunDialog(invoiceRun: InvoiceRun): Observable<InvoiceRun> {
