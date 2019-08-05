@@ -65,20 +65,31 @@ public class InvoiceGenerationService {
 
     private void generateInvoiceForClient(InvoiceRun invoiceRun, Client client, Integer invoiceNumber) throws IOException, NoPlanVersionValidOnDate, NoPlanValidOnDate, NoReadingValueFound {
         ZonedDateTime onDate = invoiceRun.getSinceClosed();
+        PlanVersion planVersion = findPlanVersion(client, onDate);
+        Bucket buckets = createBuckets(planVersion);
+        List<ReadingValue> readingValues = findReadingValuesToInvoice(invoiceRun, client);
+        List<FlattenedBucket> flattenedBuckets = putReadingValuesToBuckets(buckets, readingValues);
+        List<InvoiceLine> invoiceLines = createInvoiceLines(planVersion, flattenedBuckets);
+        BigDecimal invoiceGrossTotal = calculateInvoiceGrossTotal(invoiceLines);
+        Invoice savedInvoice = saveInvoice(invoiceRun, client, invoiceNumber, invoiceGrossTotal);
+        saveInvoiceLines(invoiceLines, savedInvoice);
+    }
 
-        // find plan version
+    private PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanValidOnDate, NoPlanVersionValidOnDate {
         ClientPlanAssignment clientPlanAssignment = clientPlanAssignmentsRepository
                 .findFirstByClientIdAndValidSinceLessThanEqualOrderByValidSinceAscIdDesc(client.getId(), onDate)
                 .orElseThrow(() -> new NoPlanValidOnDate(client, onDate));
         Plan plan = clientPlanAssignment.getPlan();
-        PlanVersion planVersion = plan
+        return plan
                 .getVersionValidOn(onDate)
                 .orElseThrow(() -> new NoPlanVersionValidOnDate(client, plan, onDate));
+    }
 
-        // create buckets
-        Bucket buckets = new ExpressionParser().parse(planVersion.getExpression());
+    private Bucket createBuckets(PlanVersion planVersion) throws IOException {
+        return new ExpressionParser().parse(planVersion.getExpression());
+    }
 
-        // find reading values to invoice
+    private List<ReadingValue> findReadingValuesToInvoice(InvoiceRun invoiceRun, Client client) throws NoReadingValueFound {
         List<Reading> readings = readingsRepository
                 .findByReadingSpreadSinceClosedLessThanAndReadingSpreadUntilOpenGreaterThanAndMeter(
                         invoiceRun.getUntilOpen(),
@@ -95,8 +106,10 @@ public class InvoiceGenerationService {
         if (readingValues.isEmpty()) {
             throw new NoReadingValueFound(client);
         }
+        return readingValues;
+    }
 
-        // put reading values to buckets
+    private List<FlattenedBucket> putReadingValuesToBuckets(Bucket buckets, List<ReadingValue> readingValues) {
         ReadingValue readingValue = readingValues.get(0);
         for (int i = 1; i < readingValues.size(); i++) {
             if (readingValues.get(i).getDate().isAfter(readingValue.getDate())) {
@@ -105,24 +118,29 @@ public class InvoiceGenerationService {
             readingValue = readingValues.get(i);
         }
         buckets.accept(readingValues.get(readingValues.size() - 1));
-        List<FlattenedBucket> flattenedBuckets = buckets.flatten();
+        return buckets.flatten();
+    }
 
-        // create invoice lines
+    private List<InvoiceLine> createInvoiceLines(PlanVersion planVersion, List<FlattenedBucket> flattenedBuckets) {
         List<InvoiceLine> invoiceLines = new ArrayList<>();
         for (FlattenedBucket flattenedBucket : flattenedBuckets) {
             invoiceLines.add(new InvoiceLine(flattenedBucket.getDescription(), flattenedBucket.getUnitPrice(), flattenedBucket.getTotalUsage(), KWH, nrgyInvoicRConfig.getVatAsBigDecimal()));
         }
         invoiceLines.add(new InvoiceLine("Network fee", planVersion.getFixedFees().getNetworkFee(), ONE, NONE, nrgyInvoicRConfig.getVatAsBigDecimal()));
         invoiceLines.add(new InvoiceLine("Subscription fee", planVersion.getFixedFees().getSubscriptionFee(), ONE, NONE, nrgyInvoicRConfig.getVatAsBigDecimal()));
+        return invoiceLines;
+    }
 
-        // calculate invoice gross total
-        BigDecimal invoiceGrossTotal = invoiceLines.stream().map(InvoiceLine::getGrossTotal).reduce(ZERO, BigDecimal::add);
+    private BigDecimal calculateInvoiceGrossTotal(List<InvoiceLine> invoiceLines) {
+        return invoiceLines.stream().map(InvoiceLine::getGrossTotal).reduce(ZERO, BigDecimal::add);
+    }
 
-        // save invoice
+    private Invoice saveInvoice(InvoiceRun invoiceRun, Client client, Integer invoiceNumber, BigDecimal invoiceGrossTotal) {
         Invoice invoice = new Invoice(format(nrgyInvoicRConfig.getInvoiceNumberTemplate(), invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, invoiceGrossTotal);
-        Invoice savedInvoice = invoicesRepository.save(invoice);
+        return invoicesRepository.save(invoice);
+    }
 
-        // save invoice lines
+    private void saveInvoiceLines(List<InvoiceLine> invoiceLines, Invoice savedInvoice) {
         for (InvoiceLine invoiceLine : invoiceLines) {
             invoiceLine.setInvoiceId(savedInvoice.getId());
         }
