@@ -1,10 +1,14 @@
 package com.hclc.nrgyinvoicr.backend.clients.control;
 
+import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.clients.entity.ClientPlanAssignment;
 import com.hclc.nrgyinvoicr.backend.clients.entity.ClientPlanAssignmentsSearchCriteria;
+import com.hclc.nrgyinvoicr.backend.plans.entity.Plan;
+import com.hclc.nrgyinvoicr.backend.plans.entity.PlanVersion;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -22,6 +26,16 @@ public class ClientPlanAssignmentsService {
 
     public Page<ClientPlanAssignment> findClientPlanAssignments(long clientId, ClientPlanAssignmentsSearchCriteria criteria) {
         return clientPlanAssignmentsRepository.findByClientId(clientId, criteria.getPageDefinition().asPageRequest());
+    }
+
+    public PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanValidOnDate, NoPlanVersionValidOnDate {
+        ClientPlanAssignment clientPlanAssignment = clientPlanAssignmentsRepository
+                .findFirstByClientIdAndValidSinceLessThanEqualOrderByValidSinceAscIdDesc(client.getId(), onDate)
+                .orElseThrow(() -> new NoPlanValidOnDate(client, onDate));
+        Plan plan = clientPlanAssignment.getPlan();
+        return plan
+                .getVersionValidOn(onDate)
+                .orElseThrow(() -> new NoPlanVersionValidOnDate(client, plan, onDate));
     }
 
     public Optional<ClientPlanAssignment> updateClientPlanAssignment(ClientPlanAssignment clientPlanAssignment) {

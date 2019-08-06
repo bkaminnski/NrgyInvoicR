@@ -1,6 +1,6 @@
 package com.hclc.nrgyinvoicr.backend.invoices.boundary;
 
-import com.hclc.nrgyinvoicr.backend.ErrorResponse;
+import com.hclc.nrgyinvoicr.backend.EntityNotFoundException;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceRunsService;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunsSearchCriteria;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import java.net.URI;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/invoiceRuns")
@@ -31,6 +31,14 @@ public class InvoiceRunsController {
         return ResponseEntity.created(uri).body(savedInvoiceRun);
     }
 
+    @GetMapping("/{id}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<InvoiceRun> getInvoiceRun(@PathVariable Long id) {
+        return invoiceRunsService.getInvoiceRun(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new EntityNotFoundException(InvoiceRun.class, id));
+    }
+
     @GetMapping
     @Transactional(readOnly = true)
     public Page<InvoiceRun> findInvoiceRuns(InvoiceRunsSearchCriteria invoiceRunsSearchCriteria) {
@@ -45,13 +53,8 @@ public class InvoiceRunsController {
 
     @PostMapping("/{id}/start")
     @Transactional
-    public ResponseEntity<Void> start(@PathVariable Long id) throws Exception {
-        invoiceRunsService.start(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @ExceptionHandler({Exception.class})
-    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        return ResponseEntity.status(BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
+    public ResponseEntity<InvoiceRun> start(@PathVariable Long id) throws Exception {
+        InvoiceRun invoiceRun = invoiceRunsService.start(id);
+        return ok(invoiceRun);
     }
 }

@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -34,6 +33,10 @@ public class InvoiceRun extends AuditableEntity {
 
     @NotNull
     private Integer firstInvoiceNumber;
+
+    public String format(Integer invoiceNumber) {
+        return String.format(numberTemplate, invoiceNumber);
+    }
 
     public Long getId() {
         return id;

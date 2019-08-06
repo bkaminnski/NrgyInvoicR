@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.hclc.nrgyinvoicr.backend.clients.entity.ClientsSpecification.*;
@@ -36,6 +37,10 @@ public class ClientsService {
 
     public Optional<Client> getClient(Long id) {
         return clientsRepository.findById(id);
+    }
+
+    public List<Client> findAll() {
+        return clientsRepository.findAll();
     }
 
     public Page<Client> findClients(ClientsSearchCriteria criteria) {

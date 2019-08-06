@@ -1,10 +1,10 @@
 package com.hclc.nrgyinvoicr.backend.invoices.control.generation;
 
 import com.hclc.nrgyinvoicr.backend.NrgyInvoicRConfig;
-import com.hclc.nrgyinvoicr.backend.clients.control.ClientPlanAssignmentsRepository;
-import com.hclc.nrgyinvoicr.backend.clients.control.ClientsRepository;
+import com.hclc.nrgyinvoicr.backend.clients.control.ClientPlanAssignmentsService;
+import com.hclc.nrgyinvoicr.backend.clients.control.NoPlanValidOnDate;
+import com.hclc.nrgyinvoicr.backend.clients.control.NoPlanVersionValidOnDate;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
-import com.hclc.nrgyinvoicr.backend.clients.entity.ClientPlanAssignment;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceLinesRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoicesRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.Invoice;
@@ -13,13 +13,12 @@ import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import com.hclc.nrgyinvoicr.backend.plans.control.expression.ExpressionParser;
 import com.hclc.nrgyinvoicr.backend.plans.control.expression.buckets.Bucket;
 import com.hclc.nrgyinvoicr.backend.plans.control.expression.buckets.FlattenedBucket;
-import com.hclc.nrgyinvoicr.backend.plans.entity.Plan;
 import com.hclc.nrgyinvoicr.backend.plans.entity.PlanVersion;
-import com.hclc.nrgyinvoicr.backend.readings.control.ReadingValuesRepository;
-import com.hclc.nrgyinvoicr.backend.readings.control.ReadingsRepository;
-import com.hclc.nrgyinvoicr.backend.readings.entity.Reading;
+import com.hclc.nrgyinvoicr.backend.readings.control.NoReadingValueFound;
+import com.hclc.nrgyinvoicr.backend.readings.control.ReadingValuesService;
 import com.hclc.nrgyinvoicr.backend.readings.entity.ReadingValue;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -29,41 +28,43 @@ import java.util.List;
 
 import static com.hclc.nrgyinvoicr.backend.invoices.entity.Unit.KWH;
 import static com.hclc.nrgyinvoicr.backend.invoices.entity.Unit.NONE;
-import static java.lang.String.format;
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
-import static java.util.stream.Collectors.toList;
+import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 @Component
-public class InvoiceGenerationService {
+class InvoiceGenerator {
+    private final ProgressTracker progressTracker;
     private final NrgyInvoicRConfig nrgyInvoicRConfig;
-    private final ClientsRepository clientsRepository;
-    private final ReadingsRepository readingsRepository;
-    private final ReadingValuesRepository readingValuesRepository;
-    private final ClientPlanAssignmentsRepository clientPlanAssignmentsRepository;
+    private final ClientPlanAssignmentsService clientPlanAssignmentsService;
+    private final ReadingValuesService readingValuesService;
     private final InvoicesRepository invoicesRepository;
     private final InvoiceLinesRepository invoiceLinesRepository;
 
-    public InvoiceGenerationService(NrgyInvoicRConfig nrgyInvoicRConfig, ClientsRepository clientsRepository, ReadingsRepository readingsRepository, ReadingValuesRepository readingValuesRepository, ClientPlanAssignmentsRepository clientPlanAssignmentsRepository, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository) {
+    InvoiceGenerator(ProgressTracker progressTracker, NrgyInvoicRConfig nrgyInvoicRConfig, ClientPlanAssignmentsService clientPlanAssignmentsService, ReadingValuesService readingValuesService, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository) {
+        this.progressTracker = progressTracker;
         this.nrgyInvoicRConfig = nrgyInvoicRConfig;
-        this.clientsRepository = clientsRepository;
-        this.readingsRepository = readingsRepository;
-        this.readingValuesRepository = readingValuesRepository;
-        this.clientPlanAssignmentsRepository = clientPlanAssignmentsRepository;
+        this.clientPlanAssignmentsService = clientPlanAssignmentsService;
+        this.readingValuesService = readingValuesService;
         this.invoicesRepository = invoicesRepository;
         this.invoiceLinesRepository = invoiceLinesRepository;
     }
 
-    public void start(InvoiceRun invoiceRun) throws IOException, NoReadingValueFound, NoPlanValidOnDate, NoPlanVersionValidOnDate {
-        List<Client> clients = clientsRepository.findAll();
-        int invoiceNumber = invoiceRun.getFirstInvoiceNumber();
-        for (Client client : clients) {
-            generateInvoiceForClient(invoiceRun, client, invoiceNumber);
-            invoiceNumber++;
+    @Transactional(propagation = REQUIRES_NEW)
+    public void generateInvoice(InvoiceRun invoiceRun, int invoiceNumber, Client client) {
+        try {
+            tryGeneratingInvoice(invoiceRun, client, invoiceNumber);
+            progressTracker.incrementSuccesses(invoiceRun);
+        } catch (NoPlanVersionValidOnDate | NoPlanValidOnDate | NoReadingValueFound e) {
+            progressTracker.addMessage(invoiceRun, e.getMessage());
+            progressTracker.incrementFailures(invoiceRun);
+        } catch (Exception e) {
+            progressTracker.addMessage(invoiceRun, "Unknown error occurred: " + e.getMessage());
+            progressTracker.incrementFailures(invoiceRun);
         }
     }
 
-    private void generateInvoiceForClient(InvoiceRun invoiceRun, Client client, Integer invoiceNumber) throws IOException, NoPlanVersionValidOnDate, NoPlanValidOnDate, NoReadingValueFound {
+    private void tryGeneratingInvoice(InvoiceRun invoiceRun, Client client, Integer invoiceNumber) throws IOException, NoPlanVersionValidOnDate, NoPlanValidOnDate, NoReadingValueFound {
         ZonedDateTime onDate = invoiceRun.getSinceClosed();
         PlanVersion planVersion = findPlanVersion(client, onDate);
         Bucket buckets = createBuckets(planVersion);
@@ -75,14 +76,8 @@ public class InvoiceGenerationService {
         saveInvoiceLines(invoiceLines, savedInvoice);
     }
 
-    private PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanValidOnDate, NoPlanVersionValidOnDate {
-        ClientPlanAssignment clientPlanAssignment = clientPlanAssignmentsRepository
-                .findFirstByClientIdAndValidSinceLessThanEqualOrderByValidSinceAscIdDesc(client.getId(), onDate)
-                .orElseThrow(() -> new NoPlanValidOnDate(client, onDate));
-        Plan plan = clientPlanAssignment.getPlan();
-        return plan
-                .getVersionValidOn(onDate)
-                .orElseThrow(() -> new NoPlanVersionValidOnDate(client, plan, onDate));
+    private PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanVersionValidOnDate, NoPlanValidOnDate {
+        return clientPlanAssignmentsService.findPlanVersion(client, onDate);
     }
 
     private Bucket createBuckets(PlanVersion planVersion) throws IOException {
@@ -90,23 +85,7 @@ public class InvoiceGenerationService {
     }
 
     private List<ReadingValue> findReadingValuesToInvoice(InvoiceRun invoiceRun, Client client) throws NoReadingValueFound {
-        List<Reading> readings = readingsRepository
-                .findByReadingSpreadSinceClosedLessThanAndReadingSpreadUntilOpenGreaterThanAndMeter(
-                        invoiceRun.getUntilOpen(),
-                        invoiceRun.getSinceClosed(),
-                        client.getMeter()
-                );
-        List<Long> readingsIds = readings.stream().map(Reading::getId).collect(toList());
-        List<ReadingValue> readingValues = readingValuesRepository
-                .findByReadingIdInAndDateGreaterThanEqualAndDateLessThanOrderByDateAscReadingIdAsc(
-                        readingsIds,
-                        invoiceRun.getSinceClosed(),
-                        invoiceRun.getUntilOpen()
-                );
-        if (readingValues.isEmpty()) {
-            throw new NoReadingValueFound(client);
-        }
-        return readingValues;
+        return readingValuesService.findReadingValues(invoiceRun.getSinceClosed(), invoiceRun.getUntilOpen(), client.getMeter());
     }
 
     private List<FlattenedBucket> putReadingValuesToBuckets(Bucket buckets, List<ReadingValue> readingValues) {
@@ -136,7 +115,7 @@ public class InvoiceGenerationService {
     }
 
     private Invoice saveInvoice(InvoiceRun invoiceRun, Client client, Integer invoiceNumber, BigDecimal invoiceGrossTotal) {
-        Invoice invoice = new Invoice(format(nrgyInvoicRConfig.getInvoiceNumberTemplate(), invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, invoiceGrossTotal);
+        Invoice invoice = new Invoice(invoiceRun.format(invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, invoiceGrossTotal);
         return invoicesRepository.save(invoice);
     }
 
