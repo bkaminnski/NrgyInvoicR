@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunStatus.NEW;
+
 @Component
 public class InvoicesGenerationStarter {
     private final ClientsService clientsService;
@@ -20,6 +22,9 @@ public class InvoicesGenerationStarter {
     }
 
     public InvoiceRun start(InvoiceRun invoiceRun) {
+        if (invoiceRun.getStatus() != NEW) {
+            throw new IllegalStateException("Only new invoice run can be started.");
+        }
         List<Client> clients = clientsService.findAll();
         InvoiceRun startedInvoiceRun = progressTracker.markAsStarted(invoiceRun, clients.size());
         invoicesGenerator.generateInvoices(invoiceRun, clients);

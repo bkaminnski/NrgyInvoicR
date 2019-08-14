@@ -71,4 +71,31 @@
                                  constraintName="invoice_line_invoice_fk"
                                  referencedTableName="invoice" referencedColumnNames="id"/>
     </changeSet>
+    <changeSet author="bkaminnski" id="1.6_invoice_generation_004">
+        <addColumn tableName="invoice_run">
+            <column name="status" type="varchar2(50)"/>
+            <column name="number_of_invoices_to_generate" type="bigint"/>
+            <column name="number_of_successes" type="bigint"/>
+            <column name="number_of_failures" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="bkaminnski" id="1.6_invoice_generation_005">
+        <createTable tableName="invoice_run_message">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="invoice_run_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="varchar2(2000)"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp with timezone"/>
+            <column name="modified_by" type="varchar(255)"/>
+            <column name="modified_date" type="timestamp with timezone"/>
+        </createTable>
+        <createSequence sequenceName="invoice_run_message_id_seq" startValue="1" minValue="1" incrementBy="50"/>
+        <addForeignKeyConstraint baseTableName="invoice_run_message" baseColumnNames="invoice_run_id"
+                                 constraintName="invoice_run_message_invoice_run_fk"
+                                 referencedTableName="invoice_run" referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>

@@ -18,7 +18,7 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: InvoiceRunsListDataSource;
-  public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate', 'options'];
+  public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate', 'status', 'options'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

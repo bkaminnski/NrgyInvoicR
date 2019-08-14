@@ -40,10 +40,14 @@
         <mat-header-cell mat-sort-header *matHeaderCellDef>Number Template</mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.numberTemplate}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="status">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.status}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun; let i = index">
-          <button *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="startInvoiceRun(invoiceRun)">
+          <button [disabled]="invoiceRun.status != 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="startInvoiceRun(invoiceRun)">
             <mat-icon>play_circle_filled</mat-icon> Start
           </button>
         </mat-cell>

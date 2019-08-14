@@ -52,8 +52,8 @@ public class InvoiceRunsController {
     }
 
     @PostMapping("/{id}/start")
-    @Transactional
-    public ResponseEntity<InvoiceRun> start(@PathVariable Long id) throws Exception {
+    @Transactional(readOnly = true)
+    public ResponseEntity<InvoiceRun> start(@PathVariable Long id) {
         InvoiceRun invoiceRun = invoiceRunsService.start(id);
         return ok(invoiceRun);
     }

@@ -6,6 +6,7 @@ import com.hclc.nrgyinvoicr.backend.clients.control.NoPlanValidOnDate;
 import com.hclc.nrgyinvoicr.backend.clients.control.NoPlanVersionValidOnDate;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceLinesRepository;
+import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceRunsRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoicesRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.Invoice;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceLine;
@@ -38,14 +39,16 @@ class InvoiceGenerator {
     private final NrgyInvoicRConfig nrgyInvoicRConfig;
     private final ClientPlanAssignmentsService clientPlanAssignmentsService;
     private final ReadingValuesService readingValuesService;
+    private final InvoiceRunsRepository invoiceRunsRepository;
     private final InvoicesRepository invoicesRepository;
     private final InvoiceLinesRepository invoiceLinesRepository;
 
-    InvoiceGenerator(ProgressTracker progressTracker, NrgyInvoicRConfig nrgyInvoicRConfig, ClientPlanAssignmentsService clientPlanAssignmentsService, ReadingValuesService readingValuesService, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository) {
+    InvoiceGenerator(ProgressTracker progressTracker, NrgyInvoicRConfig nrgyInvoicRConfig, ClientPlanAssignmentsService clientPlanAssignmentsService, ReadingValuesService readingValuesService, InvoiceRunsRepository invoiceRunsRepository, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository) {
         this.progressTracker = progressTracker;
         this.nrgyInvoicRConfig = nrgyInvoicRConfig;
         this.clientPlanAssignmentsService = clientPlanAssignmentsService;
         this.readingValuesService = readingValuesService;
+        this.invoiceRunsRepository = invoiceRunsRepository;
         this.invoicesRepository = invoicesRepository;
         this.invoiceLinesRepository = invoiceLinesRepository;
     }
@@ -54,13 +57,15 @@ class InvoiceGenerator {
     public void generateInvoice(InvoiceRun invoiceRun, int invoiceNumber, Client client) {
         try {
             tryGeneratingInvoice(invoiceRun, client, invoiceNumber);
-            progressTracker.incrementSuccesses(invoiceRun);
+            invoiceRun = progressTracker.incrementSuccesses(invoiceRun);
         } catch (NoPlanVersionValidOnDate | NoPlanValidOnDate | NoReadingValueFound e) {
             progressTracker.addMessage(invoiceRun, e.getMessage());
-            progressTracker.incrementFailures(invoiceRun);
+            invoiceRun = progressTracker.incrementFailures(invoiceRun);
         } catch (Exception e) {
             progressTracker.addMessage(invoiceRun, "Unknown error occurred: " + e.getMessage());
-            progressTracker.incrementFailures(invoiceRun);
+            invoiceRun = progressTracker.incrementFailures(invoiceRun);
+        } finally {
+            invoiceRunsRepository.save(invoiceRun);
         }
     }
 
