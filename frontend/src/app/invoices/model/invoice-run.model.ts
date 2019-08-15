@@ -1,4 +1,5 @@
 import { Entity } from 'src/app/core/model/entity.model';
+import { InvoiceRunProgress } from './invoice-run-progress.model';
 
 export class InvoiceRun extends Entity {
 
@@ -9,6 +10,7 @@ export class InvoiceRun extends Entity {
     public firstInvoiceNumber?: number,
     public numberTemplate?: string,
     public status?: string,
+    public progress?: InvoiceRunProgress,
     public id: number = null) {
     super(id);
   }
@@ -21,6 +23,7 @@ export class InvoiceRun extends Entity {
       invoiceRun.firstInvoiceNumber,
       invoiceRun.numberTemplate,
       invoiceRun.status,
+      invoiceRun.progress === null ? null : InvoiceRunProgress.cloned(invoiceRun.progress),
       invoiceRun.id
     );
   }

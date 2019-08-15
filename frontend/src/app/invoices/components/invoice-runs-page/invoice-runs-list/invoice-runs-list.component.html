@@ -44,6 +44,18 @@
         <mat-header-cell mat-sort-header *matHeaderCellDef>Status</mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.status}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="progress.numberOfInvoicesToGenerate">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Number of Invoices</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfInvoicesToGenerate}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="progress.numberOfSuccesses">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Successes</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfSuccesses}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="progress.numberOfFailures">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Failures</mat-header-cell>
+        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfFailures}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let invoiceRun; let i = index">

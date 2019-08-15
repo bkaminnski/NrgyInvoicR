@@ -18,7 +18,11 @@ export class InvoiceRunsListComponent implements OnInit, OnDestroy, AfterViewIni
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: InvoiceRunsListDataSource;
-  public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate', 'status', 'options'];
+  public displayedColumns: string[] = [
+    'issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate',
+    'status', 'progress.numberOfInvoicesToGenerate', 'progress.numberOfSuccesses', 'progress.numberOfFailures',
+    'options'
+  ];
   private refreshHeartbeat: Subscription;
   private invoiceRunsToRefresh: InvoiceRun[] = [];
 
