@@ -11,6 +11,7 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
   public invoiceRuns = this.invoiceRunsSubject.asObservable();
   public totalElements = 0;
   public loading = false;
+  private lastPage: Page<InvoiceRun>;
 
   constructor(private invoiceRunsService: InvoiceRunsService) { }
 
@@ -29,8 +30,19 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
         catchError(() => of([])),
         finalize(() => this.loading = false),
         tap<Page<InvoiceRun>>(page => this.totalElements = page.totalElements),
-        tap<Page<InvoiceRun>>(page => callback(page))
+        tap<Page<InvoiceRun>>(page => callback(page)),
+        tap<Page<InvoiceRun>>(page => this.lastPage = page)
       )
       .subscribe(page => this.invoiceRunsSubject.next(page.content));
+  }
+
+  showLastPageReplacing(invoiceRun: InvoiceRun) {
+    const index = this.lastPage.indexOf(invoiceRun);
+    if (index < 0) {
+      return;
+    }
+    const updatedContent = this.lastPage.content.slice();
+    updatedContent[index] = invoiceRun;
+    this.invoiceRunsSubject.next(updatedContent);
   }
 }

@@ -8,6 +8,7 @@ export class InvoiceRun extends Entity {
     public issueDate?: Date,
     public firstInvoiceNumber?: number,
     public numberTemplate?: string,
+    public status?: string,
     public id: number = null) {
     super(id);
   }
@@ -19,6 +20,7 @@ export class InvoiceRun extends Entity {
       invoiceRun.issueDate,
       invoiceRun.firstInvoiceNumber,
       invoiceRun.numberTemplate,
+      invoiceRun.status,
       invoiceRun.id
     );
   }

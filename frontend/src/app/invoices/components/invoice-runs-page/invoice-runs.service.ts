@@ -19,6 +19,10 @@ export class InvoiceRunsService {
     }
   }
 
+  getInvoiceRun(id: number): Observable<InvoiceRun> {
+    return this.http.get<InvoiceRun>('/api/invoiceRuns/' + id);
+  }
+
   findInvoiceRuns(pageDefinition: PageDefinition): Observable<Page<InvoiceRun>> {
     let params = new HttpParams();
     params = pageDefinition.appendTo(params);

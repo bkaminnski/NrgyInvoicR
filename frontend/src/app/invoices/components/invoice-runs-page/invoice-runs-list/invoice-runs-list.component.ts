@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { InvoiceRunsService } from '../invoice-runs.service';
 import { InvoiceRunsListDataSource } from './invoice-runs-list.datasource';
@@ -6,7 +6,7 @@ import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { InvoiceRunDialogComponent } from '../invoice-run-dialog/invoice-run-dialog.component';
 import { InvoiceRun } from 'src/app/invoices/model/invoice-run.model';
 import { Page } from 'src/app/core/model/page.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
 
 @Component({
@@ -14,11 +14,13 @@ import { NotificationService } from 'src/app/core/components/notification/notifi
   templateUrl: './invoice-runs-list.component.html',
   styleUrls: ['./invoice-runs-list.component.scss']
 })
-export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
+export class InvoiceRunsListComponent implements OnInit, OnDestroy, AfterViewInit {
   public highlightedRowIndex: number;
   public spotlightedRowIndex: number;
   public dataSource: InvoiceRunsListDataSource;
   public displayedColumns: string[] = ['issueDate', 'sinceClosed', 'untilOpen', 'firstInvoiceNumber', 'numberTemplate', 'status', 'options'];
+  private refreshHeartbeat: Subscription;
+  private invoiceRunsToRefresh: InvoiceRun[] = [];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,7 +44,13 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
     this.dataSource = new InvoiceRunsListDataSource(this.invoiceRunsService);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.refreshHeartbeat = interval(500).subscribe(() => this.refreshInvoiceRuns());
+  }
+
+  ngOnDestroy(): void {
+    this.refreshHeartbeat.unsubscribe();
+  }
 
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.resetPaginatorAndSearchWithCriteria());
@@ -86,7 +94,7 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   startInvoiceRun(invoiceRun: InvoiceRun) {
     this.invoiceRunsService.startInvoiceRun(invoiceRun)
       .subscribe(
-        () => { },
+        i => this.invoiceRunsToRefresh.push(i),
         errorResponse => this.handleError(errorResponse)
       );
   }
@@ -113,5 +121,20 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
 
   mouseLeave() {
     this.highlightedRowIndex = null;
+  }
+
+  private refreshInvoiceRuns() {
+    this.invoiceRunsToRefresh.forEach(i => this.reloadInvoiceRun(i));
+  }
+
+  private reloadInvoiceRun(invoiceRun: InvoiceRun): void {
+    this.invoiceRunsService
+      .getInvoiceRun(invoiceRun.id)
+      .subscribe(i => {
+        this.dataSource.showLastPageReplacing(i);
+        if (i.status === 'FINISHED') {
+          this.invoiceRunsToRefresh = this.invoiceRunsToRefresh.filter(r => r.id !== i.id);
+        }
+      });
   }
 }
