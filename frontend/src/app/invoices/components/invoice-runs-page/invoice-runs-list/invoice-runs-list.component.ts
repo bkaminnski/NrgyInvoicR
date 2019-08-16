@@ -99,7 +99,10 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   startInvoiceRun(invoiceRun: InvoiceRun) {
     this.invoiceRunsService.startInvoiceRun(invoiceRun)
       .subscribe(
-        i => this.dataSource.autoRefresh(i),
+        i => {
+          this.dataSource.autoRefresh(i);
+          this.expandedInvoiceRun = i;
+        },
         errorResponse => this.handleError(errorResponse)
       );
   }
