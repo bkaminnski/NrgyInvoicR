@@ -3,6 +3,10 @@ table {
   background-color: darkorange;
 }
 
+.mat-column-number {
+  flex: 0 0 70px;
+}
+
 mat-header-row {
   border-bottom-width: 0;
 }

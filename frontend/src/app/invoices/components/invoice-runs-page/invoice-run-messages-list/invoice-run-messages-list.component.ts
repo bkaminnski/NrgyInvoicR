@@ -11,7 +11,7 @@ import { InvoiceRunsService } from '../invoice-runs.service';
 export class InvoiceRunMessagesListComponent implements OnInit {
   @Input() invoiceRun: InvoiceRun;
   public dataSource: InvoiceRunMessagesListDataSource;
-  public displayedColumns: string[] = ['message'];
+  public displayedColumns: string[] = ['number', 'message'];
 
   constructor(private invoiceRunsService: InvoiceRunsService) { }
 
