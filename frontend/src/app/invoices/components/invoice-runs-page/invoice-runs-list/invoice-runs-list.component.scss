@@ -24,3 +24,7 @@ tr.invoice-run-detail-row {
   overflow: hidden;
   display: flex;
 }
+
+.invoice-run-detail-element > * {
+  width: 100%;
+}

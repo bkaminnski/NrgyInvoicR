@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Page } from 'src/app/core/model/page.model';
 import { PageDefinition } from 'src/app/core/model/page-definition.model';
 import { InvoiceRun } from '../../model/invoice-run.model';
+import { InvoiceRunMessage } from '../../model/invoice-run-message.model';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -21,6 +22,10 @@ export class InvoiceRunsService {
 
   getInvoiceRun(id: number): Observable<InvoiceRun> {
     return this.http.get<InvoiceRun>('/api/invoiceRuns/' + id);
+  }
+
+  getInvoiceRunMessages(id: number): Observable<InvoiceRunMessage[]> {
+    return this.http.get<InvoiceRunMessage[]>('/api/invoiceRuns/' + id + '/messages');
   }
 
   findInvoiceRuns(pageDefinition: PageDefinition): Observable<Page<InvoiceRun>> {

@@ -1,0 +1,14 @@
+table {
+  width: 200px;
+  background-color: darkorange;
+}
+
+mat-header-row {
+  border-bottom-width: 0;
+}
+
+mat-row {
+  border-top-color: rgba(0, 0, 0, 0.12);
+  border-top-width: 1px;
+  border-bottom-width: 0;
+}

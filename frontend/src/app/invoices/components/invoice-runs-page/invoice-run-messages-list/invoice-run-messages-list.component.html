@@ -1,0 +1,9 @@
+<mat-table [dataSource]="dataSource">
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let invoiceRunMessage; columns: displayedColumns;">
+  </mat-row>
+  <ng-container matColumnDef="message">
+    <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceRunMessage">{{invoiceRunMessage.message}}</mat-cell>
+  </ng-container>
+</mat-table>

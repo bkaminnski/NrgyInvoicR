@@ -10,6 +10,7 @@ import { InvoicesListComponent } from './components/invoices-page/invoices-list/
 import { InvoiceRunsPageComponent } from './components/invoice-runs-page/invoice-runs-page.component';
 import { InvoiceRunsListComponent } from './components/invoice-runs-page/invoice-runs-list/invoice-runs-list.component';
 import { InvoiceRunDialogComponent } from './components/invoice-runs-page/invoice-run-dialog/invoice-run-dialog.component';
+import { InvoiceRunMessagesListComponent } from './components/invoice-runs-page/invoice-run-messages-list/invoice-run-messages-list.component';
 import { CoreModule } from '../core/core.module';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CoreModule } from '../core/core.module';
     InvoicesListComponent,
     InvoiceRunsPageComponent,
     InvoiceRunsListComponent,
-    InvoiceRunDialogComponent
+    InvoiceRunDialogComponent,
+    InvoiceRunMessagesListComponent
   ],
   imports: [
     CommonModule,
