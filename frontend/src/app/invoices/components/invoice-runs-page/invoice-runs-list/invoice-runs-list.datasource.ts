@@ -10,15 +10,15 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
   private invoiceRunsSubject = new BehaviorSubject<InvoiceRun[]>([]);
   public invoiceRuns = this.invoiceRunsSubject.asObservable();
   public totalElements = 0;
+  private content: InvoiceRun[];
   public loading = false;
-  private lastPage: Page<InvoiceRun>;
   private refreshHeartbeat: Subscription;
   private invoiceRunsToRefresh: InvoiceRun[] = [];
 
   constructor(private invoiceRunsService: InvoiceRunsService) { }
 
   connect(collectionViewer: CollectionViewer): Observable<InvoiceRun[]> {
-    this.refreshHeartbeat = interval(500).subscribe(() => this.refreshInvoiceRuns());
+    this.refreshHeartbeat = interval(1000).subscribe(() => this.refreshInvoiceRuns());
     return this.invoiceRuns;
   }
 
@@ -35,8 +35,8 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
         catchError(() => of([])),
         finalize(() => this.loading = false),
         tap<Page<InvoiceRun>>(page => this.totalElements = page.totalElements),
+        tap<Page<InvoiceRun>>(page => this.content = page.content),
         tap<Page<InvoiceRun>>(page => callback(page)),
-        tap<Page<InvoiceRun>>(page => this.lastPage = page),
         tap<Page<InvoiceRun>>(page => this.autoRefreshInvoiceRunsInProgress(page))
       )
       .subscribe(page => this.invoiceRunsSubject.next(page.content));
@@ -68,13 +68,12 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
   }
 
   private redrawLastPageReplacing(invoiceRun: InvoiceRun) {
-    const index = this.lastPage.indexOf(invoiceRun);
+    const index = this.content.findIndex(e => e.id === invoiceRun.id);
     if (index < 0) {
       return;
     }
-    const updatedContent = this.lastPage.content.slice();
-    updatedContent[index] = invoiceRun;
-    this.invoiceRunsSubject.next(updatedContent);
+    this.content[index] = invoiceRun;
+    this.invoiceRunsSubject.next(this.content);
   }
 
   private stopRefreshingWhenFinished(invoiceRun: InvoiceRun) {
