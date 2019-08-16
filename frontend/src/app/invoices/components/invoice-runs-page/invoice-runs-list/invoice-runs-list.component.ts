@@ -8,11 +8,19 @@ import { InvoiceRun } from 'src/app/invoices/model/invoice-run.model';
 import { Page } from 'src/app/core/model/page.model';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/components/notification/notification.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-invoice-runs-list',
   templateUrl: './invoice-runs-list.component.html',
-  styleUrls: ['./invoice-runs-list.component.scss']
+  styleUrls: ['./invoice-runs-list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   public highlightedRowIndex: number;
@@ -23,6 +31,7 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
     'status', 'progress.numberOfInvoicesToGenerate', 'progress.numberOfSuccesses', 'progress.numberOfFailures',
     'options'
   ];
+  public expandedInvoiceRun: InvoiceRun;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

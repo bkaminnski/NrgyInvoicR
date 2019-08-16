@@ -8,6 +8,19 @@ table {
 }
 
 .mat-column-options {
-  flex: 0 0 170px;
-  justify-content: flex-end;
+  width: 250px;
+  text-align: right;
+}
+
+tr.invoice-run-parent-row td {
+  border-bottom-width: 0;
+}
+
+tr.invoice-run-detail-row {
+  height: 0;
+}
+
+.invoice-run-detail-element {
+  overflow: hidden;
+  display: flex;
 }

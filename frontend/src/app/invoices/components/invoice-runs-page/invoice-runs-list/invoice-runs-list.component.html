@@ -13,58 +13,72 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
-      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let invoiceRun; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"
-        (mouseleave)="mouseLeave()" onclick="" [class.row-highlighted]="i === highlightedRowIndex"
-        [class.row-spotlighted]="i === spotlightedRowIndex">
-      </mat-row>
+    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear multiTemplateDataRows>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let invoiceRun; columns: displayedColumns; let i = dataIndex" (mouseenter)="mouseEnter(i)"
+        (mouseleave)="mouseLeave()" [class.row-highlighted]="i === highlightedRowIndex"
+        [class.row-spotlighted]="i === spotlightedRowIndex" onclick="" class="invoice-run-parent-row">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="invoice-run-detail-row"></tr>
       <ng-container matColumnDef="issueDate">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.issueDate | date:'shortDate'}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.issueDate | date:'shortDate'}}</td>
       </ng-container>
       <ng-container matColumnDef="sinceClosed">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Since</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.sinceClosed | date:'shortDate'}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Since</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.sinceClosed | date:'shortDate'}}</td>
       </ng-container>
       <ng-container matColumnDef="untilOpen">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Until</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.untilOpen | date:'shortDate'}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Until</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.untilOpen | date:'shortDate'}}</td>
       </ng-container>
       <ng-container matColumnDef="firstInvoiceNumber">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>First Invoice Number</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.firstInvoiceNumber}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>First Invoice Number</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.firstInvoiceNumber}}</td>
       </ng-container>
       <ng-container matColumnDef="numberTemplate">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Number Template</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.numberTemplate}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Number Template</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.numberTemplate}}</td>
       </ng-container>
       <ng-container matColumnDef="status">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Status</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.status}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.status}}</td>
       </ng-container>
       <ng-container matColumnDef="progress.numberOfInvoicesToGenerate">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Number of Invoices</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfInvoicesToGenerate}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Number of Invoices</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfInvoicesToGenerate}}</td>
       </ng-container>
       <ng-container matColumnDef="progress.numberOfSuccesses">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Successes</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfSuccesses}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Successes</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfSuccesses}}</td>
       </ng-container>
       <ng-container matColumnDef="progress.numberOfFailures">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Failures</mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfFailures}}</mat-cell>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Failures</th>
+        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfFailures}}</td>
       </ng-container>
       <ng-container matColumnDef="options">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let invoiceRun; let i = index">
-          <button [disabled]="invoiceRun.status != 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="startInvoiceRun(invoiceRun)">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let invoiceRun; let i = dataIndex">
+          <button [disabled]="invoiceRun.status != 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button"
+            (click)="startInvoiceRun(invoiceRun)">
             <mat-icon>play_circle_filled</mat-icon> Start
           </button>
-        </mat-cell>
+          <button [disabled]="invoiceRun.status == 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button"
+            (click)="expandedInvoiceRun = expandedInvoiceRun?.id === invoiceRun.id ? null : invoiceRun">
+            <mat-icon>list</mat-icon> Details
+          </button>
+        </td>
       </ng-container>
-    </mat-table>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let invoiceRun" [attr.colspan]="displayedColumns.length">
+          <div class="invoice-run-detail-element"
+            [@detailExpand]="invoiceRun.id == expandedInvoiceRun?.id ? 'expanded' : 'collapsed'">
+            A place for invoice run messages.
+          </div>
+        </td>
+      </ng-container>
+    </table>
     <div [hidden]="dataSource.totalElements === 0">
       <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"
         [pageSizeOptions]="paginatorConfig.pageSizeOptions">
