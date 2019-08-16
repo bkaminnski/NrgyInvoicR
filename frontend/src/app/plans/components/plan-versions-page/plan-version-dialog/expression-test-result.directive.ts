@@ -13,7 +13,6 @@ export class ExpressionTestResultValidator {
   validate(control: AbstractControl, flattenedBucketsSubject: Subject<FlattenedBucket[]>): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return timer(300).pipe(
       mergeMap(() => this.expressionService.testExpression(control.value)),
-      tap(e => console.log(e)),
       tap(e => flattenedBucketsSubject.next(e.flattenedBuckets)),
       map(e => (e.valid ? null : { validExpression: this.toErrorMessage(e) })),
       catchError(() => of({ validExpression: 'Expression is invalid.' }))
