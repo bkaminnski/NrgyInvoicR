@@ -1,7 +1,9 @@
 import { Entity } from 'src/app/core/model/entity.model';
 import { InvoiceRunProgress } from './invoice-run-progress.model';
+import { InvoiceRunMessage } from './invoice-run-message.model';
 
 export class InvoiceRun extends Entity {
+  public messages: InvoiceRunMessage[];
 
   constructor(
     public sinceClosed?: Date,

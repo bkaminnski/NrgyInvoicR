@@ -72,6 +72,8 @@ export class InvoiceRunsListDataSource implements DataSource<InvoiceRun> {
     if (index < 0) {
       return;
     }
+    const previuosInvoiceRun = this.content[index];
+    invoiceRun.messages = previuosInvoiceRun.messages;
     this.content[index] = invoiceRun;
     this.invoiceRunsSubject.next(this.content);
   }

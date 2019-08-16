@@ -6,10 +6,13 @@ import { InvoiceRunsService } from '../invoice-runs.service';
 import { catchError } from 'rxjs/operators';
 
 export class InvoiceRunMessagesListDataSource implements DataSource<InvoiceRunMessage> {
-  private invoiceRunMessagesSubject = new BehaviorSubject<InvoiceRunMessage[]>([]);
-  public invoiceRunMessages = this.invoiceRunMessagesSubject.asObservable();
+  private invoiceRunMessagesSubject: BehaviorSubject<InvoiceRunMessage[]>;
+  public invoiceRunMessages: Observable<InvoiceRunMessage[]>;
 
-  constructor(private invoiceRunsService: InvoiceRunsService) { }
+  constructor(private invoiceRunsService: InvoiceRunsService, initialInvoiceRunMessages: InvoiceRunMessage[]) {
+    this.invoiceRunMessagesSubject = new BehaviorSubject<InvoiceRunMessage[]>(initialInvoiceRunMessages);
+    this.invoiceRunMessages = this.invoiceRunMessagesSubject.asObservable();
+  }
 
   connect(collectionViewer: CollectionViewer): Observable<InvoiceRunMessage[]> {
     return this.invoiceRunMessages;

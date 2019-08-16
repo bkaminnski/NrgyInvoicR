@@ -16,7 +16,8 @@ export class InvoiceRunMessagesListComponent implements OnInit {
   constructor(private invoiceRunsService: InvoiceRunsService) { }
 
   ngOnInit() {
-    this.dataSource = new InvoiceRunMessagesListDataSource(this.invoiceRunsService);
+    this.dataSource = new InvoiceRunMessagesListDataSource(this.invoiceRunsService, this.invoiceRun.messages);
+    this.dataSource.invoiceRunMessages.subscribe(m => this.invoiceRun.messages = m);
     this.dataSource.loadInvoiceRunMessages(this.invoiceRun);
   }
 }
