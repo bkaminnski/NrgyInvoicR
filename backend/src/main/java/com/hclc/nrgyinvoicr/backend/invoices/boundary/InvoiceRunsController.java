@@ -3,6 +3,7 @@ package com.hclc.nrgyinvoicr.backend.invoices.boundary;
 import com.hclc.nrgyinvoicr.backend.EntityNotFoundException;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceRunsService;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
+import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunMessage;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunsSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -37,6 +39,12 @@ public class InvoiceRunsController {
         return invoiceRunsService.getInvoiceRun(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new EntityNotFoundException(InvoiceRun.class, id));
+    }
+
+    @GetMapping("/{id}/messages")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<InvoiceRunMessage>> getInvoiceRunMessages(@PathVariable Long id) {
+        return ResponseEntity.ok(invoiceRunsService.getInvoiceRunMessages(id));
     }
 
     @GetMapping

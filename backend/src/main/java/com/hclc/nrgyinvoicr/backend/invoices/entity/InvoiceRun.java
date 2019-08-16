@@ -1,12 +1,10 @@
 package com.hclc.nrgyinvoicr.backend.invoices.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 import static com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunStatus.NEW;
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -40,11 +38,6 @@ public class InvoiceRun extends AuditableEntity {
 
     @Embedded
     private InvoiceRunProgress progress;
-
-    @OneToMany
-    @JoinColumn(name = "invoice_run_id")
-    @JsonIgnore
-    private List<InvoiceRunMessage> invoiceRunMessages;
 
     public String format(Integer invoiceNumber) {
         return String.format(numberTemplate, invoiceNumber);
@@ -112,13 +105,5 @@ public class InvoiceRun extends AuditableEntity {
 
     public void setProgress(InvoiceRunProgress progress) {
         this.progress = progress;
-    }
-
-    public List<InvoiceRunMessage> getInvoiceRunMessages() {
-        return invoiceRunMessages;
-    }
-
-    public void setInvoiceRunMessages(List<InvoiceRunMessage> invoiceRunMessages) {
-        this.invoiceRunMessages = invoiceRunMessages;
     }
 }
