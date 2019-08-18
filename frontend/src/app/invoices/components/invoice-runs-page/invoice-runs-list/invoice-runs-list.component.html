@@ -46,7 +46,7 @@
         <td mat-cell *matCellDef="let invoiceRun">
           <mat-spinner [diameter]="20" *ngIf="invoiceRun.status === 'STARTED'"></mat-spinner>
           <mat-icon *ngIf="invoiceRun.status === 'FINISHED' && invoiceRun.progress?.numberOfFailures === 0">
-            done_all</mat-icon>
+            done</mat-icon>
           <mat-icon *ngIf="invoiceRun.status === 'FINISHED' && invoiceRun.progress?.numberOfFailures > 0">error_outline
           </mat-icon>
         </td>
