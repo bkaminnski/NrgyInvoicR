@@ -36,10 +36,14 @@
                                  referencedTableName="invoice_run" referencedColumnNames="id"/>
         <addColumn tableName="invoice">
             <column name="client_id" type="bigint"/>
+            <column name="plan_version_id" type="bigint"/>
         </addColumn>
         <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="client_id"
                                  constraintName="invoice_client_fk"
                                  referencedTableName="client" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="plan_version_id"
+                                 constraintName="invoice_plan_version_fk"
+                                 referencedTableName="plan_version" referencedColumnNames="id"/>
         <addColumn tableName="invoice">
             <column name="gross_total" type="number(11,2)"/>
         </addColumn>

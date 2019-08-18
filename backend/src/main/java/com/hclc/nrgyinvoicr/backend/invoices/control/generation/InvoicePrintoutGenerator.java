@@ -3,7 +3,6 @@ package com.hclc.nrgyinvoicr.backend.invoices.control.generation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hclc.nrgyinvoicr.backend.NrgyInvoicRConfig;
-import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
@@ -65,31 +64,31 @@ class InvoicePrintoutGenerator {
         return formatter.format(clock.instant().atZone(systemDefault())) + "_IR_" + invoiceRun.getId();
     }
 
-    void printToPdf(Invoice invoice, List<InvoiceLine> invoiceLines, Client client, InvoicePrintoutGenerationDescriptor descriptor) throws ErrorGeneratingPdfPrintoutOfAnInvoice {
+    void printToPdf(Invoice invoice, List<InvoiceLine> invoiceLines, InvoicePrintoutGenerationDescriptor descriptor) throws ErrorGeneratingPdfPrintoutOfAnInvoice {
         try {
-            String invoiceAsJsonString = serializeToJsonString(invoice, invoiceLines, client);
+            String invoiceAsJsonString = serializeToJsonString(invoice, invoiceLines);
             JasperPrint jasperPrint = fillIn(descriptor.getCompiledTemplate(), invoiceAsJsonString);
-            exportToPdf(jasperPrint, descriptor.getFolderName(), preparePdfFileName(client, invoice));
+            exportToPdf(jasperPrint, descriptor.getFolderName(), preparePdfFileName(invoice));
         } catch (JRException | IOException e) {
             logger.log(Level.SEVERE, "", e);
-            throw new ErrorGeneratingPdfPrintoutOfAnInvoice(client, e);
+            throw new ErrorGeneratingPdfPrintoutOfAnInvoice(invoice.getClient(), e);
         }
     }
 
-    private String preparePdfFileName(Client client, Invoice invoice) {
-        return "C_" + client.getNumber() + "_" + formatter.format(clock.instant().atZone(systemDefault())) + "_I_" + invoice.getId() + ".pdf";
+    private String preparePdfFileName(Invoice invoice) {
+        return "C_" + invoice.getClient().getNumber() + "_" + formatter.format(clock.instant().atZone(systemDefault())) + "_I_" + invoice.getId() + ".pdf";
     }
 
-    private String serializeToJsonString(Invoice invoice, List<InvoiceLine> invoiceLines, Client client) throws JsonProcessingException {
-        List<InvoicePrintoutLine> invoicePrintoutLines = prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(invoice, invoiceLines, client);
+    private String serializeToJsonString(Invoice invoice, List<InvoiceLine> invoiceLines) throws JsonProcessingException {
+        List<InvoicePrintoutLine> invoicePrintoutLines = prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(invoice, invoiceLines);
         return this.objectMapper.writeValueAsString(invoicePrintoutLines);
     }
 
-    private List<InvoicePrintoutLine> prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(Invoice invoice, List<InvoiceLine> invoiceLines, Client client) {
+    private List<InvoicePrintoutLine> prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(Invoice invoice, List<InvoiceLine> invoiceLines) {
         List<InvoicePrintoutLine> invoicePrintoutLines = new ArrayList<>();
         boolean invoiceAndClientAdded = false;
         for (InvoiceLine invoiceLine : invoiceLines) {
-            invoicePrintoutLines.add(invoiceAndClientAdded ? new InvoicePrintoutLine(invoiceLine) : new InvoicePrintoutLine(invoice, invoiceLine, client));
+            invoicePrintoutLines.add(invoiceAndClientAdded ? new InvoicePrintoutLine(invoiceLine) : new InvoicePrintoutLine(invoice, invoiceLine));
             invoiceAndClientAdded = true;
         }
         return invoicePrintoutLines;

@@ -1,7 +1,9 @@
 package com.hclc.nrgyinvoicr.backend.invoices.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
+import com.hclc.nrgyinvoicr.backend.plans.entity.PlanVersion;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +33,13 @@ public class Invoice extends AuditableEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
+    @JsonIgnore
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "plan_version_id", nullable = false)
+    @JsonIgnore
+    private PlanVersion planVersion;
 
     @NotNull
     private BigDecimal grossTotal;
@@ -43,11 +51,12 @@ public class Invoice extends AuditableEntity {
     protected Invoice() {
     }
 
-    public Invoice(String number, ZonedDateTime issueDate, Long invoiceRunId, Client client, BigDecimal grossTotal) {
+    public Invoice(String number, ZonedDateTime issueDate, Long invoiceRunId, Client client, PlanVersion planVersion, BigDecimal grossTotal) {
         this.number = number;
         this.issueDate = issueDate;
         this.invoiceRunId = invoiceRunId;
         this.client = client;
+        this.planVersion = planVersion;
         this.grossTotal = grossTotal;
     }
 
@@ -81,5 +90,21 @@ public class Invoice extends AuditableEntity {
 
     public void setGrossTotal(BigDecimal grossTotal) {
         this.grossTotal = grossTotal;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public PlanVersion getPlanVersion() {
+        return planVersion;
+    }
+
+    public void setPlanVersion(PlanVersion planVersion) {
+        this.planVersion = planVersion;
     }
 }

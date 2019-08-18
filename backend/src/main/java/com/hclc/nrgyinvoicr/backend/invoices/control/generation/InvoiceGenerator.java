@@ -80,9 +80,9 @@ class InvoiceGenerator {
         List<FlattenedBucket> flattenedBuckets = putReadingValuesToBuckets(buckets, readingValues);
         List<InvoiceLine> invoiceLines = createInvoiceLines(planVersion, flattenedBuckets);
         BigDecimal invoiceGrossTotal = calculateInvoiceGrossTotal(invoiceLines);
-        Invoice savedInvoice = saveInvoice(invoiceRun, client, invoiceNumber, invoiceGrossTotal);
+        Invoice savedInvoice = saveInvoice(invoiceRun, client, planVersion, invoiceNumber, invoiceGrossTotal);
         saveInvoiceLines(invoiceLines, savedInvoice);
-        printToPdf(descriptor, invoiceLines, savedInvoice, client);
+        printToPdf(descriptor, savedInvoice, invoiceLines);
     }
 
     private PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanVersionValidOnDate, NoPlanValidOnDate {
@@ -123,8 +123,8 @@ class InvoiceGenerator {
         return invoiceLines.stream().map(InvoiceLine::getGrossTotal).reduce(ZERO, BigDecimal::add);
     }
 
-    private Invoice saveInvoice(InvoiceRun invoiceRun, Client client, Integer invoiceNumber, BigDecimal invoiceGrossTotal) {
-        Invoice invoice = new Invoice(invoiceRun.format(invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, invoiceGrossTotal);
+    private Invoice saveInvoice(InvoiceRun invoiceRun, Client client, PlanVersion planVersion, Integer invoiceNumber, BigDecimal invoiceGrossTotal) {
+        Invoice invoice = new Invoice(invoiceRun.format(invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, planVersion, invoiceGrossTotal);
         return invoicesRepository.save(invoice);
     }
 
@@ -135,7 +135,7 @@ class InvoiceGenerator {
         invoiceLinesRepository.saveAll(invoiceLines);
     }
 
-    private void printToPdf(InvoicePrintoutGenerationDescriptor descriptor, List<InvoiceLine> invoiceLines, Invoice invoice, Client client) throws ErrorGeneratingPdfPrintoutOfAnInvoice {
-        invoicePrintoutGenerator.printToPdf(invoice, invoiceLines, client, descriptor);
+    private void printToPdf(InvoicePrintoutGenerationDescriptor descriptor, Invoice invoice, List<InvoiceLine> invoiceLines) throws ErrorGeneratingPdfPrintoutOfAnInvoice {
+        invoicePrintoutGenerator.printToPdf(invoice, invoiceLines, descriptor);
     }
 }

@@ -33,8 +33,8 @@ public class PlanVersionsController {
     @PostMapping("/{planId}/versions")
     @Transactional
     public ResponseEntity<PlanVersion> createPlanVersion(@PathVariable("planId") long planId, @RequestBody PlanVersion planVersion) throws InvalidExpressionException, IOException {
-        plansService.getPlan(planId).orElseThrow(() -> new EntityNotFoundException(Plan.class, planId));
-        planVersion.setPlanId(planId);
+        Plan plan = plansService.getPlan(planId).orElseThrow(() -> new EntityNotFoundException(Plan.class, planId));
+        planVersion.setPlan(plan);
         PlanVersion savedPlanVersion = planVersionsService.createPlanVersion(planVersion);
         URI uri = MvcUriComponentsBuilder.fromController(getClass()).path("/{id}").buildAndExpand(savedPlanVersion.getId()).toUri();
         return ResponseEntity.created(uri).body(savedPlanVersion);
@@ -49,8 +49,8 @@ public class PlanVersionsController {
     @PutMapping("/{planId}/versions/{id}")
     @Transactional
     public ResponseEntity<PlanVersion> updatePlanVersion(@PathVariable("planId") long planId, @PathVariable Long id, @RequestBody PlanVersion planVersion) throws InvalidExpressionException, IOException {
-        plansService.getPlan(planId).orElseThrow(() -> new EntityNotFoundException(Plan.class, planId));
-        planVersion.setPlanId(planId);
+        Plan plan = plansService.getPlan(planId).orElseThrow(() -> new EntityNotFoundException(Plan.class, planId));
+        planVersion.setPlan(plan);
         planVersion.setId(id);
         return planVersionsService.updatePlanVersion(planVersion)
                 .map(ResponseEntity::ok)

@@ -13,8 +13,9 @@ public class PlanVersion {
     @GeneratedValue(strategy = SEQUENCE, generator = "plan_version_id_seq")
     private Long id;
 
-    @Column(name = "plan_id")
-    private Long planId;
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private Plan plan;
 
     private ZonedDateTime validSince;
 
@@ -35,12 +36,12 @@ public class PlanVersion {
         this.id = id;
     }
 
-    public Long getPlanId() {
-        return planId;
+    public Plan getPlan() {
+        return plan;
     }
 
-    public void setPlanId(Long planId) {
-        this.planId = planId;
+    public void setPlan(Plan plan) {
+        this.plan = plan;
     }
 
     public ZonedDateTime getValidSince() {
