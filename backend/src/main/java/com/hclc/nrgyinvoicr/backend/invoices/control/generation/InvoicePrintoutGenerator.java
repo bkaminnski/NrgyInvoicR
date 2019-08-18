@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.time.Clock;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,8 @@ import java.util.logging.Logger;
 
 import static com.hclc.nrgyinvoicr.backend.DateTimeFormat.DATE_TIME_FILE_NAME_SAFE;
 import static java.time.ZoneId.systemDefault;
+import static java.util.Locale.US;
+import static java.util.stream.Collectors.toList;
 
 @Component
 class InvoicePrintoutGenerator {
@@ -80,23 +81,14 @@ class InvoicePrintoutGenerator {
     }
 
     private String serializeToJsonString(Invoice invoice, List<InvoiceLine> invoiceLines) throws JsonProcessingException {
-        List<InvoicePrintoutLine> invoicePrintoutLines = prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(invoice, invoiceLines);
+        List<InvoicePrintoutLine> invoicePrintoutLines = invoiceLines.stream().map(i -> new InvoicePrintoutLine(i, invoice)).collect(toList());
         return this.objectMapper.writeValueAsString(invoicePrintoutLines);
-    }
-
-    private List<InvoicePrintoutLine> prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(Invoice invoice, List<InvoiceLine> invoiceLines) {
-        List<InvoicePrintoutLine> invoicePrintoutLines = new ArrayList<>();
-        boolean invoiceAndClientAdded = false;
-        for (InvoiceLine invoiceLine : invoiceLines) {
-            invoicePrintoutLines.add(invoiceAndClientAdded ? new InvoicePrintoutLine(invoiceLine) : new InvoicePrintoutLine(invoiceLine, invoice));
-            invoiceAndClientAdded = true;
-        }
-        return invoicePrintoutLines;
     }
 
     private JasperPrint fillIn(JasperReport jasperReport, String invoiceAsJsonString) throws JRException {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(invoiceAsJsonString.getBytes());
-        JRDataSource dataSource = new JsonDataSource(inputStream);
+        JsonDataSource dataSource = new JsonDataSource(inputStream);
+        dataSource.setLocale(US);
         Map<String, Object> parameters = new HashMap<>();
         return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
     }

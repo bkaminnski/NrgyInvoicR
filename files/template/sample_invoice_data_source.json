@@ -99,10 +99,73 @@
 			"vat": 0.23,
 			"grossTotal": 0.0
 		},
-		"invoice": null,
-		"client": null,
-		"planVersion": null,
-		"invoiceRun": null
+		"invoice": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:41.244+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:41.244+0000",
+			"id": 1,
+			"number": "ENR/000001",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"grossTotal": 61.803555513
+		},
+		"client": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:51:46.452+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:51:46.452+0000",
+			"id": 1,
+			"number": "75c39c4e-c03a-4f93-989c-0dcc6919f466",
+			"firstName": "Joanne",
+			"middleName": null,
+			"lastName": "Chapman",
+			"addressLine1": "8015 Arizona Rd",
+			"addressLine2": null,
+			"postalCode": "37421",
+			"city": "Chattanoog",
+			"meter": {
+				"createdBy": null,
+				"createdDate": "2019-08-18T19:50:29.703+0000",
+				"modifiedBy": null,
+				"modifiedDate": "2019-08-18T19:51:46.459+0000",
+				"id": 1,
+				"serialNumber": "17d42621-e689-44fc-8f52-af9cf5918729",
+				"clientNumber": "75c39c4e-c03a-4f93-989c-0dcc6919f466"
+			}
+		},
+		"planVersion": {
+			"id": 301,
+			"plan": {
+				"id": 101,
+				"name": "Weekend Plan",
+				"description": "Save on your electricity consumption over the weekend."
+			},
+			"validSince": "2017-01-01T00:00:00+01:00",
+			"fixedFees": {
+				"subscriptionFee": 0.5,
+				"networkFee": 2.3
+			},
+			"expression": ".01.01-12.31\n..1-5\n...0-23:0.19131\n..6-7\n...0-23:0.17617",
+			"description": null
+		},
+		"invoiceRun": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:39.106+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:39.106+0000",
+			"id": 52,
+			"sinceClosed": "2019-07-01T00:00:00+02:00",
+			"untilOpen": "2019-08-01T00:00:00+02:00",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"numberTemplate": "ENR/%06d",
+			"firstInvoiceNumber": 1,
+			"status": "STARTED",
+			"progress": {
+				"numberOfInvoicesToGenerate": 1,
+				"numberOfSuccesses": 0,
+				"numberOfFailures": 0
+			}
+		}
 	},
 	{
 		"invoiceLine": {
@@ -120,10 +183,73 @@
 			"vat": 0.23,
 			"grossTotal": 2.829
 		},
-		"invoice": null,
-		"client": null,
-		"planVersion": null,
-		"invoiceRun": null
+		"invoice": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:41.244+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:41.244+0000",
+			"id": 1,
+			"number": "ENR/000001",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"grossTotal": 61.803555513
+		},
+		"client": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:51:46.452+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:51:46.452+0000",
+			"id": 1,
+			"number": "75c39c4e-c03a-4f93-989c-0dcc6919f466",
+			"firstName": "Joanne",
+			"middleName": null,
+			"lastName": "Chapman",
+			"addressLine1": "8015 Arizona Rd",
+			"addressLine2": null,
+			"postalCode": "37421",
+			"city": "Chattanoog",
+			"meter": {
+				"createdBy": null,
+				"createdDate": "2019-08-18T19:50:29.703+0000",
+				"modifiedBy": null,
+				"modifiedDate": "2019-08-18T19:51:46.459+0000",
+				"id": 1,
+				"serialNumber": "17d42621-e689-44fc-8f52-af9cf5918729",
+				"clientNumber": "75c39c4e-c03a-4f93-989c-0dcc6919f466"
+			}
+		},
+		"planVersion": {
+			"id": 301,
+			"plan": {
+				"id": 101,
+				"name": "Weekend Plan",
+				"description": "Save on your electricity consumption over the weekend."
+			},
+			"validSince": "2017-01-01T00:00:00+01:00",
+			"fixedFees": {
+				"subscriptionFee": 0.5,
+				"networkFee": 2.3
+			},
+			"expression": ".01.01-12.31\n..1-5\n...0-23:0.19131\n..6-7\n...0-23:0.17617",
+			"description": null
+		},
+		"invoiceRun": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:39.106+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:39.106+0000",
+			"id": 52,
+			"sinceClosed": "2019-07-01T00:00:00+02:00",
+			"untilOpen": "2019-08-01T00:00:00+02:00",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"numberTemplate": "ENR/%06d",
+			"firstInvoiceNumber": 1,
+			"status": "STARTED",
+			"progress": {
+				"numberOfInvoicesToGenerate": 1,
+				"numberOfSuccesses": 0,
+				"numberOfFailures": 0
+			}
+		}
 	},
 	{
 		"invoiceLine": {
@@ -141,9 +267,72 @@
 			"vat": 0.23,
 			"grossTotal": 0.615
 		},
-		"invoice": null,
-		"client": null,
-		"planVersion": null,
-		"invoiceRun": null
+		"invoice": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:41.244+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:41.244+0000",
+			"id": 1,
+			"number": "ENR/000001",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"grossTotal": 61.803555513
+		},
+		"client": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:51:46.452+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:51:46.452+0000",
+			"id": 1,
+			"number": "75c39c4e-c03a-4f93-989c-0dcc6919f466",
+			"firstName": "Joanne",
+			"middleName": null,
+			"lastName": "Chapman",
+			"addressLine1": "8015 Arizona Rd",
+			"addressLine2": null,
+			"postalCode": "37421",
+			"city": "Chattanoog",
+			"meter": {
+				"createdBy": null,
+				"createdDate": "2019-08-18T19:50:29.703+0000",
+				"modifiedBy": null,
+				"modifiedDate": "2019-08-18T19:51:46.459+0000",
+				"id": 1,
+				"serialNumber": "17d42621-e689-44fc-8f52-af9cf5918729",
+				"clientNumber": "75c39c4e-c03a-4f93-989c-0dcc6919f466"
+			}
+		},
+		"planVersion": {
+			"id": 301,
+			"plan": {
+				"id": 101,
+				"name": "Weekend Plan",
+				"description": "Save on your electricity consumption over the weekend."
+			},
+			"validSince": "2017-01-01T00:00:00+01:00",
+			"fixedFees": {
+				"subscriptionFee": 0.5,
+				"networkFee": 2.3
+			},
+			"expression": ".01.01-12.31\n..1-5\n...0-23:0.19131\n..6-7\n...0-23:0.17617",
+			"description": null
+		},
+		"invoiceRun": {
+			"createdBy": null,
+			"createdDate": "2019-08-18T19:58:39.106+0000",
+			"modifiedBy": null,
+			"modifiedDate": "2019-08-18T19:58:39.106+0000",
+			"id": 52,
+			"sinceClosed": "2019-07-01T00:00:00+02:00",
+			"untilOpen": "2019-08-01T00:00:00+02:00",
+			"issueDate": "2019-08-12T00:00:00+02:00",
+			"numberTemplate": "ENR/%06d",
+			"firstInvoiceNumber": 1,
+			"status": "STARTED",
+			"progress": {
+				"numberOfInvoicesToGenerate": 1,
+				"numberOfSuccesses": 0,
+				"numberOfFailures": 0
+			}
+		}
 	}
 ]

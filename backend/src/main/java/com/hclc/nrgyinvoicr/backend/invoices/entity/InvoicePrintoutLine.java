@@ -10,23 +10,12 @@ public class InvoicePrintoutLine {
     private final PlanVersion planVersion;
     private final InvoiceRun invoiceRun;
 
-    public InvoicePrintoutLine(InvoiceLine invoiceLine) {
-        this(invoiceLine, null);
-    }
-
     public InvoicePrintoutLine(InvoiceLine invoiceLine, Invoice invoice) {
         this.invoiceLine = invoiceLine;
-        if (invoice == null) {
-            this.invoice = null;
-            this.client = null;
-            this.planVersion = null;
-            this.invoiceRun = null;
-        } else {
-            this.invoice = invoice;
-            this.client = invoice.getClient();
-            this.planVersion = invoice.getPlanVersion();
-            this.invoiceRun = invoice.getInvoiceRun();
-        }
+        this.invoice = invoice;
+        this.client = invoice.getClient();
+        this.planVersion = invoice.getPlanVersion();
+        this.invoiceRun = invoice.getInvoiceRun();
     }
 
     public InvoiceLine getInvoiceLine() {
