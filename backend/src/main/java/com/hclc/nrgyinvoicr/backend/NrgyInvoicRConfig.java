@@ -12,6 +12,7 @@ public class NrgyInvoicRConfig {
     private String timeZone;
     private String invoiceNumberTemplate;
     private String vat;
+    private String invoiceFolder;
 
     public ZoneId getTimeZoneAsZoneId() {
         return ZoneId.of(timeZone);
@@ -35,5 +36,13 @@ public class NrgyInvoicRConfig {
 
     public void setVat(String vat) {
         this.vat = vat;
+    }
+
+    public String getInvoiceFolder() {
+        return invoiceFolder;
+    }
+
+    public void setInvoiceFolder(String invoiceFolder) {
+        this.invoiceFolder = invoiceFolder;
     }
 }

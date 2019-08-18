@@ -2,6 +2,7 @@ package com.hclc.nrgyinvoicr.backend.invoices.control.generation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hclc.nrgyinvoicr.backend.NrgyInvoicRConfig;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.*;
 import net.sf.jasperreports.engine.*;
@@ -25,10 +26,13 @@ import static java.time.ZoneId.systemDefault;
 class InvoicePrintoutGenerator {
     private static final Logger logger = Logger.getLogger(InvoicePrintoutGenerator.class.getName());
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FILE_NAME_SAFE);
+    private static final String TEMPLATE_NAME = "nrgy_invoicr_invoice.jrxml";
+    private final NrgyInvoicRConfig nrgyInvoicRConfig;
     private final ObjectMapper objectMapper;
     private final Clock clock;
 
-    public InvoicePrintoutGenerator(ObjectMapper objectMapper, Clock clock) {
+    public InvoicePrintoutGenerator(NrgyInvoicRConfig nrgyInvoicRConfig, ObjectMapper objectMapper, Clock clock) {
+        this.nrgyInvoicRConfig = nrgyInvoicRConfig;
         this.objectMapper = objectMapper;
         this.clock = clock;
     }
@@ -36,13 +40,25 @@ class InvoicePrintoutGenerator {
     InvoicePrintoutGenerationDescriptor prepareDescriptor(InvoiceRun invoiceRun) throws ErrorCompilingInvoicePrintoutTemplate {
         JasperReport compiledTemplate;
         try {
-            compiledTemplate = JasperCompileManager.compileReport("/tmp/nrgy_invoicr_invoice.jrxml");
+            compiledTemplate = compileTemplate();
         } catch (JRException e) {
             logger.log(Level.SEVERE, "", e);
             throw new ErrorCompilingInvoicePrintoutTemplate(e);
         }
         String folderName = prepareFolderName(invoiceRun);
         return new InvoicePrintoutGenerationDescriptor(compiledTemplate, folderName);
+    }
+
+    private JasperReport compileTemplate() throws JRException {
+        JasperReport compiledTemplate;
+        String templateFilePathWithName = nrgyInvoicRConfig.getInvoiceFolder() + TEMPLATE_NAME;
+        if (new File(templateFilePathWithName).canRead()) {
+            compiledTemplate = JasperCompileManager.compileReport(templateFilePathWithName);
+        } else {
+            InputStream resourceAsStream = InvoicePrintoutGenerator.class.getResourceAsStream("/templates/" + TEMPLATE_NAME);
+            compiledTemplate = JasperCompileManager.compileReport(resourceAsStream);
+        }
+        return compiledTemplate;
     }
 
     private String prepareFolderName(InvoiceRun invoiceRun) {
@@ -87,7 +103,7 @@ class InvoicePrintoutGenerator {
     }
 
     private void exportToPdf(JasperPrint jasperPrint, String folderName, String fileName) throws JRException, IOException {
-        String path = "/tmp/" + folderName;
+        String path = nrgyInvoicRConfig.getInvoiceFolder() + folderName;
         new File(path).mkdirs();
         String pdfFilePathWithName = path + "/" + fileName;
         OutputStream output = new FileOutputStream(new File(pdfFilePathWithName));

@@ -21,3 +21,4 @@ nrgyinvoicr:
   timezone: Europe/Berlin
   invoiceNumberTemplate: ENR/%06d
   vat: 0.23
+  invoiceFolder: /tmp/
