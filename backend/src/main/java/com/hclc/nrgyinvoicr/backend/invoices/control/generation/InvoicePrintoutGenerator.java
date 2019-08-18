@@ -66,7 +66,7 @@ class InvoicePrintoutGenerator {
 
     private String serializeToJsonString(Invoice invoice, List<InvoiceLine> invoiceLines, Client client) throws JsonProcessingException {
         List<InvoicePrintoutLine> invoicePrintoutLines = prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(invoice, invoiceLines, client);
-        return this.objectMapper.writeValueAsString(new InvoicePrintout(invoicePrintoutLines));
+        return this.objectMapper.writeValueAsString(invoicePrintoutLines);
     }
 
     private List<InvoicePrintoutLine> prepareInvoiceLinesKeepingInvoiceAndClientOnlyInFirstElement(Invoice invoice, List<InvoiceLine> invoiceLines, Client client) {
@@ -80,7 +80,8 @@ class InvoicePrintoutGenerator {
     }
 
     private JasperPrint fillIn(JasperReport jasperReport, String invoiceAsJsonString) throws JRException {
-        JRDataSource dataSource = new JsonDataSource(new ByteArrayInputStream(invoiceAsJsonString.getBytes()));
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(invoiceAsJsonString.getBytes());
+        JRDataSource dataSource = new JsonDataSource(inputStream);
         Map<String, Object> parameters = new HashMap<>();
         return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
     }
