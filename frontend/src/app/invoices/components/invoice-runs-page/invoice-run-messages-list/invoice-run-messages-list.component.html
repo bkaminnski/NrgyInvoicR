@@ -11,4 +11,6 @@
     <mat-cell *matCellDef="let invoiceRunMessage">{{invoiceRunMessage.message}}</mat-cell>
   </ng-container>
 </mat-table>
-<app-no-records-found [length]="dataSource.totalElements"></app-no-records-found>
+<div *ngIf="dataSource.totalElements === 0" class="no-messages-found">
+  <p>There are no messages in this invoice run.</p>
+</div>

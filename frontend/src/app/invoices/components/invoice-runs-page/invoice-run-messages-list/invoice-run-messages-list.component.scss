@@ -16,3 +16,10 @@ mat-row {
   border-top-width: 1px;
   border-bottom-width: 0;
 }
+
+.no-messages-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
