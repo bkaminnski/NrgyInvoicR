@@ -30,14 +30,12 @@
     <changeSet author="bkaminnski" id="1.6_invoice_generation_002">
         <addColumn tableName="invoice">
             <column name="invoice_run_id" type="bigint"/>
+            <column name="client_id" type="bigint"/>
+            <column name="plan_version_id" type="bigint"/>
         </addColumn>
         <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="invoice_run_id"
                                  constraintName="invoice_invoice_run_fk"
                                  referencedTableName="invoice_run" referencedColumnNames="id"/>
-        <addColumn tableName="invoice">
-            <column name="client_id" type="bigint"/>
-            <column name="plan_version_id" type="bigint"/>
-        </addColumn>
         <addForeignKeyConstraint baseTableName="invoice" baseColumnNames="client_id"
                                  constraintName="invoice_client_fk"
                                  referencedTableName="client" referencedColumnNames="id"/>

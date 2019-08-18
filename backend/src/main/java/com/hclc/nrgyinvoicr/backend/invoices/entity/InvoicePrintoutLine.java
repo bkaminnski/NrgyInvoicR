@@ -4,34 +4,37 @@ import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.plans.entity.PlanVersion;
 
 public class InvoicePrintoutLine {
-    private final Invoice invoice;
     private final InvoiceLine invoiceLine;
+    private final Invoice invoice;
     private final Client client;
     private final PlanVersion planVersion;
+    private final InvoiceRun invoiceRun;
 
     public InvoicePrintoutLine(InvoiceLine invoiceLine) {
-        this(null, invoiceLine);
+        this(invoiceLine, null);
     }
 
-    public InvoicePrintoutLine(Invoice invoice, InvoiceLine invoiceLine) {
+    public InvoicePrintoutLine(InvoiceLine invoiceLine, Invoice invoice) {
         this.invoiceLine = invoiceLine;
         if (invoice == null) {
             this.invoice = null;
             this.client = null;
             this.planVersion = null;
+            this.invoiceRun = null;
         } else {
             this.invoice = invoice;
             this.client = invoice.getClient();
             this.planVersion = invoice.getPlanVersion();
+            this.invoiceRun = invoice.getInvoiceRun();
         }
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
     }
 
     public InvoiceLine getInvoiceLine() {
         return invoiceLine;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
     }
 
     public Client getClient() {
@@ -40,5 +43,9 @@ public class InvoicePrintoutLine {
 
     public PlanVersion getPlanVersion() {
         return planVersion;
+    }
+
+    public InvoiceRun getInvoiceRun() {
+        return invoiceRun;
     }
 }

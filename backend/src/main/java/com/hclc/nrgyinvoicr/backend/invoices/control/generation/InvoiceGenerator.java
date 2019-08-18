@@ -124,7 +124,7 @@ class InvoiceGenerator {
     }
 
     private Invoice saveInvoice(InvoiceRun invoiceRun, Client client, PlanVersion planVersion, Integer invoiceNumber, BigDecimal invoiceGrossTotal) {
-        Invoice invoice = new Invoice(invoiceRun.format(invoiceNumber), invoiceRun.getIssueDate(), invoiceRun.getId(), client, planVersion, invoiceGrossTotal);
+        Invoice invoice = new Invoice(invoiceRun.format(invoiceNumber), invoiceRun, client, planVersion, invoiceGrossTotal);
         return invoicesRepository.save(invoice);
     }
 

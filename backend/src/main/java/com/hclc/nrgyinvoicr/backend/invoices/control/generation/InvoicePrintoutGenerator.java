@@ -88,7 +88,7 @@ class InvoicePrintoutGenerator {
         List<InvoicePrintoutLine> invoicePrintoutLines = new ArrayList<>();
         boolean invoiceAndClientAdded = false;
         for (InvoiceLine invoiceLine : invoiceLines) {
-            invoicePrintoutLines.add(invoiceAndClientAdded ? new InvoicePrintoutLine(invoiceLine) : new InvoicePrintoutLine(invoice, invoiceLine));
+            invoicePrintoutLines.add(invoiceAndClientAdded ? new InvoicePrintoutLine(invoiceLine) : new InvoicePrintoutLine(invoiceLine, invoice));
             invoiceAndClientAdded = true;
         }
         return invoicePrintoutLines;

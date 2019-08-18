@@ -28,8 +28,10 @@ public class Invoice extends AuditableEntity {
     @NotNull
     private ZonedDateTime issueDate;
 
-    @Column(name = "invoice_run_id")
-    private Long invoiceRunId;
+    @ManyToOne
+    @JoinColumn(name = "invoice_run_id")
+    @JsonIgnore
+    private InvoiceRun invoiceRun;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
@@ -51,10 +53,10 @@ public class Invoice extends AuditableEntity {
     protected Invoice() {
     }
 
-    public Invoice(String number, ZonedDateTime issueDate, Long invoiceRunId, Client client, PlanVersion planVersion, BigDecimal grossTotal) {
+    public Invoice(String number, InvoiceRun invoiceRun, Client client, PlanVersion planVersion, BigDecimal grossTotal) {
         this.number = number;
-        this.issueDate = issueDate;
-        this.invoiceRunId = invoiceRunId;
+        this.issueDate = invoiceRun.getIssueDate();
+        this.invoiceRun = invoiceRun;
         this.client = client;
         this.planVersion = planVersion;
         this.grossTotal = grossTotal;
@@ -90,6 +92,14 @@ public class Invoice extends AuditableEntity {
 
     public void setGrossTotal(BigDecimal grossTotal) {
         this.grossTotal = grossTotal;
+    }
+
+    public InvoiceRun getInvoiceRun() {
+        return invoiceRun;
+    }
+
+    public void setInvoiceRun(InvoiceRun invoiceRun) {
+        this.invoiceRun = invoiceRun;
     }
 
     public Client getClient() {
