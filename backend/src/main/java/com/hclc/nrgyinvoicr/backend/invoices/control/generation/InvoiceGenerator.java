@@ -10,6 +10,7 @@ import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceRunsRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoicesRepository;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.Invoice;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceLine;
+import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoicePrintoutGenerationDescriptor;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import com.hclc.nrgyinvoicr.backend.plans.control.expression.ExpressionParser;
 import com.hclc.nrgyinvoicr.backend.plans.control.expression.buckets.Bucket;
@@ -42,8 +43,9 @@ class InvoiceGenerator {
     private final InvoiceRunsRepository invoiceRunsRepository;
     private final InvoicesRepository invoicesRepository;
     private final InvoiceLinesRepository invoiceLinesRepository;
+    private final InvoicePrintoutGenerator invoicePrintoutGenerator;
 
-    InvoiceGenerator(ProgressTracker progressTracker, NrgyInvoicRConfig nrgyInvoicRConfig, ClientPlanAssignmentsService clientPlanAssignmentsService, ReadingValuesService readingValuesService, InvoiceRunsRepository invoiceRunsRepository, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository) {
+    InvoiceGenerator(ProgressTracker progressTracker, NrgyInvoicRConfig nrgyInvoicRConfig, ClientPlanAssignmentsService clientPlanAssignmentsService, ReadingValuesService readingValuesService, InvoiceRunsRepository invoiceRunsRepository, InvoicesRepository invoicesRepository, InvoiceLinesRepository invoiceLinesRepository, InvoicePrintoutGenerator invoicePrintoutGenerator) {
         this.progressTracker = progressTracker;
         this.nrgyInvoicRConfig = nrgyInvoicRConfig;
         this.clientPlanAssignmentsService = clientPlanAssignmentsService;
@@ -51,14 +53,15 @@ class InvoiceGenerator {
         this.invoiceRunsRepository = invoiceRunsRepository;
         this.invoicesRepository = invoicesRepository;
         this.invoiceLinesRepository = invoiceLinesRepository;
+        this.invoicePrintoutGenerator = invoicePrintoutGenerator;
     }
 
     @Transactional(propagation = REQUIRES_NEW)
-    public void generateInvoice(InvoiceRun invoiceRun, int invoiceNumber, Client client) {
+    public void generateInvoice(InvoicePrintoutGenerationDescriptor descriptor, InvoiceRun invoiceRun, int invoiceNumber, Client client) {
         try {
-            tryGeneratingInvoice(invoiceRun, client, invoiceNumber);
+            tryGeneratingInvoice(descriptor, invoiceRun, client, invoiceNumber);
             invoiceRun = progressTracker.incrementSuccesses(invoiceRun);
-        } catch (NoPlanVersionValidOnDate | NoPlanValidOnDate | NoReadingValueFound e) {
+        } catch (NoPlanVersionValidOnDate | NoPlanValidOnDate | NoReadingValueFound | ErrorGeneratingPdfPrintoutOfAnInvoice e) {
             progressTracker.addMessage(invoiceRun, e.getMessage());
             invoiceRun = progressTracker.incrementFailures(invoiceRun);
         } catch (Exception e) {
@@ -69,7 +72,7 @@ class InvoiceGenerator {
         }
     }
 
-    private void tryGeneratingInvoice(InvoiceRun invoiceRun, Client client, Integer invoiceNumber) throws IOException, NoPlanVersionValidOnDate, NoPlanValidOnDate, NoReadingValueFound {
+    private void tryGeneratingInvoice(InvoicePrintoutGenerationDescriptor descriptor, InvoiceRun invoiceRun, Client client, Integer invoiceNumber) throws IOException, NoPlanVersionValidOnDate, NoPlanValidOnDate, NoReadingValueFound, ErrorGeneratingPdfPrintoutOfAnInvoice {
         ZonedDateTime onDate = invoiceRun.getSinceClosed();
         PlanVersion planVersion = findPlanVersion(client, onDate);
         Bucket buckets = createBuckets(planVersion);
@@ -79,6 +82,7 @@ class InvoiceGenerator {
         BigDecimal invoiceGrossTotal = calculateInvoiceGrossTotal(invoiceLines);
         Invoice savedInvoice = saveInvoice(invoiceRun, client, invoiceNumber, invoiceGrossTotal);
         saveInvoiceLines(invoiceLines, savedInvoice);
+        printToPdf(descriptor, invoiceLines, savedInvoice, client);
     }
 
     private PlanVersion findPlanVersion(Client client, ZonedDateTime onDate) throws NoPlanVersionValidOnDate, NoPlanValidOnDate {
@@ -129,5 +133,9 @@ class InvoiceGenerator {
             invoiceLine.setInvoiceId(savedInvoice.getId());
         }
         invoiceLinesRepository.saveAll(invoiceLines);
+    }
+
+    private void printToPdf(InvoicePrintoutGenerationDescriptor descriptor, List<InvoiceLine> invoiceLines, Invoice invoice, Client client) throws ErrorGeneratingPdfPrintoutOfAnInvoice {
+        invoicePrintoutGenerator.printToPdf(invoice, invoiceLines, client, descriptor);
     }
 }

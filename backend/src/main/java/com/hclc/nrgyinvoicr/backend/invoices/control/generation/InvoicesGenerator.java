@@ -1,6 +1,7 @@
 package com.hclc.nrgyinvoicr.backend.invoices.control.generation;
 
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
+import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoicePrintoutGenerationDescriptor;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -20,18 +21,18 @@ class InvoicesGenerator {
 
     @Async
     @Transactional(readOnly = true)
-    public void generateInvoices(InvoiceRun invoiceRun, List<Client> clients) {
+    public void generateInvoices(InvoicePrintoutGenerationDescriptor descriptor, InvoiceRun invoiceRun, List<Client> clients) {
         try {
-            tryGeneratingInvoices(invoiceRun, clients);
+            tryGeneratingInvoices(descriptor, invoiceRun, clients);
         } finally {
             this.progressTracker.markAsFinished(invoiceRun);
         }
     }
 
-    private void tryGeneratingInvoices(InvoiceRun invoiceRun, List<Client> clients) {
+    private void tryGeneratingInvoices(InvoicePrintoutGenerationDescriptor descriptor, InvoiceRun invoiceRun, List<Client> clients) {
         int invoiceNumber = invoiceRun.getFirstInvoiceNumber();
         for (Client client : clients) {
-            invoiceGenerator.generateInvoice(invoiceRun, invoiceNumber, client);
+            invoiceGenerator.generateInvoice(descriptor, invoiceRun, invoiceNumber, client);
             invoiceNumber++;
         }
     }

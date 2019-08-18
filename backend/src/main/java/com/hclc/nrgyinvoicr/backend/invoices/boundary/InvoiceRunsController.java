@@ -1,7 +1,9 @@
 package com.hclc.nrgyinvoicr.backend.invoices.boundary;
 
 import com.hclc.nrgyinvoicr.backend.EntityNotFoundException;
+import com.hclc.nrgyinvoicr.backend.ErrorResponse;
 import com.hclc.nrgyinvoicr.backend.invoices.control.InvoiceRunsService;
+import com.hclc.nrgyinvoicr.backend.invoices.control.generation.ErrorCompilingInvoicePrintoutTemplate;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunMessage;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunsSearchCriteria;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.net.URI;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
@@ -61,8 +64,13 @@ public class InvoiceRunsController {
 
     @PostMapping("/{id}/start")
     @Transactional(readOnly = true)
-    public ResponseEntity<InvoiceRun> start(@PathVariable Long id) {
+    public ResponseEntity<InvoiceRun> start(@PathVariable Long id) throws ErrorCompilingInvoicePrintoutTemplate {
         InvoiceRun invoiceRun = invoiceRunsService.start(id);
         return ok(invoiceRun);
+    }
+
+    @ExceptionHandler({ErrorCompilingInvoicePrintoutTemplate.class})
+    protected ResponseEntity<ErrorResponse> handleException(ErrorCompilingInvoicePrintoutTemplate e) {
+        return ResponseEntity.status(BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 }

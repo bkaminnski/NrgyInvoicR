@@ -1,7 +1,8 @@
 package com.hclc.nrgyinvoicr.backend.invoices.control;
 
 import com.hclc.nrgyinvoicr.backend.EntityNotFoundException;
-import com.hclc.nrgyinvoicr.backend.invoices.control.generation.InvoicesGenerationStarter;
+import com.hclc.nrgyinvoicr.backend.invoices.control.generation.ErrorCompilingInvoicePrintoutTemplate;
+import com.hclc.nrgyinvoicr.backend.invoices.control.generation.InvoicesGeneratorStarter;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRun;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunMessage;
 import com.hclc.nrgyinvoicr.backend.invoices.entity.InvoiceRunsSearchCriteria;
@@ -16,13 +17,13 @@ public class InvoiceRunsService {
     private final InvoiceRunsRepository invoiceRunsRepository;
     private final InvoiceRunMessagesRepository invoiceRunMessagesRepository;
     private final NewInvoiceRunFactory newInvoiceRunFactory;
-    private final InvoicesGenerationStarter invoiceGenerationStarter;
+    private final InvoicesGeneratorStarter invoicesGeneratorStarter;
 
-    InvoiceRunsService(InvoiceRunsRepository invoiceRunsRepository, InvoiceRunMessagesRepository invoiceRunMessagesRepository, NewInvoiceRunFactory newInvoiceRunFactory, InvoicesGenerationStarter invoiceGenerationStarter) {
+    InvoiceRunsService(InvoiceRunsRepository invoiceRunsRepository, InvoiceRunMessagesRepository invoiceRunMessagesRepository, NewInvoiceRunFactory newInvoiceRunFactory, InvoicesGeneratorStarter invoicesGeneratorStarter) {
         this.invoiceRunsRepository = invoiceRunsRepository;
         this.invoiceRunMessagesRepository = invoiceRunMessagesRepository;
         this.newInvoiceRunFactory = newInvoiceRunFactory;
-        this.invoiceGenerationStarter = invoiceGenerationStarter;
+        this.invoicesGeneratorStarter = invoicesGeneratorStarter;
     }
 
     public InvoiceRun prepareNewInvoiceRun() {
@@ -46,8 +47,8 @@ public class InvoiceRunsService {
         return this.invoiceRunsRepository.findAll(criteria.getPageDefinition().asPageRequest());
     }
 
-    public InvoiceRun start(Long id) {
+    public InvoiceRun start(Long id) throws ErrorCompilingInvoicePrintoutTemplate {
         InvoiceRun invoiceRun = invoiceRunsRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(InvoiceRun.class, id));
-        return invoiceGenerationStarter.start(invoiceRun);
+        return invoicesGeneratorStarter.start(invoiceRun);
     }
 }

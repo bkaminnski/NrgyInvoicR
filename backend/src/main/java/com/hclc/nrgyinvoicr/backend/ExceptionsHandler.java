@@ -14,7 +14,6 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @ControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
-
     private static final Logger logger = Logger.getLogger(ExceptionsHandler.class.getName());
 
     @ExceptionHandler({Exception.class})
