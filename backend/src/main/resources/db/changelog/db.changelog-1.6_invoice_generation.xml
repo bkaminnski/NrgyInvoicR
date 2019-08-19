@@ -57,7 +57,7 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="unit_price" type="number(11,2)"/>
+            <column name="unit_price" type="number(11,5)"/>
             <column name="quantity" type="number(11,4)"/>
             <column name="unit" type="varchar(10)"/>
             <column name="net_total" type="number(11,2)"/>

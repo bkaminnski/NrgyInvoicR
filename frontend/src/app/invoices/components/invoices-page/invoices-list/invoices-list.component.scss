@@ -1,16 +1,38 @@
+.mat-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
 table {
   width: 100%;
 }
 
 .mat-column-client-number {
-  flex: 0 0 280px;
+  width: 280px;
 }
 
 .mat-column-client-meter-serialNumber {
-  flex: 0 0 280px;
+  width: 280px;
 }
 
-.mat-card-title {
+.mat-column-options {
+  width: 250px;
+  text-align: right;
+}
+
+tr.invoice-parent-row td {
+  border-bottom-width: 0;
+}
+
+tr.invoice-detail-row {
+  height: 0;
+}
+
+.invoice-detail-element {
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
+}
+
+.invoice-detail-element > * {
+  width: 100%;
 }

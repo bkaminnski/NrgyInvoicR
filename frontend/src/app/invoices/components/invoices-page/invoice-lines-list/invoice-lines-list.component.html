@@ -1,0 +1,40 @@
+<mat-table [dataSource]="dataSource">
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let invoiceLine; columns: displayedColumns;">
+  </mat-row>
+  <ng-container matColumnDef="number">
+    <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine; let i = index">{{i + 1}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.description}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="unitPrice">
+    <mat-header-cell *matHeaderCellDef>Unit Price</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.unitPrice}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="quantity">
+    <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.quantity}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="unit">
+    <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.unit}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="netTotal">
+    <mat-header-cell *matHeaderCellDef>Net</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.netTotal}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="vat">
+    <mat-header-cell *matHeaderCellDef>VAT</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.vat * 100}}%</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="grossTotal">
+    <mat-header-cell *matHeaderCellDef>Gross</mat-header-cell>
+    <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.grossTotal}}</mat-cell>
+  </ng-container>
+</mat-table>
+<div *ngIf="dataSource.totalElements === 0" class="no-lines-found">
+  <p>There are no lines in this invoice.</p>
+</div>
