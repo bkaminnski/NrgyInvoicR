@@ -1,6 +1,5 @@
 package com.hclc.nrgyinvoicr.backend.invoices.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hclc.nrgyinvoicr.backend.AuditableEntity;
 import com.hclc.nrgyinvoicr.backend.clients.entity.Client;
 import com.hclc.nrgyinvoicr.backend.plans.entity.PlanVersion;
@@ -14,6 +13,19 @@ import java.util.List;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@NamedEntityGraph(
+        name = "invoiceWithInvoiceRunAndClientAndPlanVersion",
+        attributeNodes = {
+                @NamedAttributeNode(value = "invoiceRun"),
+                @NamedAttributeNode(value = "client", subgraph = "meter"),
+                @NamedAttributeNode(value = "planVersion", subgraph = "plan"),
+                @NamedAttributeNode(value = "invoiceLines")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "meter", attributeNodes = @NamedAttributeNode(value = "meter")),
+                @NamedSubgraph(name = "plan", attributeNodes = @NamedAttributeNode("plan"))
+        }
+)
 public class Invoice extends AuditableEntity {
 
     @Id
@@ -30,17 +42,14 @@ public class Invoice extends AuditableEntity {
 
     @ManyToOne
     @JoinColumn(name = "invoice_run_id")
-    @JsonIgnore
     private InvoiceRun invoiceRun;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnore
     private Client client;
 
     @ManyToOne
     @JoinColumn(name = "plan_version_id", nullable = false)
-    @JsonIgnore
     private PlanVersion planVersion;
 
     @NotNull
@@ -66,55 +75,31 @@ public class Invoice extends AuditableEntity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public ZonedDateTime getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(ZonedDateTime issueDate) {
-        this.issueDate = issueDate;
-    }
-
     public BigDecimal getGrossTotal() {
         return grossTotal;
-    }
-
-    public void setGrossTotal(BigDecimal grossTotal) {
-        this.grossTotal = grossTotal;
     }
 
     public InvoiceRun getInvoiceRun() {
         return invoiceRun;
     }
 
-    public void setInvoiceRun(InvoiceRun invoiceRun) {
-        this.invoiceRun = invoiceRun;
-    }
-
     public Client getClient() {
         return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public PlanVersion getPlanVersion() {
         return planVersion;
     }
 
-    public void setPlanVersion(PlanVersion planVersion) {
-        this.planVersion = planVersion;
+    public List<InvoiceLine> getInvoiceLines() {
+        return invoiceLines;
     }
 }
