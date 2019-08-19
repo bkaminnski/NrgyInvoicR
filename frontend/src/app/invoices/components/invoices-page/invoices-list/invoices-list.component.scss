@@ -2,6 +2,14 @@ table {
   width: 100%;
 }
 
+.mat-column-client-number {
+  flex: 0 0 280px;
+}
+
+.mat-column-client-meter-serialNumber {
+  flex: 0 0 280px;
+}
+
 .mat-card-title {
   display: flex;
   justify-content: space-between;

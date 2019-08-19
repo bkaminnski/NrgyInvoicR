@@ -24,6 +24,26 @@
         <mat-header-cell mat-sort-header *matHeaderCellDef>Gross Total</mat-header-cell>
         <mat-cell *matCellDef="let invoice">{{invoice.grossTotal}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="client.number">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Client Number</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.client.number}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="client.lastName">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Client Name</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.client.firstName}} {{invoice.client.lastName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="client.meter.serialNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Meter</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.client.meter.serialNumber}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="invoiceRun.sinceClosed">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Invoiced Period</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.invoiceRun.sinceClosed | date:'shortDate'}} - {{invoice.invoiceRun.untilOpen | date:'shortDate'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="planVersion.plan.name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Plan</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.planVersion.plan.name}}</mat-cell>
+      </ng-container>
     </mat-table>
     <div [hidden]="dataSource.totalElements === 0">
       <mat-paginator [length]="dataSource.totalElements" [pageSize]="paginatorConfig.initialPageSize"

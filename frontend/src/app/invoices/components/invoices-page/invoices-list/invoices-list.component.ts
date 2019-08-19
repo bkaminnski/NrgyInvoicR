@@ -13,7 +13,12 @@ import { PageDefinition } from 'src/app/core/model/page-definition.model';
 export class InvoicesListComponent implements OnInit, AfterViewInit {
   private invoicesSearchCriteria: InvoicesSearchCriteria;
   dataSource: InvoicesListDataSource;
-  displayedColumns: string[] = ['number', 'issueDate', 'grossTotal'];
+  displayedColumns: string[] = [
+    'number', 'issueDate', 'grossTotal',
+    'client.number', 'client.lastName', 'client.meter.serialNumber',
+    'invoiceRun.sinceClosed',
+    'planVersion.plan.name'
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
