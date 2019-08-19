@@ -19,6 +19,9 @@ export class InvoicesListService {
     if (invoicesSearchCriteria.issueDateUntil) {
       params = params.append('issueDateUntil', invoicesSearchCriteria.issueDateUntil.clone().add(1, 'day').toISOString());
     }
+    if (invoicesSearchCriteria.clientNumber) {
+      params = params.append('clientNumber', invoicesSearchCriteria.clientNumber);
+    }
     params = pageDefinition.appendTo(params);
     return this.http.get<Page<Invoice>>('/api/invoices', { params: params });
   }

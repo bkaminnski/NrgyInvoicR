@@ -16,6 +16,10 @@
         <mat-datepicker-toggle matSuffix [for]="issueDateUntil"></mat-datepicker-toggle>
         <mat-datepicker #issueDateUntil></mat-datepicker>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Client Number" name="clientNumber"
+          [(ngModel)]="invoicesSearchCriteria.clientNumber">
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button type="submit">

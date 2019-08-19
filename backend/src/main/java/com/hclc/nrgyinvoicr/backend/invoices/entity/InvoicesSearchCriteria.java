@@ -13,6 +13,8 @@ public class InvoicesSearchCriteria {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime issueDateUntil;
 
+    private String clientNumber;
+
     private PageDefinition pageDefinition;
 
     public ZonedDateTime getIssueDateSince() {
@@ -29,6 +31,14 @@ public class InvoicesSearchCriteria {
 
     public void setIssueDateUntil(ZonedDateTime issueDateUntil) {
         this.issueDateUntil = issueDateUntil;
+    }
+
+    public String getClientNumber() {
+        return clientNumber;
+    }
+
+    public void setClientNumber(String clientNumber) {
+        this.clientNumber = clientNumber;
     }
 
     public PageDefinition getPageDefinition() {
