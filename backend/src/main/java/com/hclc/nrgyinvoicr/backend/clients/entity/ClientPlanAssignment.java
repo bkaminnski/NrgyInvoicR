@@ -9,6 +9,17 @@ import java.time.ZonedDateTime;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@NamedEntityGraph(
+        name = "clientPlanAssignmentWithClientAndPlan",
+        attributeNodes = {
+                @NamedAttributeNode(value = "client", subgraph = "meter"),
+                @NamedAttributeNode(value = "plan", subgraph = "versions")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "meter", attributeNodes = @NamedAttributeNode("meter")),
+                @NamedSubgraph(name = "versions", attributeNodes = @NamedAttributeNode("versions"))
+        }
+)
 public class ClientPlanAssignment {
 
     @Id
