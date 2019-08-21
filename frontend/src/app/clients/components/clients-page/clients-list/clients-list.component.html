@@ -5,13 +5,13 @@
         Clients
         <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
       </span>
-      <button mat-button type="button" (click)="registerClient()">
+      <button id="ae-button-register-client" mat-button type="button" (click)="registerClient()">
         <mat-icon>add_circle</mat-icon> Register a New Client
       </button>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+    <mat-table id="ae-table-clients" [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let client; columns: displayedColumns; let i = index" (mouseenter)="mouseEnter(i)"

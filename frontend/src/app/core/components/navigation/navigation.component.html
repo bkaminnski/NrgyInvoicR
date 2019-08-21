@@ -2,7 +2,7 @@
   <mat-icon>flash_on</mat-icon>
   <span class="title">NrgyInvoicR</span>
   <button mat-button [routerLink]="['/dashboard']">Dashboard</button>
-  <button mat-button [matMenuTriggerFor]="registriesMenu">Registries</button>
+  <button id="ae-button-registries" mat-button [matMenuTriggerFor]="registriesMenu">Registries</button>
   <button mat-button [matMenuTriggerFor]="meterReadingsMenu">Meter Readings</button>
   <button mat-button [matMenuTriggerFor]="invoicingMenu">Invoicing</button>
   <span class="space"></span>
@@ -11,8 +11,8 @@
 </mat-toolbar>
 
 <mat-menu #registriesMenu>
-  <button mat-menu-item [routerLink]="['/meters']">Meters</button>
-  <button mat-menu-item [routerLink]="['/clients']">Clients</button>
+  <button id="ae-button-meters" mat-menu-item [routerLink]="['/meters']">Meters</button>
+  <button id="ae-button-clients" mat-menu-item [routerLink]="['/clients']">Clients</button>
 </mat-menu>
 
 <mat-menu #meterReadingsMenu>

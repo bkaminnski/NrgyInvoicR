@@ -1,6 +1,6 @@
 <div class="spinner-container">
   <mat-form-field>
-    <input matInput [required]="required" placeholder="Meter" name="meter" #meter="ngModel" [(ngModel)]="selectedMeter"
+    <input id="ae-input-meter-autocomplete" matInput [required]="required" placeholder="Meter" name="meter" #meter="ngModel" [(ngModel)]="selectedMeter"
       [matAutocomplete]="meterAutocomplete" (ngModelChange)="serialNumberChanged($event)"
       (blur)="discardNonExistingSerialNumber()">
     <mat-autocomplete #meterAutocomplete="matAutocomplete" [displayWith]="meterAsString" autoActiveFirstOption

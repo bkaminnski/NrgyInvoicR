@@ -6,7 +6,7 @@
   </h1>
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput required maxlength="36" placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel"
+      <input id="ae-input-meter-serial-number" matInput required maxlength="36" placeholder="Serial Number" name="serialNumber" #serialNumber="ngModel"
         [(ngModel)]="meter.serialNumber">
       <mat-error *ngIf="serialNumber.invalid">Serial Number is required</mat-error>
     </mat-form-field>
@@ -16,7 +16,7 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button id="ae-button-meter-save" mat-button class="mat-primary" type="submit">Save</button>
     <button mat-button type="button" (click)="cancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

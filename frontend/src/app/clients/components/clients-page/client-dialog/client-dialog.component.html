@@ -11,37 +11,37 @@
     </mat-form-field>
     <div class="form-row">
       <mat-form-field>
-        <input matInput required maxlength="36" placeholder="First Name" name="firstName" #firstName="ngModel"
+        <input id="ae-input-client-first-name" matInput required maxlength="36" placeholder="First Name" name="firstName" #firstName="ngModel"
           [(ngModel)]="client.firstName">
         <mat-error *ngIf="firstName.invalid">First Name is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput maxlength="36" placeholder="Middle Name" name="middleName" #middleName="ngModel"
+        <input id="ae-input-client-middle-name" matInput maxlength="36" placeholder="Middle Name" name="middleName" #middleName="ngModel"
           [(ngModel)]="client.middleName">
       </mat-form-field>
       <mat-form-field>
-        <input matInput required maxlength="36" placeholder="Last Name" name="lastName" #lastName="ngModel"
+        <input id="ae-input-client-last-name" matInput required maxlength="36" placeholder="Last Name" name="lastName" #lastName="ngModel"
           [(ngModel)]="client.lastName">
         <mat-error *ngIf="lastName.invalid">Last Name is required</mat-error>
       </mat-form-field>
     </div>
     <mat-form-field>
-      <input matInput required maxlength="50" placeholder="Address Line 1" name="addressLine1" #addressLine1="ngModel"
+      <input id="ae-input-client-address-line-1" matInput required maxlength="50" placeholder="Address Line 1" name="addressLine1" #addressLine1="ngModel"
         [(ngModel)]="client.addressLine1">
       <mat-error *ngIf="addressLine1.invalid">Address Line 1 is required</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput maxlength="50" placeholder="Address Line 2" name="addressLine2" #addressLine2="ngModel"
+      <input id="ae-input-client-address-line-2" matInput maxlength="50" placeholder="Address Line 2" name="addressLine2" #addressLine2="ngModel"
         [(ngModel)]="client.addressLine2">
     </mat-form-field>
     <div class="form-row">
       <mat-form-field>
-        <input matInput required maxlength="10" placeholder="Postal Code" name="postalCode" #postalCode="ngModel"
+        <input id="ae-input-client-postal-code" matInput required maxlength="10" placeholder="Postal Code" name="postalCode" #postalCode="ngModel"
           [(ngModel)]="client.postalCode">
         <mat-error *ngIf="postalCode.invalid">Postal Code is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput required maxlength="10" placeholder="City" name="city" #city="ngModel"
+        <input id="ae-input-client-city" matInput required maxlength="36" placeholder="City" name="city" #city="ngModel"
           [(ngModel)]="client.city">
         <mat-error *ngIf="city.invalid">City is required</mat-error>
       </mat-form-field>
@@ -49,7 +49,7 @@
     <app-meter-autocomplete required name="meter" [(ngModel)]="client.meter"></app-meter-autocomplete>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button id="ae-button-client-save" mat-button class="mat-primary" type="submit">Save</button>
     <button mat-button type="button" (click)="cancel()">Cancel</button>
   </mat-dialog-actions>
 </form>
