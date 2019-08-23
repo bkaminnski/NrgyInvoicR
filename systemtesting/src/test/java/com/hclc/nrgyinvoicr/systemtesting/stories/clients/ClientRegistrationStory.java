@@ -57,7 +57,7 @@ public class ClientRegistrationStory {
         }).doesNotThrowAnyException();
     }
 
-    public void assertThatUserCanEditARegisteredClient(Client client) {
+    public void assertThatClientRegistrationFormContainsAllFieldsForA(Client client) {
         WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()='" + client.lastName + "']/.."));
         app.createActions().moveToElement(clientRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-client"));

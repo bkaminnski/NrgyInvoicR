@@ -75,7 +75,7 @@ public class PlanVersionDefinitionStory {
         }).doesNotThrowAnyException();
     }
 
-    public void assertThatUserCanEditADefinedPlanVersion(PlanVersion planVersion) {
+    public void assertThatPlanVersionDefinitionFormContainsAllFieldsForA(PlanVersion planVersion) {
         WebElement weekendPlanRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[text()='" + planVersion.description + "']/.."));
         app.createActions().moveToElement(weekendPlanRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-plan-version"));

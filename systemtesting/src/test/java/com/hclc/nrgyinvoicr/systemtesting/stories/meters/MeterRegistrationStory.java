@@ -43,7 +43,7 @@ public class MeterRegistrationStory {
         }).doesNotThrowAnyException();
     }
 
-    public void assertThatUserCanEditARegisteredMeter(Meter meter) {
+    public void assertThatMeterRegistrationFormContainsAllFieldsForA(Meter meter) {
         WebElement meterRow = app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[text()='" + meter.serialNumber + "']/.."));
         app.createActions().moveToElement(meterRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-meter"));

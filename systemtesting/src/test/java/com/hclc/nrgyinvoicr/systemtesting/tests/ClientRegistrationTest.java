@@ -23,6 +23,6 @@ class ClientRegistrationTest extends SystemTest {
         Client client = clientRegistrationStory.userRegistersANewClient(meter);
 
         clientRegistrationStory.assertThatUserSeesARegisteredClientInAListOfClients(client);
-        clientRegistrationStory.assertThatUserCanEditARegisteredClient(client);
+        clientRegistrationStory.assertThatClientRegistrationFormContainsAllFieldsForA(client);
     }
 }
