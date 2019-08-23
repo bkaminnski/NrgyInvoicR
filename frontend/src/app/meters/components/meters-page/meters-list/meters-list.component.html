@@ -33,7 +33,8 @@
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let meter; let i = index">
-          <button *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="editMeter(meter)">
+          <button id="ae-button-edit-meter" *ngIf="i === highlightedRowIndex" mat-button type="button"
+            (click)="editMeter(meter)">
             <mat-icon>edit</mat-icon> Edit
           </button>
         </mat-cell>

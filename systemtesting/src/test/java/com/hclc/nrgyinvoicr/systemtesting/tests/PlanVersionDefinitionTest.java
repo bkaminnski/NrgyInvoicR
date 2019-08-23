@@ -14,10 +14,6 @@ class PlanVersionDefinitionTest extends SystemTest {
         PlanVersion planVersion = planVersionDefinitionStory.userDefinesANewPlanVersion("Weekend Plan");
 
         planVersionDefinitionStory.assertThatUserSeesADefinedPlanVersionInAListOfPlanVersions(planVersion);
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        planVersionDefinitionStory.assertThatUserCanEditADefinedPlanVersion(planVersion);
     }
 }

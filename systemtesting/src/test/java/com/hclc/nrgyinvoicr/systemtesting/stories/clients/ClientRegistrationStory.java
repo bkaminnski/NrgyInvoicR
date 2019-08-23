@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static com.hclc.nrgyinvoicr.systemtesting.stories.clients.ClientBuilder.aClient;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class ClientRegistrationStory {
@@ -54,5 +55,20 @@ public class ClientRegistrationStory {
             clientRow.findElement(By.xpath("mat-cell[text()='" + client.postalCode + "']"));
             clientRow.findElement(By.xpath("mat-cell[text()='" + client.meterSerialNumber + "']"));
         }).doesNotThrowAnyException();
+    }
+
+    public void assertThatUserCanEditARegisteredClient(Client client) {
+        WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()='" + client.lastName + "']/.."));
+        app.createActions().moveToElement(clientRow).perform();
+        app.clickWith1sTimeout(By.id("ae-button-edit-client"));
+        assertThat(app.getValueOfElement(By.id("ae-input-client-first-name"))).isEqualTo(client.fistName);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-middle-name"))).isEqualTo(client.middleName);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-last-name"))).isEqualTo(client.lastName);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-address-line-1"))).isEqualTo(client.addressLine1);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-address-line-2"))).isEqualTo(client.addressLine2);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-postal-code"))).isEqualTo(client.postalCode);
+        assertThat(app.getValueOfElement(By.id("ae-input-client-city"))).isEqualTo(client.city);
+        assertThat(app.getValueOfElement(By.id("ae-input-meter-autocomplete"))).isEqualTo(client.meterSerialNumber);
+        app.findElement(By.id("ae-button-client-cancel")).click();
     }
 }

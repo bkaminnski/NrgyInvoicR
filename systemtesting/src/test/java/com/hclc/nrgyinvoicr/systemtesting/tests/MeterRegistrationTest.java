@@ -14,5 +14,6 @@ class MeterRegistrationTest extends SystemTest {
         Meter meter = meterRegistrationStory.userRegistersANewMeter();
 
         meterRegistrationStory.assertThatUserSeesARegisteredMeterInAListOfMeters(meter);
+        meterRegistrationStory.assertThatUserCanEditARegisteredMeter(meter);
     }
 }

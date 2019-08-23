@@ -44,7 +44,7 @@ public class Client extends AuditableEntity {
     private String postalCode;
 
     @NotNull
-    @Column(length = 10)
+    @Column(length = 36)
     private String city;
 
     @OneToOne(mappedBy = "client")

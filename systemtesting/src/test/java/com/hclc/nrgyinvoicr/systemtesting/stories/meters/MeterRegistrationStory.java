@@ -2,8 +2,10 @@ package com.hclc.nrgyinvoicr.systemtesting.stories.meters;
 
 import com.hclc.nrgyinvoicr.systemtesting.Application;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static com.hclc.nrgyinvoicr.systemtesting.stories.meters.MeterBuilder.aMeter;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class MeterRegistrationStory {
@@ -39,5 +41,13 @@ public class MeterRegistrationStory {
         assertThatCode(() -> {
             app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[text()='" + meter.serialNumber + "']/.."));
         }).doesNotThrowAnyException();
+    }
+
+    public void assertThatUserCanEditARegisteredMeter(Meter meter) {
+        WebElement meterRow = app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[text()='" + meter.serialNumber + "']/.."));
+        app.createActions().moveToElement(meterRow).perform();
+        app.clickWith1sTimeout(By.id("ae-button-edit-meter"));
+        assertThat(app.getValueOfElement(By.id("ae-input-meter-serial-number"))).isEqualTo(meter.serialNumber);
+        app.findElement(By.id("ae-button-meter-cancel")).click();
     }
 }

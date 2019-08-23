@@ -93,4 +93,8 @@ public class Application {
             }
         }
     }
+
+    public String getValueOfElement(By by) {
+        return driver.findElement(by).getAttribute("value");
+    }
 }

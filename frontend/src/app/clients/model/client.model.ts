@@ -4,14 +4,15 @@ import { Meter } from 'src/app/meters/model/meter.model';
 
 export class Client extends Entity {
 
-  public constructor(public number?: string,
+  public constructor(
+    public number?: string,
     public firstName?: string,
     public middleName?: string,
     public lastName?: string,
     public addressLine1?: string,
     public addressLine2?: string,
-    public postalCode?: string,
     public city?: string,
+    public postalCode?: string,
     public createdDate?: Date,
     public meter?: Meter,
     public id: number = null) {
