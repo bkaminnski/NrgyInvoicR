@@ -3,6 +3,9 @@ package com.hclc.nrgyinvoicr.systemtesting;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -53,6 +56,15 @@ public class Application {
 
     void quit() {
         driver.quit();
+    }
+
+    public Actions createActions() {
+        return new Actions(driver);
+    }
+
+    public void waitFor1sUntilVisibleElement(By by) {
+        WebDriverWait wait = new WebDriverWait(driver, 1);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     public WebElement findElement(By by) {
