@@ -61,7 +61,7 @@ public class PlanVersionDefinitionStory {
         app.findElement(By.id("ae-textarea-plan-version-description")).sendKeys(planVersion.description);
         app.findElement(By.id("ae-textarea-plan-version-expression")).clear();
         app.findElement(By.id("ae-textarea-plan-version-expression")).sendKeys(planVersion.expression);
-        app.waitFor1sUntilVisibleElement(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + price + "']"));
+        app.waitUpTo1sUntilElementIsVisible(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + price + "']"));
         app.findElement(By.id("ae-button-plan-version-save")).click();
         return planVersion;
     }

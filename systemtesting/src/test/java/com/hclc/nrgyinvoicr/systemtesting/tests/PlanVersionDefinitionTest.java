@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class PlanVersionDefinitionTest extends SystemTest {
 
     @Test
-    void userDefinesANewVersionOfOfAWeekendPlan() {
+    void userDefinesANewVersionOfAWeekendPlan() {
         PlanVersionDefinitionStory planVersionDefinitionStory = new PlanVersionDefinitionStory(app);
 
         PlanVersion planVersion = planVersionDefinitionStory.userDefinesANewPlanVersion("Weekend Plan");

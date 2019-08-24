@@ -8,7 +8,7 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-table [dataSource]="dataSource">
+    <mat-table id="ae-table-upload-progress" [dataSource]="dataSource">
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       <ng-container matColumnDef="fileName">
@@ -45,13 +45,13 @@
       </ng-container>
       <ng-container matColumnDef="measured">
         <mat-header-cell *matHeaderCellDef>Measured</mat-header-cell>
-        <mat-cell *matCellDef="let reading">
+        <mat-cell id="ae-cell-measured-values" *matCellDef="let reading">
           {{(reading.increment | async).measuredValues}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="expected">
         <mat-header-cell *matHeaderCellDef>Expected</mat-header-cell>
-        <mat-cell *matCellDef="let reading">
+        <mat-cell id="ae-cell-expected-values" *matCellDef="let reading">
           {{(reading.increment | async).expectedValues}}
         </mat-cell>
       </ng-container>

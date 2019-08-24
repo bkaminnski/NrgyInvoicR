@@ -62,8 +62,16 @@ public class Application {
         return new Actions(driver);
     }
 
-    public void waitFor1sUntilVisibleElement(By by) {
-        WebDriverWait wait = new WebDriverWait(driver, 1);
+    public void waitUpTo1sUntilElementIsVisible(By by) {
+        waitUntilElementIsVisible(by, 1);
+    }
+
+    public void waitUpTo30sUntilElementIsVisible(By by) {
+        waitUntilElementIsVisible(by, 30);
+    }
+
+    private void waitUntilElementIsVisible(By by, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
