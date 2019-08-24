@@ -25,5 +25,6 @@ class ReadingUploadTest extends SystemTest {
         ReadingUpload readingUpload = readingsUploadStory.userUploadsReadingFile(meter);
 
         readingsUploadStory.assertThatUserSeesUploadedReadingFileInUploadProgressTable(readingUpload);
+        readingsUploadStory.assertThatUserSeesUploadedReadingFileInReadingsUploadsHistory(readingUpload);
     }
 }

@@ -8,8 +8,9 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
-      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear>
+    <mat-table id="ae-table-readings-uploads" [dataSource]="dataSource" matSort
+      [matSortActive]="sortConfig.initialSortActive" [matSortDirection]="sortConfig.initialSortDirection"
+      matSortDisableClear>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       <ng-container matColumnDef="date">
@@ -23,9 +24,11 @@
       <ng-container matColumnDef="status">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Status</mat-header-cell>
         <mat-cell *matCellDef="let readingUpload">
-          <mat-icon *ngIf="readingUpload.status === 'OK'" color="primary">cloud_done
+          <mat-icon *ngIf="readingUpload.status === 'OK'" color="primary">
+            cloud_done
           </mat-icon>
-          <mat-icon *ngIf="readingUpload.status !== 'OK'" color="primary">cloud_off
+          <mat-icon *ngIf="readingUpload.status !== 'OK'" color="primary">
+            cloud_off
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -35,14 +38,14 @@
       </ng-container>
       <ng-container matColumnDef="reading.readingSpread.numberOfMeasuredValues">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Measured</mat-header-cell>
-        <mat-cell *matCellDef="let readingUpload">
-          <span>{{readingUpload?.reading?.readingSpread?.numberOfMeasuredValues}}</span>
+        <mat-cell id="ae-cell-measured-values" *matCellDef="let readingUpload">
+          {{readingUpload?.reading?.readingSpread?.numberOfMeasuredValues}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="reading.readingSpread.numberOfExpectedValues">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Expected</mat-header-cell>
-        <mat-cell *matCellDef="let readingUpload">
-          <span>{{readingUpload?.reading?.readingSpread?.numberOfExpectedValues}}</span>
+        <mat-cell id="ae-cell-expected-values" *matCellDef="let readingUpload">
+          {{readingUpload?.reading?.readingSpread?.numberOfExpectedValues}}
         </mat-cell>
       </ng-container>
     </mat-table>

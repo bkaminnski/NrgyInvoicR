@@ -25,7 +25,7 @@ public class ReadingUploadStory {
         navigateToReadingsUploadPage();
         ReadingUpload readingUpload = prepareFileToUpload(meter);
         startUpload(readingUpload);
-        waitUntilUploadCompletes(meter);
+        waitUntilUploadCompletes(readingUpload);
         return readingUpload;
     }
 
@@ -51,15 +51,30 @@ public class ReadingUploadStory {
         app.findElement(By.id("ae-input-file-upload")).sendKeys(readingUpload.filePathWithName);
     }
 
-    private void waitUntilUploadCompletes(Meter meter) {
-        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[contains(text(), '" + meter.serialNumber + "')]/..//mat-icon[contains(text(), 'cloud_done')]"));
+    private void waitUntilUploadCompletes(ReadingUpload readingUpload) {
+        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text() = ' " + readingUpload.fileName + " ']/..//mat-icon[text() = ' cloud_done ']"));
     }
 
     public void assertThatUserSeesUploadedReadingFileInUploadProgressTable(ReadingUpload readingUpload) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[contains(text(), '" + readingUpload.fileName + "')]/.."));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-measured-values' and contains(text(), '" + readingUpload.numberOfValues + "')]"));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-expected-values' and contains(text(), '" + readingUpload.numberOfValues + "')]"));
+            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text() = ' " + readingUpload.fileName + " ']/.."));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-measured-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-expected-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
         }).doesNotThrowAnyException();
+    }
+
+    public void assertThatUserSeesUploadedReadingFileInReadingsUploadsHistory(ReadingUpload readingUpload) {
+        navigateToReadingsUploadsHistoryPage(readingUpload);
+        assertThatCode(() -> {
+            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-readings-uploads']/mat-row/mat-cell[text() = '" + readingUpload.fileName + "']/.."));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-measured-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-expected-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("//mat-icon[text() = ' cloud_done ']"));
+        }).doesNotThrowAnyException();
+    }
+
+    private void navigateToReadingsUploadsHistoryPage(ReadingUpload readingUpload) {
+        app.findElement(By.id("ae-button-meter-readings")).click();
+        app.clickWith1sTimeout(By.id("ae-button-history-of-uploads"));
     }
 }

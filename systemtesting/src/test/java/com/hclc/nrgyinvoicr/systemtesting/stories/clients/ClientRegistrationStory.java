@@ -41,7 +41,7 @@ public class ClientRegistrationStory {
         app.findElement(By.id("ae-input-client-postal-code")).sendKeys(client.postalCode);
         app.findElement(By.id("ae-input-client-city")).sendKeys(client.city);
         app.findElement(By.id("ae-input-meter-autocomplete")).sendKeys(client.meterSerialNumber);
-        app.clickWith1sTimeout(By.xpath("//mat-option/span[contains(text(), '" + client.meterSerialNumber + "')]/.."));
+        app.clickWith1sTimeout(By.xpath("//mat-option/span[text() = ' " + client.meterSerialNumber + " ']/.."));
         app.findElement(By.id("ae-button-client-save")).click();
         return client;
     }
