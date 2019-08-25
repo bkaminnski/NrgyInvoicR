@@ -41,24 +41,24 @@ public class ClientRegistrationStory {
         app.findElement(By.id("ae-input-client-postal-code")).sendKeys(client.postalCode);
         app.findElement(By.id("ae-input-client-city")).sendKeys(client.city);
         app.findElement(By.id("ae-input-meter-autocomplete")).sendKeys(client.meterSerialNumber);
-        app.clickWith1sTimeout(By.xpath("//mat-option/span[text() = ' " + client.meterSerialNumber + " ']/.."));
+        app.clickWith1sTimeout(By.xpath("//mat-option/span[text()=' " + client.meterSerialNumber + " ']/.."));
         app.findElement(By.id("ae-button-client-save")).click();
         return client;
     }
 
     public void assertThatUserSeesARegisteredClientInAListOfClients(Client client) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()='" + client.lastName + "']/.."));
-            clientRow.findElement(By.xpath("mat-cell[text()='" + client.fistName + "']"));
-            clientRow.findElement(By.xpath("mat-cell[text()='" + client.addressLine1 + "']"));
-            clientRow.findElement(By.xpath("mat-cell[text()='" + client.city + "']"));
-            clientRow.findElement(By.xpath("mat-cell[text()='" + client.postalCode + "']"));
-            clientRow.findElement(By.xpath("mat-cell[text()='" + client.meterSerialNumber + "']"));
+            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[@id='ae-cell-client-last-name' and text()=' " + client.lastName + " ']/.."));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-first-name' and text()=' " + client.fistName + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-address-line-1' and text()=' " + client.addressLine1 + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-city' and text()=' " + client.city + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-postal-code' and text()=' " + client.postalCode + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-meter-serial-number' and text()=' " + client.meterSerialNumber + " ']"));
         }).doesNotThrowAnyException();
     }
 
     public void assertThatClientRegistrationFormContainsAllFieldsForA(Client client) {
-        WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()='" + client.lastName + "']/.."));
+        WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()=' " + client.lastName + " ']/.."));
         app.createActions().moveToElement(clientRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-client"));
         assertThat(app.getValueOfElement(By.id("ae-input-client-first-name"))).isEqualTo(client.fistName);

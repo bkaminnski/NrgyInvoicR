@@ -52,14 +52,14 @@ public class ReadingUploadStory {
     }
 
     private void waitUntilUploadCompletes(ReadingUpload readingUpload) {
-        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text() = ' " + readingUpload.fileName + " ']/..//mat-icon[text() = ' cloud_done ']"));
+        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text()=' " + readingUpload.fileName + " ']/..//mat-icon[text() = ' cloud_done ']"));
     }
 
     public void assertThatUserSeesUploadedReadingFileInUploadProgressTable(ReadingUpload readingUpload) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text() = ' " + readingUpload.fileName + " ']/.."));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-measured-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-expected-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
+            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text()=' " + readingUpload.fileName + " ']/.."));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-upload-progress-measured-values' and text()=' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-upload-progress-expected-values' and text()=' " + readingUpload.numberOfValues + " ']"));
         }).doesNotThrowAnyException();
     }
 
@@ -67,8 +67,8 @@ public class ReadingUploadStory {
         navigateToReadingsUploadsHistoryPage(readingUpload);
         assertThatCode(() -> {
             WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-readings-uploads']/mat-row/mat-cell[text() = '" + readingUpload.fileName + "']/.."));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-measured-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
-            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-expected-values' and text() = ' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-readings-uploads-measured-values' and text()=' " + readingUpload.numberOfValues + " ']"));
+            clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-readings-uploads-expected-values' and text()=' " + readingUpload.numberOfValues + " ']"));
             clientRow.findElement(By.xpath("//mat-icon[text() = ' cloud_done ']"));
         }).doesNotThrowAnyException();
     }

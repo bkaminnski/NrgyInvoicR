@@ -53,11 +53,11 @@ public class InvoiceRunCreationStory {
 
     public void assertThatUserSeesACreatedInvoiceRunInAListOfInvoiceRuns(InvoiceRun invoiceRun) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[text()='" + invoiceRun.invoiceNumberTemplate + "']/.."));
-            clientRow.findElement(By.xpath("td[text()='" + invoiceRun.sinceShortYear + "']"));
-            clientRow.findElement(By.xpath("td[text()='" + invoiceRun.untilShortYear + "']"));
-            clientRow.findElement(By.xpath("td[text()='" + invoiceRun.issueDateShortYear + "']"));
-            clientRow.findElement(By.xpath("td[text()='" + invoiceRun.firstInvoiceNumber + "']"));
+            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[@id='ae-cell-invoice-run-number-template' and text()=' " + invoiceRun.invoiceNumberTemplate + " ']/.."));
+            clientRow.findElement(By.xpath("td[@id='ae-cell-invoice-run-since-closed' and text()=' " + invoiceRun.sinceShortYear + " ']"));
+            clientRow.findElement(By.xpath("td[@id='ae-cell-invoice-run-until-open' and text()=' " + invoiceRun.untilShortYear + " ']"));
+            clientRow.findElement(By.xpath("td[@id='ae-cell-invoice-run-issue-date' and text()=' " + invoiceRun.issueDateShortYear + " ']"));
+            clientRow.findElement(By.xpath("td[@id='ae-cell-invoice-run-first-invoice-number' and text()=' " + invoiceRun.firstInvoiceNumber + " ']"));
         }).doesNotThrowAnyException();
     }
 }

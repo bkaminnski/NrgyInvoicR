@@ -67,15 +67,15 @@ public class PlanVersionDefinitionStory {
 
     public void assertThatUserSeesADefinedPlanVersionInAListOfPlanVersions(PlanVersion planVersion) {
         assertThatCode(() -> {
-            WebElement planVersionRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[text()='" + planVersion.description + "']/.."));
-            planVersionRow.findElement(By.xpath("mat-cell[text()='" + planVersion.validSinceShortYear + "']"));
-            planVersionRow.findElement(By.xpath("mat-cell[text()='" + planVersion.subscriptionFee + "']"));
-            planVersionRow.findElement(By.xpath("mat-cell[text()='" + planVersion.networkFee + "']"));
+            WebElement planVersionRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[@id='ae-cell-plan-version-description' and text()=' " + planVersion.description + " ']/.."));
+            planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-valid-since' and text()=' " + planVersion.validSinceShortYear + " ']"));
+            planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-subscription-fee' and text()=' " + planVersion.subscriptionFee + " ']"));
+            planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-network-fee' and text()=' " + planVersion.networkFee + " ']"));
         }).doesNotThrowAnyException();
     }
 
     public void assertThatPlanVersionDefinitionFormContainsAllFieldsForA(PlanVersion planVersion) {
-        WebElement weekendPlanRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[text()='" + planVersion.description + "']/.."));
+        WebElement weekendPlanRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[@id='ae-cell-plan-version-description' and text()=' " + planVersion.description + " ']/.."));
         app.createActions().moveToElement(weekendPlanRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-plan-version"));
         assertThat(app.getValueOfElement(By.id("ae-input-plan-version-valid-since"))).isEqualTo(planVersion.validSince);

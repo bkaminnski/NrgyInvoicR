@@ -26,19 +26,27 @@
       </mat-row>
       <ng-container matColumnDef="validSince">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Valid Since</mat-header-cell>
-        <mat-cell *matCellDef="let planVersion">{{planVersion.validSince | date:'shortDate'}}</mat-cell>
+        <mat-cell id="ae-cell-plan-version-valid-since" *matCellDef="let planVersion">
+          {{planVersion.validSince | date:'shortDate'}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="fixedFees.subscriptionFee">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Subscription Fee</mat-header-cell>
-        <mat-cell *matCellDef="let planVersion">{{planVersion.fixedFees.subscriptionFee}}</mat-cell>
+        <mat-cell id="ae-cell-plan-version-subscription-fee" *matCellDef="let planVersion">
+          {{planVersion.fixedFees.subscriptionFee}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="fixedFees.networkFee">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Network Fee</mat-header-cell>
-        <mat-cell *matCellDef="let planVersion">{{planVersion.fixedFees.networkFee}}</mat-cell>
+        <mat-cell id="ae-cell-plan-version-network-fee" *matCellDef="let planVersion">
+          {{planVersion.fixedFees.networkFee}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="description">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Description</mat-header-cell>
-        <mat-cell *matCellDef="let planVersion">{{planVersion.description}}</mat-cell>
+        <mat-cell id="ae-cell-plan-version-description" *matCellDef="let planVersion">
+          {{planVersion.description}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>

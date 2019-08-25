@@ -13,8 +13,9 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table id="ae-table-invoice-runs" mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
-      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear multiTemplateDataRows>
+    <table id="ae-table-invoice-runs" mat-table [dataSource]="dataSource" matSort
+      [matSortActive]="sortConfig.initialSortActive" [matSortDirection]="sortConfig.initialSortDirection"
+      matSortDisableClear multiTemplateDataRows>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let invoiceRun; columns: displayedColumns; let i = dataIndex" (mouseenter)="mouseEnter(i)"
         (mouseleave)="mouseLeave()" [class.row-highlighted]="i === highlightedRowIndex"
@@ -23,23 +24,33 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="invoice-run-detail-row"></tr>
       <ng-container matColumnDef="issueDate">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.issueDate | date:'shortDate'}}</td>
+        <td id="ae-cell-invoice-run-issue-date" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.issueDate | date:'shortDate'}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="sinceClosed">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Since</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.sinceClosed | date:'shortDate'}}</td>
+        <td id="ae-cell-invoice-run-since-closed" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.sinceClosed | date:'shortDate'}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="untilOpen">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Until</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.untilOpen | date:'shortDate'}}</td>
+        <td id="ae-cell-invoice-run-until-open" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.untilOpen | date:'shortDate'}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="firstInvoiceNumber">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>First Invoice Number</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.firstInvoiceNumber}}</td>
+        <td id="ae-cell-invoice-run-first-invoice-number" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.firstInvoiceNumber}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="numberTemplate">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Number Template</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.numberTemplate}}</td>
+        <td id="ae-cell-invoice-run-number-template" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.numberTemplate}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="status">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>

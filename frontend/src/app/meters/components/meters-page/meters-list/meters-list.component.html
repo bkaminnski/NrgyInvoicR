@@ -20,15 +20,21 @@
       </mat-row>
       <ng-container matColumnDef="serialNumber">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Serial Number</mat-header-cell>
-        <mat-cell *matCellDef="let meter">{{meter.serialNumber}}</mat-cell>
+        <mat-cell id="ae-cell-meter-serial-number" *matCellDef="let meter">
+          {{meter.serialNumber}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="client.number">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Client Number</mat-header-cell>
-        <mat-cell *matCellDef="let meter">{{meter.clientNumber}}</mat-cell>
+        <mat-cell id="ae-cell-meter-client-number" *matCellDef="let meter">
+          {{meter.clientNumber}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>
-        <mat-cell *matCellDef="let meter">{{meter.createdDate | date:'mediumDate'}}</mat-cell>
+        <mat-cell *matCellDef="let meter">
+          {{meter.createdDate | date:'mediumDate'}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>

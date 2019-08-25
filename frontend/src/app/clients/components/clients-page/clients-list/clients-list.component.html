@@ -20,39 +20,51 @@
       </mat-row>
       <ng-container matColumnDef="number">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Number</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.number}}</mat-cell>
+        <mat-cell id="ae-cell-client-number" *matCellDef="let client">
+          {{client.number}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="firstName">
         <mat-header-cell mat-sort-header *matHeaderCellDef>First Name</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.firstName}}</mat-cell>
+        <mat-cell id="ae-cell-client-first-name" *matCellDef="let client">
+          {{client.firstName}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="lastName">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Last Name</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.lastName}}</mat-cell>
+        <mat-cell id="ae-cell-client-last-name" *matCellDef="let client">
+          {{client.lastName}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="addressLine1">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Address Line 1</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.addressLine1}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="addressLine2">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Address Line 2</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.addressLine2}}</mat-cell>
+        <mat-cell id="ae-cell-client-address-line-1" *matCellDef="let client">
+          {{client.addressLine1}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="postalCode">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Postal Code</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.postalCode}}</mat-cell>
+        <mat-cell id="ae-cell-client-postal-code" *matCellDef="let client">
+          {{client.postalCode}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="city">
         <mat-header-cell mat-sort-header *matHeaderCellDef>City</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.city}}</mat-cell>
+        <mat-cell id="ae-cell-client-city" *matCellDef="let client">
+          {{client.city}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="meter">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Meter</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.meter?.serialNumber}}</mat-cell>
+        <mat-cell id="ae-cell-client-meter-serial-number" *matCellDef="let client">
+          {{client.meter?.serialNumber}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Registration Date</mat-header-cell>
-        <mat-cell *matCellDef="let client">{{client.createdDate | date:'mediumDate'}}</mat-cell>
+        <mat-cell *matCellDef="let client">
+          {{client.createdDate | date:'mediumDate'}}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>

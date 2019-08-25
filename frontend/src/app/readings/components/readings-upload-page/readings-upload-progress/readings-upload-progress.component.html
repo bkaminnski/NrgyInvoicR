@@ -45,13 +45,13 @@
       </ng-container>
       <ng-container matColumnDef="measured">
         <mat-header-cell *matHeaderCellDef>Measured</mat-header-cell>
-        <mat-cell id="ae-cell-measured-values" *matCellDef="let reading">
+        <mat-cell id="ae-cell-upload-progress-measured-values" *matCellDef="let reading">
           {{(reading.increment | async).measuredValues}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="expected">
         <mat-header-cell *matHeaderCellDef>Expected</mat-header-cell>
-        <mat-cell id="ae-cell-expected-values" *matCellDef="let reading">
+        <mat-cell id="ae-cell-upload-progress-expected-values" *matCellDef="let reading">
           {{(reading.increment | async).expectedValues}}
         </mat-cell>
       </ng-container>

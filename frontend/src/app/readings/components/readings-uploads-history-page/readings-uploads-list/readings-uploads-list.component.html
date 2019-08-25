@@ -38,13 +38,13 @@
       </ng-container>
       <ng-container matColumnDef="reading.readingSpread.numberOfMeasuredValues">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Measured</mat-header-cell>
-        <mat-cell id="ae-cell-measured-values" *matCellDef="let readingUpload">
+        <mat-cell id="ae-cell-readings-uploads-measured-values" *matCellDef="let readingUpload">
           {{readingUpload?.reading?.readingSpread?.numberOfMeasuredValues}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="reading.readingSpread.numberOfExpectedValues">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Expected</mat-header-cell>
-        <mat-cell id="ae-cell-expected-values" *matCellDef="let readingUpload">
+        <mat-cell id="ae-cell-readings-uploads-expected-values" *matCellDef="let readingUpload">
           {{readingUpload?.reading?.readingSpread?.numberOfExpectedValues}}
         </mat-cell>
       </ng-container>

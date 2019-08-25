@@ -39,12 +39,12 @@ public class MeterRegistrationStory {
 
     public void assertThatUserSeesARegisteredMeterInAListOfMeters(Meter meter) {
         assertThatCode(() -> {
-            app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[text()='" + meter.serialNumber + "']/.."));
+            app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
         }).doesNotThrowAnyException();
     }
 
     public void assertThatMeterRegistrationFormContainsAllFieldsForA(Meter meter) {
-        WebElement meterRow = app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[text()='" + meter.serialNumber + "']/.."));
+        WebElement meterRow = app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
         app.createActions().moveToElement(meterRow).perform();
         app.clickWith1sTimeout(By.id("ae-button-edit-meter"));
         assertThat(app.getValueOfElement(By.id("ae-input-meter-serial-number"))).isEqualTo(meter.serialNumber);
