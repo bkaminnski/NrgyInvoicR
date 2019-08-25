@@ -61,7 +61,7 @@ public class ReadingsFilesService {
         try (ReadingValuesReader readingValuesReader = new ReadingValuesReader(fileContent, readingLineParser, readingId)) {
             ReadingValue readingValue;
             while ((readingValue = readingValuesReader.readReadingValue()) != null) {
-                readingValuesRepository.save(readingValue);
+                readingValuesRepository.persist(readingValue);
             }
             return readingValuesReader.determineReadingSpread();
         }

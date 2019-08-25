@@ -11,6 +11,12 @@ spring:
     password: nrgyinvoicr
   jpa:
     generate-ddl: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 500
+        order_inserts: true
+        order_updates: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
