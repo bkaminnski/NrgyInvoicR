@@ -3,6 +3,8 @@ package com.hclc.nrgyinvoicr.backend;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import static org.springframework.data.domain.Sort.Direction.ASC;
+
 public class PageDefinition {
     private String sortColumn;
     private String sortDirection;
@@ -10,7 +12,12 @@ public class PageDefinition {
     private int pageSize;
 
     public PageRequest asPageRequest() {
-        return PageRequest.of(pageNumber, pageSize, Sort.Direction.fromString(sortDirection), sortColumn);
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Sort sort = Sort.by(
+                direction == ASC ? Sort.Order.asc(sortColumn) : Sort.Order.desc(sortColumn),
+                Sort.Order.desc("id")
+        );
+        return PageRequest.of(pageNumber, pageSize, sort);
     }
 
     public String getSortColumn() {

@@ -59,8 +59,7 @@ public class PlanVersionDefinitionStory {
         app.findElement(By.id("ae-input-plan-version-subscription-fee")).sendKeys(planVersion.subscriptionFee);
         app.findElement(By.id("ae-input-plan-version-network-fee")).sendKeys(planVersion.networkFee);
         app.findElement(By.id("ae-textarea-plan-version-description")).sendKeys(planVersion.description);
-        app.findElement(By.id("ae-textarea-plan-version-expression")).clear();
-        app.findElement(By.id("ae-textarea-plan-version-expression")).sendKeys(planVersion.expression);
+        app.clearElementAndSendKeys(By.id("ae-textarea-plan-version-expression"), planVersion.expression);
         app.waitUpTo1sUntilElementIsVisible(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + price + "']"));
         app.findElement(By.id("ae-button-plan-version-save")).click();
         return planVersion;

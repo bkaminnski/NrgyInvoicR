@@ -6,14 +6,14 @@
         <mat-spinner *ngIf="dataSource.loading" [diameter]="20" class="table-spinner"></mat-spinner>
       </span>
       <span>
-        <button mat-button type="button" (click)="createInvoiceRun()">
+        <button id="ae-button-create-invoice-run" mat-button type="button" (click)="createInvoiceRun()">
           <mat-icon>add_circle</mat-icon> Create a New Invoice Run
         </button>
       </span>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
+    <table id="ae-table-invoice-runs" mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
       [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear multiTemplateDataRows>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let invoiceRun; columns: displayedColumns; let i = dataIndex" (mouseenter)="mouseEnter(i)"

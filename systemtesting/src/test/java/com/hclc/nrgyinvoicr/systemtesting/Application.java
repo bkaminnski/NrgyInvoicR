@@ -105,4 +105,10 @@ public class Application {
     public String getValueOfElement(By by) {
         return driver.findElement(by).getAttribute("value");
     }
+
+    public void clearElementAndSendKeys(By by, String keysToSend) {
+        WebElement element = findElement(by);
+        element.clear();
+        element.sendKeys(keysToSend);
+    }
 }

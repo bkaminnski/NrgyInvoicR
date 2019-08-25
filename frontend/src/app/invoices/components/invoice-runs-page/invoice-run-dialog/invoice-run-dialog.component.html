@@ -7,21 +7,21 @@
   <mat-dialog-content>
     <div class="form-row">
       <mat-form-field>
-        <input matInput required [matDatepicker]="sinceClosedDatepicker" placeholder="Since" name="sinceClosed"
+        <input id="ae-input-invoice-run-since" matInput required [matDatepicker]="sinceClosedDatepicker" placeholder="Since" name="sinceClosed"
           #sinceClosedInput="ngModel" [(ngModel)]="invoiceRun.sinceClosed">
         <mat-datepicker-toggle matSuffix [for]="sinceClosedDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #sinceClosedDatepicker></mat-datepicker>
         <mat-error *ngIf="sinceClosedInput.invalid">Since is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput required [matDatepicker]="untilOpenDatepicker" placeholder="Until" name="untilOpen"
+        <input id="ae-input-invoice-run-until" matInput required [matDatepicker]="untilOpenDatepicker" placeholder="Until" name="untilOpen"
           #untilOpenInput="ngModel" [(ngModel)]="invoiceRun.untilOpen">
         <mat-datepicker-toggle matSuffix [for]="untilOpenDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #untilOpenDatepicker></mat-datepicker>
         <mat-error *ngIf="untilOpenInput.invalid">Until is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput required [matDatepicker]="issueDateDatepicker" placeholder="Issue Date" name="issueDate"
+        <input id="ae-input-invoice-run-issue-date" matInput required [matDatepicker]="issueDateDatepicker" placeholder="Issue Date" name="issueDate"
           #issueDateInput="ngModel" [(ngModel)]="invoiceRun.issueDate">
         <mat-datepicker-toggle matSuffix [for]="issueDateDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #issueDateDatepicker></mat-datepicker>
@@ -30,20 +30,20 @@
     </div>
     <div class="form-row">
       <mat-form-field>
-        <input matInput required placeholder="First Invoice Number" name="firstInvoiceNumber"
+        <input id="ae-input-invoice-run-first-invoice-number" matInput required placeholder="First Invoice Number" name="firstInvoiceNumber"
           #firstInvoiceNumber="ngModel" [(ngModel)]="invoiceRun.firstInvoiceNumber" type="number" step="1" min="1"
           max="999999999">
         <mat-error *ngIf="firstInvoiceNumber.invalid">First Invoice Number is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput required maxlength="50" placeholder="Invoice Number Template" name="numberTemplate"
+        <input id="ae-input-invoice-run-invoice-number-template" matInput required maxlength="50" placeholder="Invoice Number Template" name="numberTemplate"
           #numberTemplate="ngModel" [(ngModel)]="invoiceRun.numberTemplate">
         <mat-error *ngIf="numberTemplate.invalid">Number Template is required</mat-error>
       </mat-form-field>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button class="mat-primary" type="submit">Save</button>
+    <button id="ae-button-invoice-run-save" mat-button class="mat-primary" type="submit">Save</button>
     <button mat-button type="button" (click)="cancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

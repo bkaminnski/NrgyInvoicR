@@ -17,11 +17,13 @@
 
 <mat-menu #meterReadingsMenu>
   <button id="ae-button-new-upload" mat-menu-item [routerLink]="['/readingsUpload']">New Upload</button>
-  <button id="ae-button-history-of-uploads" mat-menu-item [routerLink]="['/readingsUploadsHistory']">History of Uploads</button>
+  <button id="ae-button-history-of-uploads" mat-menu-item [routerLink]="['/readingsUploadsHistory']">
+    History of Uploads
+  </button>
 </mat-menu>
 
 <mat-menu #invoicingMenu>
-  <button mat-menu-item [routerLink]="['/invoiceRuns']">Invoice Runs</button>
+  <button id="ae-button-invoice-runs" mat-menu-item [routerLink]="['/invoiceRuns']">Invoice Runs</button>
   <button mat-menu-item [routerLink]="['/invoices']">Invoices</button>
   <button id="ae-button-plans" mat-menu-item [routerLink]="['/plans']">Electricity Consumption Plans</button>
 </mat-menu>
