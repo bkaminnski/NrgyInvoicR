@@ -21,7 +21,7 @@ public class ReadingUploadStory {
         this.app = app;
     }
 
-    public ReadingUpload userUploadsReadingFile(Meter meter) throws IOException {
+    public ReadingUpload userUploadsAReadingFile(Meter meter) throws IOException {
         navigateToReadingsUploadPage();
         ReadingUpload readingUpload = prepareFileToUpload(meter);
         startUpload(readingUpload);

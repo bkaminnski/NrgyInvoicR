@@ -17,7 +17,7 @@ public class PlanVersionDefinitionStory {
         this.app = app;
     }
 
-    public PlanVersion userDefinesANewPlanVersion(String planName) {
+    public PlanVersion userDefinesANewVersionOfAPlan(String planName) {
         navigateToPlansPage();
         openPlanVersionsOfAPlan(planName);
         openPlanVersionDefinitionForm();

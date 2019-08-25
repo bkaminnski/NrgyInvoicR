@@ -5,10 +5,10 @@ import com.hclc.nrgyinvoicr.systemtesting.stories.meters.Meter;
 import com.hclc.nrgyinvoicr.systemtesting.stories.meters.MeterRegistrationStory;
 import org.junit.jupiter.api.Test;
 
-class MeterRegistrationTest extends SystemTest {
+class MetersTest extends SystemTest {
 
     @Test
-    void userRegistersAMeter() {
+    void userRegistersANewMeter() {
         MeterRegistrationStory meterRegistrationStory = new MeterRegistrationStory(app);
 
         Meter meter = meterRegistrationStory.userRegistersANewMeter();

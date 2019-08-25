@@ -5,13 +5,13 @@ import com.hclc.nrgyinvoicr.systemtesting.stories.plans.PlanVersion;
 import com.hclc.nrgyinvoicr.systemtesting.stories.plans.PlanVersionDefinitionStory;
 import org.junit.jupiter.api.Test;
 
-class PlanVersionDefinitionTest extends SystemTest {
+class PlanVersionsTest extends SystemTest {
 
     @Test
     void userDefinesANewVersionOfAWeekendPlan() {
         PlanVersionDefinitionStory planVersionDefinitionStory = new PlanVersionDefinitionStory(app);
 
-        PlanVersion planVersion = planVersionDefinitionStory.userDefinesANewPlanVersion("Weekend Plan");
+        PlanVersion planVersion = planVersionDefinitionStory.userDefinesANewVersionOfAPlan("Weekend Plan");
 
         planVersionDefinitionStory.assertThatUserSeesADefinedPlanVersionInAListOfPlanVersions(planVersion);
         planVersionDefinitionStory.assertThatPlanVersionDefinitionFormContainsAllFieldsForA(planVersion);

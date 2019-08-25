@@ -8,7 +8,7 @@ import com.hclc.nrgyinvoicr.systemtesting.stories.meters.MeterRegistrationStory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ClientRegistrationTest extends SystemTest {
+class ClientsTest extends SystemTest {
     private Meter meter;
 
     @BeforeEach
@@ -17,7 +17,7 @@ class ClientRegistrationTest extends SystemTest {
     }
 
     @Test
-    void userRegistersAClient() {
+    void userRegistersANewClient() {
         ClientRegistrationStory clientRegistrationStory = new ClientRegistrationStory(app);
 
         Client client = clientRegistrationStory.userRegistersANewClient(meter);

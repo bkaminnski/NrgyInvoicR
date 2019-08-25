@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-class ReadingUploadTest extends SystemTest {
+class ReadingsUploadsTest extends SystemTest {
     private Meter meter;
 
     @BeforeEach
@@ -22,7 +22,7 @@ class ReadingUploadTest extends SystemTest {
     void userUploadsAReadingFile() throws IOException {
         ReadingUploadStory readingsUploadStory = new ReadingUploadStory(app);
 
-        ReadingUpload readingUpload = readingsUploadStory.userUploadsReadingFile(meter);
+        ReadingUpload readingUpload = readingsUploadStory.userUploadsAReadingFile(meter);
 
         readingsUploadStory.assertThatUserSeesUploadedReadingFileInUploadProgressTable(readingUpload);
         readingsUploadStory.assertThatUserSeesUploadedReadingFileInReadingsUploadsHistory(readingUpload);
