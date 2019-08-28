@@ -18,7 +18,8 @@ public class ClientRegistrationStory extends ClientStories {
     public Client userRegistersANewClient(Meter meter) {
         navigateToClientsPage();
         openClientRegistrationForm();
-        return registerANewClient(meter);
+        Client client = registerANewClient(meter);
+        return enrichedWithClientNumber(client);
     }
 
     private void openClientRegistrationForm() {
@@ -40,9 +41,19 @@ public class ClientRegistrationStory extends ClientStories {
         return client;
     }
 
+    private Client enrichedWithClientNumber(Client client) {
+        WebElement clientRow = findClientRow(client);
+        String clientNumber = clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-number']")).getText().trim();
+        return client.withNumber(clientNumber);
+    }
+
+    private WebElement findClientRow(Client client) {
+        return app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[@id='ae-cell-client-last-name' and text()=' " + client.lastName + " ']/.."));
+    }
+
     public void assertThatUserSeesARegisteredClientInAListOfClients(Client client) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[@id='ae-cell-client-last-name' and text()=' " + client.lastName + " ']/.."));
+            WebElement clientRow = findClientRow(client);
             clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-first-name' and text()=' " + client.fistName + " ']"));
             clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-address-line-1' and text()=' " + client.addressLine1 + " ']"));
             clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-city' and text()=' " + client.city + " ']"));

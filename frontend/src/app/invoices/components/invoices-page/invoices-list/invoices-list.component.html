@@ -8,8 +8,9 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortConfig.initialSortActive"
-      [matSortDirection]="sortConfig.initialSortDirection" matSortDisableClear multiTemplateDataRows>
+    <table id="ae-table-invoices" mat-table [dataSource]="dataSource" matSort
+      [matSortActive]="sortConfig.initialSortActive" [matSortDirection]="sortConfig.initialSortDirection"
+      matSortDisableClear multiTemplateDataRows>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = dataIndex" (mouseenter)="mouseEnter(i)"
         (mouseleave)="mouseLeave()" [class.row-highlighted]="i === highlightedRowIndex" onclick=""
@@ -17,41 +18,56 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="invoice-detail-row"></tr>
       <ng-container matColumnDef="number">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Number</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.number}}</td>
+        <td id="ae-cell-invoice-number" mat-cell *matCellDef="let invoice">
+          {{invoice.number}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="issueDate">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Issue Date</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.issueDate | date:'shortDate'}}</td>
+        <td id="ae-cell-invoice-issue-date" mat-cell *matCellDef="let invoice">
+          {{invoice.issueDate | date:'shortDate'}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="grossTotal">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Gross Total</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.grossTotal}}</td>
+        <td id="ae-cell-invoice-gross-total" mat-cell *matCellDef="let invoice">
+          {{invoice.grossTotal}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="client.number">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Client Number</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.client.number}}</td>
+        <td id="ae-cell-invoice-client-number" mat-cell *matCellDef="let invoice">
+          {{invoice.client.number}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="client.lastName">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Client Name</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.client.firstName}} {{invoice.client.lastName}}</td>
+        <td id="ae-cell-invoice-client-name" mat-cell *matCellDef="let invoice">
+          {{invoice.client.firstName}} {{invoice.client.lastName}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="client.meter.serialNumber">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Meter</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.client.meter.serialNumber}}</td>
+        <td id="ae-cell-invoice-meter-serial-number" mat-cell *matCellDef="let invoice">
+          {{invoice.client.meter.serialNumber}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="invoiceRun.sinceClosed">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Invoiced Period</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.invoiceRun.sinceClosed | date:'shortDate'}} -
-          {{invoice.invoiceRun.untilOpen | date:'shortDate'}}</td>
+        <td id="ae-cell-invoice-since-until" mat-cell *matCellDef="let invoice">
+          {{invoice.invoiceRun.sinceClosed | date:'shortDate'}} - {{invoice.invoiceRun.untilOpen | date:'shortDate'}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="planVersion.plan.name">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Plan</th>
-        <td mat-cell *matCellDef="let invoice">{{invoice.planVersion.plan.name}}</td>
+        <td id="ae-cell-invoice-plan-name" mat-cell *matCellDef="let invoice">
+          {{invoice.planVersion.plan.name}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let invoice; let i = dataIndex">
-          <button *ngIf="i === highlightedRowIndex" mat-button type="button"
+          <button id="ae-button-invoice-details" *ngIf="i === highlightedRowIndex" mat-button type="button"
             (click)="expandedInvoice = expandedInvoice?.id === invoice.id ? null : invoice">
             <mat-icon *ngIf="expandedInvoice?.id !== invoice.id">expand_more</mat-icon>
             <mat-icon *ngIf="expandedInvoice?.id === invoice.id">expand_less</mat-icon> Lines

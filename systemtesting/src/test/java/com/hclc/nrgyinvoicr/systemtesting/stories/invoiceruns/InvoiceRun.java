@@ -20,4 +20,8 @@ public class InvoiceRun {
         this.firstInvoiceNumber = firstInvoiceNumber;
         this.invoiceNumberTemplate = invoiceNumberTemplate;
     }
+
+    public String getFirstPartOfInvoiceNumberTemplate() {
+        return invoiceNumberTemplate.split("/")[0];
+    }
 }

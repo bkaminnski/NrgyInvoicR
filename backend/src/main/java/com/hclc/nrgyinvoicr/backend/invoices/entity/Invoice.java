@@ -57,6 +57,7 @@ public class Invoice extends AuditableEntity {
 
     @OneToMany
     @JoinColumn(name = "invoice_id")
+    @OrderBy("id ASC")
     private List<InvoiceLine> invoiceLines;
 
     protected Invoice() {

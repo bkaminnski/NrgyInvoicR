@@ -66,21 +66,24 @@
       </ng-container>
       <ng-container matColumnDef="progress.numberOfInvoicesToGenerate">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Number of Invoices</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfInvoicesToGenerate}}</td>
+        <td id="ae-cell-invoice-run-number-of-invoices" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.progress?.numberOfInvoicesToGenerate}}</td>
       </ng-container>
       <ng-container matColumnDef="progress.numberOfSuccesses">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Successes</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfSuccesses}}</td>
+        <td id="ae-cell-invoice-run-number-of-successes" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.progress?.numberOfSuccesses}}</td>
       </ng-container>
       <ng-container matColumnDef="progress.numberOfFailures">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Failures</th>
-        <td mat-cell *matCellDef="let invoiceRun">{{invoiceRun.progress?.numberOfFailures}}</td>
+        <td id="ae-cell-invoice-run-number-of-failures" mat-cell *matCellDef="let invoiceRun">
+          {{invoiceRun.progress?.numberOfFailures}}</td>
       </ng-container>
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let invoiceRun; let i = dataIndex">
-          <button id="ae-button-invoice-run-start" [disabled]="invoiceRun.status != 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button"
-            (click)="startInvoiceRun(invoiceRun)">
+          <button id="ae-button-invoice-run-start" [disabled]="invoiceRun.status != 'NEW'"
+            *ngIf="i === highlightedRowIndex" mat-button type="button" (click)="startInvoiceRun(invoiceRun)">
             <mat-icon>play_circle_filled</mat-icon> Start
           </button>
           <button [disabled]="invoiceRun.status == 'NEW'" *ngIf="i === highlightedRowIndex" mat-button type="button"
@@ -92,7 +95,8 @@
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let invoiceRun" [attr.colspan]="displayedColumns.length">
-          <div class="invoice-run-detail-element" [@detailExpand]="invoiceRun.id == expandedInvoiceRun?.id ? 'expanded' : 'collapsed'">
+          <div class="invoice-run-detail-element"
+            [@detailExpand]="invoiceRun.id == expandedInvoiceRun?.id ? 'expanded' : 'collapsed'">
             <app-invoice-run-messages-list *ngIf="expandedInvoiceRun?.id === invoiceRun.id" [invoiceRun]="invoiceRun">
             </app-invoice-run-messages-list>
           </div>

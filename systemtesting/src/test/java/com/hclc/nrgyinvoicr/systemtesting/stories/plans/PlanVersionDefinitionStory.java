@@ -39,7 +39,8 @@ public class PlanVersionDefinitionStory {
     }
 
     private PlanVersion defineANewPlanVersion(String planName) {
-        String price = "0.18103";
+        String weekPrice = "0.19017";
+        String weekendPrice = "0.18103";
         PlanVersion planVersion = aPlanVersion()
                 .withValidSince("6/1/2019")
                 .withValidSinceShortYear("6/1/19")
@@ -49,17 +50,19 @@ public class PlanVersionDefinitionStory {
                 .withExpression("" +
                         ".01.01-12.31\n" +
                         "..1-5\n" +
-                        "...0-23:0.19017\n" +
+                        "...0-23:" + weekPrice + "\n" +
                         "..6-7\n" +
-                        "...0-23:" + price
+                        "...0-23:" + weekendPrice
                 )
+                .withWeekPrice(weekPrice)
+                .withWeekendPrice(weekendPrice)
                 .build();
         app.findElement(By.id("ae-input-plan-version-valid-since")).sendKeys(planVersion.validSince);
         app.findElement(By.id("ae-input-plan-version-subscription-fee")).sendKeys(planVersion.subscriptionFee);
         app.findElement(By.id("ae-input-plan-version-network-fee")).sendKeys(planVersion.networkFee);
         app.findElement(By.id("ae-textarea-plan-version-description")).sendKeys(planVersion.description);
         app.clearElementAndSendKeys(By.id("ae-textarea-plan-version-expression"), planVersion.expression);
-        app.waitUpTo1sUntilElementIsVisible(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + price + "']"));
+        app.waitUpTo1sUntilElementIsVisible(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + weekendPrice + "']"));
         app.findElement(By.id("ae-button-plan-version-save")).click();
         return planVersion;
     }

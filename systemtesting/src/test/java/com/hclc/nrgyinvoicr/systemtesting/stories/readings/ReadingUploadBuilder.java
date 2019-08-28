@@ -5,6 +5,8 @@ public class ReadingUploadBuilder {
     private String filePathWithName;
     private String meterSerialNumber;
     private int numberOfValues;
+    private String weekQuantity;
+    private String weekendQuantity;
 
     public static ReadingUploadBuilder aReadingUpload() {
         return new ReadingUploadBuilder();
@@ -30,7 +32,17 @@ public class ReadingUploadBuilder {
         return this;
     }
 
+    public ReadingUploadBuilder withWeekQuantity(String weekQuantity) {
+        this.weekQuantity = weekQuantity;
+        return this;
+    }
+
+    public ReadingUploadBuilder withWeekendQuantity(String weekendQuantity) {
+        this.weekendQuantity = weekendQuantity;
+        return this;
+    }
+
     public ReadingUpload build() {
-        return new ReadingUpload(fileName, filePathWithName, meterSerialNumber, numberOfValues);
+        return new ReadingUpload(fileName, filePathWithName, meterSerialNumber, numberOfValues, weekQuantity, weekendQuantity);
     }
 }

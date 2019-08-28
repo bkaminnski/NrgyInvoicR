@@ -7,6 +7,8 @@ public class PlanVersionBuilder {
     private String networkFee;
     private String description;
     private String expression;
+    private String weekPrice;
+    private String weekendPrice;
 
     public static PlanVersionBuilder aPlanVersion() {
         return new PlanVersionBuilder();
@@ -42,7 +44,17 @@ public class PlanVersionBuilder {
         return this;
     }
 
+    public PlanVersionBuilder withWeekPrice(String weekPrice) {
+        this.weekPrice = weekPrice;
+        return this;
+    }
+
+    public PlanVersionBuilder withWeekendPrice(String weekendPrice) {
+        this.weekendPrice = weekendPrice;
+        return this;
+    }
+
     public PlanVersion build() {
-        return new PlanVersion(validSince, validSinceShortYear, subscriptionFee, networkFee, description, expression);
+        return new PlanVersion(validSince, validSinceShortYear, subscriptionFee, networkFee, description, expression, weekPrice, weekendPrice);
     }
 }

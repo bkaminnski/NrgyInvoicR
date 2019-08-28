@@ -9,6 +9,7 @@ public class Client {
     public final String postalCode;
     public final String city;
     public final String meterSerialNumber;
+    public String number;
 
     Client(String fistName, String middleName, String lastName, String addressLine1, String addressLine2, String postalCode, String city, String meterSerialNumber) {
         this.fistName = fistName;
@@ -19,5 +20,10 @@ public class Client {
         this.postalCode = postalCode;
         this.city = city;
         this.meterSerialNumber = meterSerialNumber;
+    }
+
+    public Client withNumber(String number) {
+        this.number = number;
+        return this;
     }
 }

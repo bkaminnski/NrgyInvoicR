@@ -17,7 +17,7 @@ public class Application {
     Application() {
         WebDriverManager.firefoxdriver().setup();
         this.driver = new FirefoxDriver();
-        this.driver.manage().timeouts().implicitlyWait(2, SECONDS);
+        this.driver.manage().timeouts().implicitlyWait(5, SECONDS);
         this.driver.manage().window().setSize(new Dimension(1920, 1080));
         waitForApplicationToStart();
     }
