@@ -20,11 +20,11 @@ public class InvoiceGenerationStory {
         this.app = app;
     }
 
-    public void assertThatInvoiceWasGeneratedForA(Meter meter, Client client, InvoiceRun invoiceRun, ClientPlanAssignment clientPlanAssignment, PlanVersion planVersion, ReadingUpload readingUpload) {
+    public void assertThatInvoiceWasGeneratedFor(InvoiceGenerationContext context) {
         navigateToInvoicesPage();
-        searchInvoicesForA(client, invoiceRun);
-        assertThatUserSeesGeneratedInvoice(meter, client, invoiceRun, clientPlanAssignment);
-        assertThatUserSeesInvoiceLines(client, planVersion, readingUpload);
+        searchInvoicesForA(context.client, context.invoiceRun);
+        assertThatUserSeesGeneratedInvoice(context.meter, context.client, context.invoiceRun, context.clientPlanAssignment);
+        assertThatUserSeesInvoiceLines(context.client, context.planVersion, context.readingUpload);
     }
 
     private void navigateToInvoicesPage() {
