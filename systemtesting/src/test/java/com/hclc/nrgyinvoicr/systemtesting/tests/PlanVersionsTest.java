@@ -14,6 +14,6 @@ class PlanVersionsTest extends SystemTest {
         PlanVersion planVersion = planVersionDefinitionStory.userDefinesANewVersionOfAPlan("Weekend Plan");
 
         planVersionDefinitionStory.assertThatUserSeesADefinedPlanVersionInAListOfPlanVersions(planVersion);
-        planVersionDefinitionStory.assertThatPlanVersionDefinitionFormContainsAllFieldsForA(planVersion);
+        planVersionDefinitionStory.assertThatPlanVersionDefinitionFormShowsAllValuesForA(planVersion);
     }
 }

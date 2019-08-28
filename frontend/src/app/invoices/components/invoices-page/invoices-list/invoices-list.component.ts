@@ -37,7 +37,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit {
 
   sortConfig = {
     initialSortActive: 'number',
-    initialSortDirection: 'asc'
+    initialSortDirection: 'desc'
   };
 
   paginatorConfig = {

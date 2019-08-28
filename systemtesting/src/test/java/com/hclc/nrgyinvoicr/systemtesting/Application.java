@@ -58,10 +58,6 @@ public class Application {
         driver.quit();
     }
 
-    public Actions createActions() {
-        return new Actions(driver);
-    }
-
     public void waitUpTo1sUntilElementIsVisible(By by) {
         waitUntilElementIsVisible(by, 1);
     }
@@ -110,5 +106,10 @@ public class Application {
         WebElement element = findElement(by);
         element.clear();
         element.sendKeys(keysToSend);
+    }
+
+    public void hoverOverElement(By by) {
+        WebElement element = findElement(by);
+        new Actions(driver).moveToElement(element).perform();
     }
 }

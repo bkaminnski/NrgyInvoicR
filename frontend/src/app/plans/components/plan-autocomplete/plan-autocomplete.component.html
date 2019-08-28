@@ -1,6 +1,6 @@
 <div class="spinner-container">
   <mat-form-field>
-    <input matInput [required]="required" placeholder="Plan" name="plan" #plan="ngModel" [(ngModel)]="selectedPlan"
+    <input id="ae-input-plan-autocomplete" matInput [required]="required" placeholder="Plan" name="plan" #plan="ngModel" [(ngModel)]="selectedPlan"
       [matAutocomplete]="planAutocomplete" (ngModelChange)="nameChanged($event)" (blur)="discardNonExistingName()">
     <mat-autocomplete #planAutocomplete="matAutocomplete" [displayWith]="planAsString" autoActiveFirstOption
       (closed)="discardNonExistingName()">

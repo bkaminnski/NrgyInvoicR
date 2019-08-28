@@ -9,22 +9,16 @@ import java.util.UUID;
 import static com.hclc.nrgyinvoicr.systemtesting.stories.invoiceruns.InvoiceRunBuilder.anInvoiceRun;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-public class InvoiceRunCreationStory {
-    private final Application app;
+public class InvoiceRunCreationStory extends InvoiceRunStories {
 
     public InvoiceRunCreationStory(Application app) {
-        this.app = app;
+        super(app);
     }
 
     public InvoiceRun userCreatesANewInvoiceRun() {
         navigateToInvoiceRunsPage();
         openInvoiceRunCreationForm();
         return createANewInvoiceRun();
-    }
-
-    private void navigateToInvoiceRunsPage() {
-        app.findElement(By.id("ae-button-invoicing")).click();
-        app.clickWith1sTimeout(By.id("ae-button-invoice-runs"));
     }
 
     private void openInvoiceRunCreationForm() {

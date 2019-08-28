@@ -9,22 +9,16 @@ import static com.hclc.nrgyinvoicr.systemtesting.stories.clients.ClientBuilder.a
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-public class ClientRegistrationStory {
-    private final Application app;
+public class ClientRegistrationStory extends ClientStories {
 
     public ClientRegistrationStory(Application app) {
-        this.app = app;
+        super(app);
     }
 
     public Client userRegistersANewClient(Meter meter) {
         navigateToClientsPage();
         openClientRegistrationForm();
         return registerANewClient(meter);
-    }
-
-    private void navigateToClientsPage() {
-        app.findElement(By.id("ae-button-registries")).click();
-        app.clickWith1sTimeout(By.id("ae-button-clients"));
     }
 
     private void openClientRegistrationForm() {
@@ -57,9 +51,8 @@ public class ClientRegistrationStory {
         }).doesNotThrowAnyException();
     }
 
-    public void assertThatClientRegistrationFormContainsAllFieldsForA(Client client) {
-        WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()=' " + client.lastName + " ']/.."));
-        app.createActions().moveToElement(clientRow).perform();
+    public void assertThatClientRegistrationFormShowsAllValuesForA(Client client) {
+        app.hoverOverElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()=' " + client.lastName + " ']/.."));
         app.clickWith1sTimeout(By.id("ae-button-edit-client"));
         assertThat(app.getValueOfElement(By.id("ae-input-client-first-name"))).isEqualTo(client.fistName);
         assertThat(app.getValueOfElement(By.id("ae-input-client-middle-name"))).isEqualTo(client.middleName);

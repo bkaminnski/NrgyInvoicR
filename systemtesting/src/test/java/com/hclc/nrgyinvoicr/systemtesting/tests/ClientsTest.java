@@ -2,6 +2,8 @@ package com.hclc.nrgyinvoicr.systemtesting.tests;
 
 import com.hclc.nrgyinvoicr.systemtesting.SystemTest;
 import com.hclc.nrgyinvoicr.systemtesting.stories.clients.Client;
+import com.hclc.nrgyinvoicr.systemtesting.stories.clients.ClientPlanAssignment;
+import com.hclc.nrgyinvoicr.systemtesting.stories.clients.ClientPlanAssignmentStory;
 import com.hclc.nrgyinvoicr.systemtesting.stories.clients.ClientRegistrationStory;
 import com.hclc.nrgyinvoicr.systemtesting.stories.meters.Meter;
 import com.hclc.nrgyinvoicr.systemtesting.stories.meters.MeterRegistrationStory;
@@ -23,6 +25,17 @@ class ClientsTest extends SystemTest {
         Client client = clientRegistrationStory.userRegistersANewClient(meter);
 
         clientRegistrationStory.assertThatUserSeesARegisteredClientInAListOfClients(client);
-        clientRegistrationStory.assertThatClientRegistrationFormContainsAllFieldsForA(client);
+        clientRegistrationStory.assertThatClientRegistrationFormShowsAllValuesForA(client);
+    }
+
+    @Test
+    void userAssignsAPlanToTheClient() {
+        Client client = new ClientRegistrationStory(app).userRegistersANewClient(meter);
+        ClientPlanAssignmentStory clientPlanAssignmentStory = new ClientPlanAssignmentStory(app);
+
+        ClientPlanAssignment clientPlanAssignment = clientPlanAssignmentStory.userAssignsAPlanToTheClient(client, "Weekend Plan");
+
+        clientPlanAssignmentStory.assertThatUserSeesAssignedPlanInTheListOfClientPlans(clientPlanAssignment);
+        clientPlanAssignmentStory.assertThatClientPlanAssignmentFormShowsAllValuesForA(clientPlanAssignment);
     }
 }
