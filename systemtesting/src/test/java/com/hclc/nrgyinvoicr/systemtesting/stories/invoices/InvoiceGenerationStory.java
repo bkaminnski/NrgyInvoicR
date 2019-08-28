@@ -10,10 +10,18 @@ import com.hclc.nrgyinvoicr.systemtesting.stories.readings.ReadingUpload;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import static com.hclc.nrgyinvoicr.systemtesting.stories.invoices.InvoiceLineBuilder.anInvoiceLine;
+import static java.util.Comparator.naturalOrder;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class InvoiceGenerationStory {
+    private static final String INVOICES_OUTPUT_FOLDER = "/tmp";
     private Application app;
 
     public InvoiceGenerationStory(Application app) {
@@ -25,6 +33,7 @@ public class InvoiceGenerationStory {
         searchInvoicesForA(context.client, context.invoiceRun);
         assertThatUserSeesGeneratedInvoice(context.meter, context.client, context.invoiceRun, context.clientPlanAssignment);
         assertThatUserSeesInvoiceLines(context.client, context.planVersion, context.readingUpload);
+        assertThatInvoiceWasPrintedToPdf(context.client);
     }
 
     private void navigateToInvoicesPage() {
@@ -77,5 +86,22 @@ public class InvoiceGenerationStory {
             invoiceLineRow.findElement(By.xpath("mat-cell[@id='ae-cell-invoice-line-vat' and text()=' " + invoiceLine.vat + " ']"));
             invoiceLineRow.findElement(By.xpath("mat-cell[@id='ae-cell-invoice-line-gross-total' and text()=' " + invoiceLine.gross + " ']"));
         }).doesNotThrowAnyException();
+    }
+
+    private void assertThatInvoiceWasPrintedToPdf(Client client) {
+        String localDate = LocalDate.now().toString();
+        String lastOutputFolder = Stream.of(new File(INVOICES_OUTPUT_FOLDER).list())
+                .filter(f -> f.startsWith(localDate))
+                .filter(f -> new File(INVOICES_OUTPUT_FOLDER + "/" + f).isDirectory())
+                .max(naturalOrder())
+                .map(f -> INVOICES_OUTPUT_FOLDER + "/" + f)
+                .orElse(null);
+        Optional<String> generatedInvoicePdf = Stream.of(new File(lastOutputFolder).list())
+                .filter(f -> f.endsWith(".pdf"))
+                .filter(f -> f.startsWith("C_" + client.number))
+                .findFirst()
+                .map(f -> lastOutputFolder + "/" + f);
+        assertThat(generatedInvoicePdf).isNotEmpty();
+        assertThat(new File(generatedInvoicePdf.get()).length()).isGreaterThan(0);
     }
 }
