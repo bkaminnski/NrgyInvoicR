@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
-    private static final String APPLICATION_URL = "http://localhost:4200/dashboard";
+    private static final String DEV_APPLICATION_URL = "http://localhost:4200";
     private static final String APPLICATION_TITLE = "NrgyInvoicR";
     private final WebDriver driver;
 
@@ -41,7 +41,8 @@ public class Application {
     }
 
     private void lookForPageTitle() {
-        driver.get(APPLICATION_URL);
+        String applicationUrl = System.getProperty("application-url", DEV_APPLICATION_URL);
+        driver.get(applicationUrl);
         if (!driver.getTitle().equals(APPLICATION_TITLE)) {
             throw new IllegalStateException("Page not yet loaded");
         }

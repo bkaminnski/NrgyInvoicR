@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(authenticationFilter, BasicAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/users/authentication").permitAll()
+                .antMatchers("/", "/index.html", "/*.css", "/*.eot", "/*.ico", "/*.js", "/*.ttf", "/*.woff", "/*.woff2").permitAll()
                 .anyRequest().authenticated();
     }
 }
