@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="mat-elevation-z4 app-toolbar">
+<mat-toolbar *ngIf="userIsLoggedIn()" color="primary" class="mat-elevation-z4 app-toolbar">
   <mat-icon>flash_on</mat-icon>
   <span class="title">NrgyInvoicR</span>
   <button mat-button [routerLink]="['/dashboard']">Dashboard</button>
@@ -6,8 +6,9 @@
   <button id="ae-button-meter-readings" mat-button [matMenuTriggerFor]="meterReadingsMenu">Meter Readings</button>
   <button id="ae-button-invoicing" mat-button [matMenuTriggerFor]="invoicingMenu">Invoicing</button>
   <span class="space"></span>
-  <mat-icon>account_circle</mat-icon>
-  <span class="user">Bartosz Kaminski</span>
+  <button id="ae-button-user" mat-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon><span class="user">Bartosz Kaminski</span>
+  </button>
 </mat-toolbar>
 
 <mat-menu #registriesMenu>
@@ -26,4 +27,8 @@
   <button id="ae-button-invoice-runs" mat-menu-item [routerLink]="['/invoiceRuns']">Invoice Runs</button>
   <button id="ae-button-invoices" mat-menu-item [routerLink]="['/invoices']">Invoices</button>
   <button id="ae-button-plans" mat-menu-item [routerLink]="['/plans']">Electricity Consumption Plans</button>
+</mat-menu>
+
+<mat-menu #userMenu>
+  <button id="ae-button-log-out" mat-menu-item (click)="logOut()">Log Out</button>
 </mat-menu>

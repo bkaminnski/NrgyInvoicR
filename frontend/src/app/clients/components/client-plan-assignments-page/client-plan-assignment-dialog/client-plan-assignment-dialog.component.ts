@@ -24,8 +24,6 @@ export class ClientPlanAssignmentDialogComponent implements OnInit {
     private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) data: { client: Client, clientPlanAssignment: ClientPlanAssignment }
   ) {
-    console.log(data.client);
-    console.log(data.clientPlanAssignment);
     this.client = data.client;
     this.clientPlanAssignment = ClientPlanAssignment.cloned(data.clientPlanAssignment);
     this.loading = false;

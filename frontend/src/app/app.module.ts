@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,7 @@ import { ClientDialogComponent } from './clients/components/clients-page/client-
 import { PlanVersionDialogComponent } from './plans/components/plan-versions-page/plan-version-dialog/plan-version-dialog.component';
 import { ClientPlanAssignmentDialogComponent } from './clients/components/client-plan-assignments-page/client-plan-assignment-dialog/client-plan-assignment-dialog.component';
 import { InvoiceRunDialogComponent } from './invoices/components/invoice-runs-page/invoice-run-dialog/invoice-run-dialog.component';
+import { AuthenticationInterceptor } from './core/authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,13 @@ import { InvoiceRunDialogComponent } from './invoices/components/invoice-runs-pa
     MetersModule,
     ClientsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     NotificationComponent,
