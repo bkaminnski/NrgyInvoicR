@@ -15,7 +15,11 @@ export class NavigationComponent implements OnInit {
   }
 
   userIsLoggedIn(): boolean {
-    return this.authenticationService.isAuthenticated();
+    const authenticated = this.authenticationService.isAuthenticated();
+    if (!authenticated && !this.router.url.startsWith('/login')) {
+      this.logOut();
+    }
+    return authenticated;
   }
 
   logOut() {
