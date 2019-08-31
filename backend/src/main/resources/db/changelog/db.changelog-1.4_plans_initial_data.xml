@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet author="bkaminnski" id="sample-data-0001">
+    <changeSet author="bkaminnski" id="initial-data-0001">
         <insert tableName="plan">
             <column name="id" valueSequenceNext="plan_id_seq"/>
             <column name="name" value="Stable Plan"/>

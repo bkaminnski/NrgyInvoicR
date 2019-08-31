@@ -11,4 +11,6 @@
     <include file="db.changelog-1.4_plans_initial_data.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.5_client_plans.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-1.6_invoice_generation.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-1.7_users.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-1.8_users_initial_data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
