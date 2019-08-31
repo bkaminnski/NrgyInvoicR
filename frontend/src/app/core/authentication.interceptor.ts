@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { filter, tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
@@ -14,6 +15,16 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${this.authenticationService.authenticatedUserToken}`
       }
     });
-    return next.handle(request);
+    return next.handle(request)
+      .pipe(
+        tap(
+          () => { },
+          (error: any) => {
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+              this.authenticationService.forgetAndReroute();
+            }
+          }
+        )
+      );
   }
 }

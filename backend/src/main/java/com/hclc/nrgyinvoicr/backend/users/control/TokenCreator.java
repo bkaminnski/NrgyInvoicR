@@ -19,7 +19,7 @@ class TokenCreator {
                 .setSubject(authenticatedUser.getId())
                 .claim("email", authenticatedUser.getEmail())
                 .claim("name", authenticatedUser.getName())
-                .setExpiration(from(now().plus(5, MINUTES)))
+                .setExpiration(from(now().plus(1, MINUTES)))
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }

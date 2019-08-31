@@ -19,7 +19,7 @@ export class AuthenticationGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/login'], { queryParams: { redirectUrl: state.url } });
+    this.authenticationService.forgetAndReroute(state.url);
     return false;
   }
 }
