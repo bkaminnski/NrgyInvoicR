@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
-    private static final String DEV_APPLICATION_URL = "http://localhost:4200";
+    private static final String DEV_APPLICATION_URL = "http://localhost:8080";
     private static final String APPLICATION_TITLE = "NrgyInvoicR";
     private final WebDriver driver;
 
@@ -105,7 +105,9 @@ public class Application {
 
     public void clearElementAndSendKeys(By by, String keysToSend) {
         WebElement element = findElement(by);
-        element.clear();
+        while (!element.getAttribute("value").isEmpty()) {
+            element.sendKeys(Keys.BACK_SPACE);
+        }
         element.sendKeys(keysToSend);
     }
 

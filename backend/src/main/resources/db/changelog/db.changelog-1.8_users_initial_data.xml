@@ -8,9 +8,9 @@
         <insert tableName="auser">
             <column name="id" valueSequenceNext="auser_id_seq"/>
             <column name="external_id" value="d7491b20-8534-4691-9b4d-a2011dbe5ebf"/>
-            <column name="email" value="bartosz.kaminski@zoho.com"/>
-            <column name="first_name" value="Bartosz"/>
-            <column name="last_name" value="Kaminski"/>
+            <column name="email" value="alice@company.com"/>
+            <column name="first_name" value="Alice"/>
+            <column name="last_name" value="Peterson"/>
             <column name="password" value="$2a$10$y2xNdzqgwHl6zOP9kXtdsOSNWmLYmF.IhwaExLXFTFT/RQF/J8aBK"/>
             <column name="created_by" value="SYSTEM"/>
             <column name="created_date" value="2019-01-01T00:00:00"/>

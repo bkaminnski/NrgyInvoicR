@@ -42,8 +42,8 @@ public class InvoiceGenerationStory {
     }
 
     private void searchInvoicesForA(Client client, InvoiceRun invoiceRun) {
-        app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-since"), invoiceRun.since);
-        app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-until"), invoiceRun.since);
+        app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-since"), invoiceRun.issueDate);
+        app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-until"), invoiceRun.issueDate);
         app.clearElementAndSendKeys(By.id("ae-input-invoices-search-client-number"), client.number);
         app.findElement(By.id("ae-button-search-invoices")).click();
     }
