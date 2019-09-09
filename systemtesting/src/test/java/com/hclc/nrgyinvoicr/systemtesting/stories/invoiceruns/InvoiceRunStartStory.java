@@ -25,7 +25,7 @@ public class InvoiceRunStartStory extends InvoiceRunStories {
     }
 
     private void waitUntilInvoiceRunIsFinished(InvoiceRun invoiceRun) {
-        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[text()=' " + invoiceRun.invoiceNumberTemplate + " ']/../td/mat-icon[text()=' cloud_done ' or text()=' error_outline ']"));
+        app.waitUpTo30sUntilElementIsVisible(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[text()=' " + invoiceRun.invoiceNumberTemplate + " ']/../td/mat-icon[text()=' done ' or text()=' error_outline ']"));
     }
 
     public void assertThatUserSeesAFinishedInvoiceRunInAListOfInvoiceRuns(InvoiceRun invoiceRun) {
