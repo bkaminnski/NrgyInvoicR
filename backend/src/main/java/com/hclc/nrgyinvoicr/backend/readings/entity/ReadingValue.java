@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -43,5 +44,9 @@ public class ReadingValue {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public ReadingValue atTimeZone(ZoneId zoneId) {
+        return new ReadingValue(readingId, date.withZoneSameInstant(zoneId), value);
     }
 }

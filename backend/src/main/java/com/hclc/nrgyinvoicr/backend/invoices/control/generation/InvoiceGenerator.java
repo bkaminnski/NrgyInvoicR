@@ -32,6 +32,7 @@ import static com.hclc.nrgyinvoicr.backend.invoices.entity.Unit.KWH;
 import static com.hclc.nrgyinvoicr.backend.invoices.entity.Unit.NONE;
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 @Component
@@ -94,7 +95,11 @@ class InvoiceGenerator {
     }
 
     private List<ReadingValue> findReadingValuesToInvoice(InvoiceRun invoiceRun, Client client) throws NoReadingValueFound {
-        return readingValuesService.findReadingValues(invoiceRun.getSinceClosed(), invoiceRun.getUntilOpen(), client.getMeter());
+        return readingValuesService
+                .findReadingValues(invoiceRun.getSinceClosed(), invoiceRun.getUntilOpen(), client.getMeter())
+                .stream()
+                .map(r -> r.atTimeZone(nrgyInvoicRConfig.getTimeZoneAsZoneId()))
+                .collect(toList());
     }
 
     private List<FlattenedBucket> putReadingValuesToBuckets(Bucket buckets, List<ReadingValue> readingValues) {

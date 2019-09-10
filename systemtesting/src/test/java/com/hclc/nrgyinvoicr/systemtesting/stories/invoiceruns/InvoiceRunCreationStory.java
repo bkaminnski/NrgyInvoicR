@@ -27,10 +27,10 @@ public class InvoiceRunCreationStory extends InvoiceRunStories {
 
     private InvoiceRun createANewInvoiceRun() {
         InvoiceRun invoiceRun = anInvoiceRun()
-                .withSince("7/1/2019")
-                .withSinceShortYear("7/1/19")
-                .withUntil("8/1/2019")
-                .withUntilShortYear("8/1/19")
+                .withSince("6/29/2019")
+                .withSinceShortYear("6/29/19")
+                .withUntil("8/3/2019")
+                .withUntilShortYear("8/3/19")
                 .withIssueDate("8/12/2019")
                 .withIssueDateShortYear("8/12/19")
                 .withFirstInvoiceNumber("7")
