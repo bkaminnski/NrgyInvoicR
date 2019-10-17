@@ -91,4 +91,8 @@ export class AuthenticationService {
   get authenticatedUserToken() {
     return this.authenticatedUser ? this.authenticatedUser.authenticationToken : '';
   }
+
+  get authenticatedUserName(): string {
+    return this.authenticatedUser ? this.authenticatedUser.name : '';
+  }
 }

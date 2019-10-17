@@ -7,7 +7,7 @@
   <button id="ae-button-invoicing" mat-button [matMenuTriggerFor]="invoicingMenu">Invoicing</button>
   <span class="space"></span>
   <button id="ae-button-user" mat-button [matMenuTriggerFor]="userMenu">
-    <mat-icon>account_circle</mat-icon><span class="user">Bartosz Kaminski</span>
+    <mat-icon>account_circle</mat-icon><span class="user">{{userName()}}</span>
   </button>
 </mat-toolbar>
 

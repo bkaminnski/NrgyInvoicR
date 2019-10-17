@@ -14,6 +14,10 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
   }
 
+  userName(): string {
+    return this.authenticationService.authenticatedUserName;
+  }
+
   userIsLoggedIn(): boolean {
     return this.authenticationService.isAuthenticated();
   }
