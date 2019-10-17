@@ -8,7 +8,7 @@
         <insert tableName="auser">
             <column name="id" valueSequenceNext="auser_id_seq"/>
             <column name="external_id" value="d7491b20-8534-4691-9b4d-a2011dbe5ebf"/>
-            <column name="email" value="alice@company.com"/>
+            <column name="email" value="alice@softwarewithpassion.com"/>
             <column name="first_name" value="Alice"/>
             <column name="last_name" value="Peterson"/>
             <column name="password" value="$2a$10$y2xNdzqgwHl6zOP9kXtdsOSNWmLYmF.IhwaExLXFTFT/RQF/J8aBK"/>

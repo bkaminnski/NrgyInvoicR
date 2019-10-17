@@ -11,7 +11,7 @@ public class UserLoginStory {
     }
 
     public void userLogsIn() {
-        app.findElement(By.id("ae-input-email")).sendKeys("alice@company.com");
+        app.findElement(By.id("ae-input-email")).sendKeys("alice@softwarewithpassion.com");
         app.findElement(By.id("ae-input-password")).sendKeys("password123");
         app.findElement(By.id("ae-button-log-in")).click();
         app.waitUpTo30sUntilElementIsVisible(By.id("ae-card-dashboard"));
