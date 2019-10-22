@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 class ExpressionParserTest {

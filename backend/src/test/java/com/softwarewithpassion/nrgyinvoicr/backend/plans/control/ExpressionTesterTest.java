@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ExpressionTesterTest {
     private static final String VALID_EXPRESSION = ".01.01-12.31\r\n..1-7\r\n...0-23:0.18692";

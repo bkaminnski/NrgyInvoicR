@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.ZonedDateTime;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 class ReadingSpreadTest {
