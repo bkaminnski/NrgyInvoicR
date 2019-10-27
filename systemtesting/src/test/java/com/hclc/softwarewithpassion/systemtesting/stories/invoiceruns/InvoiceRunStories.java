@@ -12,7 +12,7 @@ class InvoiceRunStories {
     }
 
     void navigateToInvoiceRunsPage() {
-        app.findElement(By.id("ae-button-invoicing")).click();
+        app.clickWith1sTimeout(By.id("ae-button-invoicing"));
         app.clickWith1sTimeout(By.id("ae-button-invoice-runs"));
     }
 

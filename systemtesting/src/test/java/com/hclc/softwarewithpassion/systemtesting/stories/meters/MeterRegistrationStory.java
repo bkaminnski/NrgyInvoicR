@@ -20,7 +20,7 @@ public class MeterRegistrationStory {
     }
 
     private void navigateToMetersPage() {
-        app.findElement(By.id("ae-button-registries")).click();
+        app.clickWith1sTimeout(By.id("ae-button-registries"));
         app.clickWith1sTimeout(By.id("ae-button-meters"));
     }
 

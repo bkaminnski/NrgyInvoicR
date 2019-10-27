@@ -30,7 +30,7 @@ public class ReadingUploadStory {
     }
 
     private void navigateToReadingsUploadPage() {
-        app.findElement(By.id("ae-button-meter-readings")).click();
+        app.clickWith1sTimeout(By.id("ae-button-meter-readings"));
         app.clickWith1sTimeout(By.id("ae-button-new-upload"));
     }
 
