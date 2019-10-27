@@ -62,3 +62,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Exception for Jaspersoft Studio project ###
+!files/template/.project
