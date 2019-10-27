@@ -36,7 +36,7 @@ public class InvoiceGenerationStory {
     }
 
     private void navigateToInvoicesPage() {
-        app.findElement(By.id("ae-button-invoicing")).click();
+        app.clickWith1sTimeout(By.id("ae-button-invoicing"));
         app.clickWith1sTimeout(By.id("ae-button-invoices"));
     }
 
