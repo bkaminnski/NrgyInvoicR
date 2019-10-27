@@ -2,7 +2,7 @@ package com.hclc.softwarewithpassion.systemtesting;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,8 +15,8 @@ public class Application {
     private final WebDriver driver;
 
     Application() {
-        WebDriverManager.firefoxdriver().setup();
-        this.driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        this.driver = new ChromeDriver();
         this.driver.manage().timeouts().implicitlyWait(5, SECONDS);
         this.driver.manage().window().setSize(new Dimension(1920, 1080));
         waitForApplicationToStart();
