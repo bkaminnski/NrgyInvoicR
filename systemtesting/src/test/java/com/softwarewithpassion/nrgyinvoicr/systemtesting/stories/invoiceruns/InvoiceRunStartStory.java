@@ -21,7 +21,7 @@ public class InvoiceRunStartStory extends InvoiceRunStories {
 
     private void startInvoiceRun(InvoiceRun invoiceRun) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[text()=' " + invoiceRun.invoiceNumberTemplate + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-invoice-run-start"));
+        app.clickWith30sTimeout(By.id("ae-button-invoice-run-start"));
     }
 
     private void waitUntilInvoiceRunIsFinished(InvoiceRun invoiceRun) {

@@ -12,8 +12,8 @@ class InvoiceRunStories {
     }
 
     void navigateToInvoiceRunsPage() {
-        app.clickWith1sTimeout(By.id("ae-button-invoicing"));
-        app.clickWith1sTimeout(By.id("ae-button-invoice-runs"));
+        app.clickWith30sTimeout(By.id("ae-button-invoicing"));
+        app.clickWith30sTimeout(By.id("ae-button-invoice-runs"));
     }
 
     WebElement findInvoiceRunRow(InvoiceRun invoiceRun) {

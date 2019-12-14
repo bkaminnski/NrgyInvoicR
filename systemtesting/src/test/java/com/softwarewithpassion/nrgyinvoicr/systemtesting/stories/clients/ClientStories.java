@@ -11,7 +11,7 @@ class ClientStories {
     }
 
     void navigateToClientsPage() {
-        app.clickWith1sTimeout(By.id("ae-button-registries"));
-        app.clickWith1sTimeout(By.id("ae-button-clients"));
+        app.clickWith30sTimeout(By.id("ae-button-registries"));
+        app.clickWith30sTimeout(By.id("ae-button-clients"));
     }
 }

@@ -22,7 +22,7 @@ public class ClientPlanAssignmentStory extends ClientStories {
 
     private void navigateToPlansAssignmentPage(Client client) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()=' " + client.lastName + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-plans"));
+        app.clickWith30sTimeout(By.id("ae-button-plans"));
     }
 
     private void openPlanAssignmentForm() {
@@ -37,7 +37,7 @@ public class ClientPlanAssignmentStory extends ClientStories {
                 .build();
         app.findElement(By.id("ae-input-client-plan-valid-since")).sendKeys(clientPlanAssignment.validSince);
         app.findElement(By.id("ae-input-plan-autocomplete")).sendKeys(clientPlanAssignment.planName);
-        app.clickWith1sTimeout(By.xpath("//mat-option/span[text()=' " + clientPlanAssignment.planName + " ']/.."));
+        app.clickWith30sTimeout(By.xpath("//mat-option/span[text()=' " + clientPlanAssignment.planName + " ']/.."));
         app.findElement(By.id("ae-button-client-plan-save")).click();
         return clientPlanAssignment;
     }
@@ -51,7 +51,7 @@ public class ClientPlanAssignmentStory extends ClientStories {
 
     public void assertThatClientPlanAssignmentFormShowsAllValuesForA(ClientPlanAssignment clientPlanAssignment) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-client-plans']/mat-row/mat-cell[text()=' " + clientPlanAssignment.planName + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-edit-plan-assignment"));
+        app.clickWith30sTimeout(By.id("ae-button-edit-plan-assignment"));
         assertThat(app.getValueOfElement(By.id("ae-input-client-plan-valid-since"))).isEqualTo(clientPlanAssignment.validSince);
         assertThat(app.getValueOfElement(By.id("ae-input-plan-autocomplete"))).isEqualTo(clientPlanAssignment.planName);
         app.findElement(By.id("ae-button-client-plan-cancel")).click();

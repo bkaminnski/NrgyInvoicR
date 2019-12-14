@@ -36,8 +36,8 @@ public class InvoiceGenerationStory {
     }
 
     private void navigateToInvoicesPage() {
-        app.clickWith1sTimeout(By.id("ae-button-invoicing"));
-        app.clickWith1sTimeout(By.id("ae-button-invoices"));
+        app.clickWith30sTimeout(By.id("ae-button-invoicing"));
+        app.clickWith30sTimeout(By.id("ae-button-invoices"));
     }
 
     private void searchInvoicesForA(Client client, InvoiceRun invoiceRun) {
@@ -67,7 +67,7 @@ public class InvoiceGenerationStory {
 
     private void assertThatUserSeesInvoiceLines(Client client, PlanVersion planVersion, ReadingUpload readingUpload) {
         app.hoverOverElement(invoiceRow(client));
-        app.clickWith1sTimeout(By.id("ae-button-invoice-details"));
+        app.clickWith30sTimeout(By.id("ae-button-invoice-details"));
         assertThatUserSees(InvoiceLineBuilder.anInvoiceLine().withNumber("1").withDescription("Monday - Friday").withUnitPrice(planVersion.weekPrice).withQuantity(readingUpload.weekQuantity).withUnit("KWH").withNet("34.66").withVat("23%").withGross("42.63").build());
         assertThatUserSees(InvoiceLineBuilder.anInvoiceLine().withNumber("2").withDescription("Saturday - Sunday").withUnitPrice(planVersion.weekendPrice).withQuantity(readingUpload.weekendQuantity).withUnit("KWH").withNet("13.17").withVat("23%").withGross("16.2").build());
         assertThatUserSees(InvoiceLineBuilder.anInvoiceLine().withNumber("3").withDescription("Network fee").withUnitPrice("4.13").withQuantity("1").withUnit("NONE").withNet("4.13").withVat("23%").withGross("5.08").build());

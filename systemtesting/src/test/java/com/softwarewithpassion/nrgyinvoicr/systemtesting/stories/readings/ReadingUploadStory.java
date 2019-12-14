@@ -30,8 +30,8 @@ public class ReadingUploadStory {
     }
 
     private void navigateToReadingsUploadPage() {
-        app.clickWith1sTimeout(By.id("ae-button-meter-readings"));
-        app.clickWith1sTimeout(By.id("ae-button-new-upload"));
+        app.clickWith30sTimeout(By.id("ae-button-meter-readings"));
+        app.clickWith30sTimeout(By.id("ae-button-new-upload"));
     }
 
     private ReadingUpload prepareFileToUpload(Meter meter) throws IOException {
@@ -77,7 +77,7 @@ public class ReadingUploadStory {
     }
 
     private void navigateToReadingsUploadsHistoryPage(ReadingUpload readingUpload) {
-        app.clickWith1sTimeout(By.id("ae-button-meter-readings"));
-        app.clickWith1sTimeout(By.id("ae-button-history-of-uploads"));
+        app.clickWith30sTimeout(By.id("ae-button-meter-readings"));
+        app.clickWith30sTimeout(By.id("ae-button-history-of-uploads"));
     }
 }

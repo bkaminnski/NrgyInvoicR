@@ -35,7 +35,7 @@ public class ClientRegistrationStory extends ClientStories {
         app.findElement(By.id("ae-input-client-postal-code")).sendKeys(client.postalCode);
         app.findElement(By.id("ae-input-client-city")).sendKeys(client.city);
         app.findElement(By.id("ae-input-meter-autocomplete")).sendKeys(client.meterSerialNumber);
-        app.clickWith1sTimeout(By.xpath("//mat-option/span[text()=' " + client.meterSerialNumber + " ']/.."));
+        app.clickWith30sTimeout(By.xpath("//mat-option/span[text()=' " + client.meterSerialNumber + " ']/.."));
         app.findElement(By.id("ae-button-client-save")).click();
         return client;
     }
@@ -63,7 +63,7 @@ public class ClientRegistrationStory extends ClientStories {
 
     public void assertThatClientRegistrationFormShowsAllValuesForA(Client client) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[text()=' " + client.lastName + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-edit-client"));
+        app.clickWith30sTimeout(By.id("ae-button-edit-client"));
         assertThat(app.getValueOfElement(By.id("ae-input-client-first-name"))).isEqualTo(client.fistName);
         assertThat(app.getValueOfElement(By.id("ae-input-client-middle-name"))).isEqualTo(client.middleName);
         assertThat(app.getValueOfElement(By.id("ae-input-client-last-name"))).isEqualTo(client.lastName);

@@ -76,8 +76,8 @@ public class Application {
         return driver.findElement(by);
     }
 
-    public void clickWith1sTimeout(By by) {
-        this.clickWithTimeout(by, 1);
+    public void clickWith30sTimeout(By by) {
+        this.clickWithTimeout(by, 30);
     }
 
     private void clickWithTimeout(By by, int timeoutInSeconds) {

@@ -24,13 +24,13 @@ public class PlanVersionDefinitionStory {
     }
 
     private void navigateToPlansPage() {
-        app.clickWith1sTimeout(By.id("ae-button-invoicing"));
-        app.clickWith1sTimeout(By.id("ae-button-plans"));
+        app.clickWith30sTimeout(By.id("ae-button-invoicing"));
+        app.clickWith30sTimeout(By.id("ae-button-plans"));
     }
 
     private void openPlanVersionsOfAPlan(String planName) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-plans']/mat-row/mat-cell[text()='" + planName + "']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-plan-versions"));
+        app.clickWith30sTimeout(By.id("ae-button-plan-versions"));
     }
 
     private void openPlanVersionDefinitionForm() {
@@ -77,7 +77,7 @@ public class PlanVersionDefinitionStory {
 
     public void assertThatPlanVersionDefinitionFormShowsAllValuesForA(PlanVersion planVersion) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[@id='ae-cell-plan-version-description' and text()=' " + planVersion.description + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-edit-plan-version"));
+        app.clickWith30sTimeout(By.id("ae-button-edit-plan-version"));
         assertThat(app.getValueOfElement(By.id("ae-input-plan-version-valid-since"))).isEqualTo(planVersion.validSince);
         assertThat(app.getValueOfElement(By.id("ae-input-plan-version-subscription-fee"))).isEqualTo(planVersion.subscriptionFee);
         assertThat(app.getValueOfElement(By.id("ae-input-plan-version-network-fee"))).isEqualTo(planVersion.networkFee);

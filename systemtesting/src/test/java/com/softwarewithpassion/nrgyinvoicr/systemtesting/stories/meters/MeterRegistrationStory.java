@@ -20,8 +20,8 @@ public class MeterRegistrationStory {
     }
 
     private void navigateToMetersPage() {
-        app.clickWith1sTimeout(By.id("ae-button-registries"));
-        app.clickWith1sTimeout(By.id("ae-button-meters"));
+        app.clickWith30sTimeout(By.id("ae-button-registries"));
+        app.clickWith30sTimeout(By.id("ae-button-meters"));
     }
 
     private void openMeterRegistrationForm() {
@@ -43,7 +43,7 @@ public class MeterRegistrationStory {
 
     public void assertThatMeterRegistrationFormShowsAllValuesForA(Meter meter) {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
-        app.clickWith1sTimeout(By.id("ae-button-edit-meter"));
+        app.clickWith30sTimeout(By.id("ae-button-edit-meter"));
         assertThat(app.getValueOfElement(By.id("ae-input-meter-serial-number"))).isEqualTo(meter.serialNumber);
         app.findElement(By.id("ae-button-meter-cancel")).click();
     }
