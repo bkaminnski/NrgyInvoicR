@@ -51,7 +51,7 @@ public class ReadingUploadStory {
     }
 
     private void startUpload(ReadingUpload readingUpload) {
-        app.findElement(By.id("ae-input-file-upload")).sendKeys(readingUpload.filePathWithName);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-file-upload")).sendKeys(readingUpload.filePathWithName);
     }
 
     private void waitUntilUploadCompletes(ReadingUpload readingUpload) {
@@ -60,7 +60,7 @@ public class ReadingUploadStory {
 
     public void assertThatUserSeesUploadedReadingFileInUploadProgressTable(ReadingUpload readingUpload) {
         assertThatCode(() -> {
-            WebElement uploadProgressRow = app.findElement(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text()=' " + readingUpload.fileName + " ']/.."));
+            WebElement uploadProgressRow = app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-upload-progress']/mat-row/mat-cell[text()=' " + readingUpload.fileName + " ']/.."));
             uploadProgressRow.findElement(By.xpath("mat-cell[@id='ae-cell-upload-progress-measured-values' and text()=' " + readingUpload.numberOfValues + " ']"));
             uploadProgressRow.findElement(By.xpath("mat-cell[@id='ae-cell-upload-progress-expected-values' and text()=' " + readingUpload.numberOfValues + " ']"));
         }).doesNotThrowAnyException();
@@ -69,7 +69,7 @@ public class ReadingUploadStory {
     public void assertThatUserSeesUploadedReadingFileInReadingsUploadsHistory(ReadingUpload readingUpload) {
         navigateToReadingsUploadsHistoryPage(readingUpload);
         assertThatCode(() -> {
-            WebElement readingUploadRow = app.findElement(By.xpath("//*[@id='ae-table-readings-uploads']/mat-row/mat-cell[text() = '" + readingUpload.fileName + "']/.."));
+            WebElement readingUploadRow = app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-readings-uploads']/mat-row/mat-cell[text() = '" + readingUpload.fileName + "']/.."));
             readingUploadRow.findElement(By.xpath("mat-cell[@id='ae-cell-readings-uploads-measured-values' and text()=' " + readingUpload.numberOfValues + " ']"));
             readingUploadRow.findElement(By.xpath("mat-cell[@id='ae-cell-readings-uploads-expected-values' and text()=' " + readingUpload.numberOfValues + " ']"));
             readingUploadRow.findElement(By.xpath("//mat-icon[text() = ' cloud_done ']"));

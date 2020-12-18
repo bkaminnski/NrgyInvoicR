@@ -17,6 +17,6 @@ class InvoiceRunStories {
     }
 
     WebElement findInvoiceRunRow(InvoiceRun invoiceRun) {
-        return app.findElement(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[@id='ae-cell-invoice-run-number-template' and text()=' " + invoiceRun.invoiceNumberTemplate + " ']/.."));
+        return app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-invoice-runs']/tbody/tr/td[@id='ae-cell-invoice-run-number-template' and text()=' " + invoiceRun.invoiceNumberTemplate + " ']/.."));
     }
 }

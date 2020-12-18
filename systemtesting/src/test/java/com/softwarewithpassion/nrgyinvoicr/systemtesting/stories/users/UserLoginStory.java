@@ -11,9 +11,9 @@ public class UserLoginStory {
     }
 
     public void userLogsIn() {
-        app.findElement(By.id("ae-input-email")).sendKeys("alice@softwarewithpassion.com");
-        app.findElement(By.id("ae-input-password")).sendKeys("password123");
-        app.findElement(By.id("ae-button-log-in")).click();
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-email")).sendKeys("alice@softwarewithpassion.com");
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-password")).sendKeys("password123");
+        app.clickWith30sTimeout(By.id("ae-button-log-in"));
         app.waitUpTo30sUntilElementIsVisible(By.id("ae-card-dashboard"));
     }
 }

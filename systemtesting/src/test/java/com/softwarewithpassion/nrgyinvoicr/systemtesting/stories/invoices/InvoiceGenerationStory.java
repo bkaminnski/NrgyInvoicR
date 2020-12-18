@@ -44,12 +44,12 @@ public class InvoiceGenerationStory {
         app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-since"), invoiceRun.issueDate);
         app.clearElementAndSendKeys(By.id("ae-input-invoices-search-issue-date-until"), invoiceRun.issueDate);
         app.clearElementAndSendKeys(By.id("ae-input-invoices-search-client-number"), client.number);
-        app.findElement(By.id("ae-button-search-invoices")).click();
+        app.clickWith30sTimeout(By.id("ae-button-search-invoices"));
     }
 
     private void assertThatUserSeesGeneratedInvoice(Meter meter, Client client, InvoiceRun invoiceRun, ClientPlanAssignment clientPlanAssignment) {
         assertThatCode(() -> {
-            WebElement invoiceRow = app.findElement(invoiceRow(client));
+            WebElement invoiceRow = app.findTimeoutableElementWith30sTimeout(invoiceRow(client));
             invoiceRow.findElement(By.xpath("td[@id='ae-cell-invoice-number' and starts-with(text(), ' " + invoiceRun.getFirstPartOfInvoiceNumberTemplate() + "')]"));
             invoiceRow.findElement(By.xpath("td[@id='ae-cell-invoice-issue-date' and text()=' " + invoiceRun.issueDateShortYear + " ']"));
             invoiceRow.findElement(By.xpath("td[@id='ae-cell-invoice-gross-total' and text()=' 67.49 ']"));
@@ -76,7 +76,7 @@ public class InvoiceGenerationStory {
 
     private void assertThatUserSees(InvoiceLine invoiceLine) {
         assertThatCode(() -> {
-            WebElement invoiceLineRow = app.findElement(By.xpath("//*[@id='ae-table-invoice-lines']/mat-row/mat-cell[@id='ae-cell-invoice-line-number' and text()=' " + invoiceLine.number + " ']/.."));
+            WebElement invoiceLineRow = app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-invoice-lines']/mat-row/mat-cell[@id='ae-cell-invoice-line-number' and text()=' " + invoiceLine.number + " ']/.."));
             invoiceLineRow.findElement(By.xpath("mat-cell[@id='ae-cell-invoice-line-description' and text()=' " + invoiceLine.description + " ']"));
             invoiceLineRow.findElement(By.xpath("mat-cell[@id='ae-cell-invoice-line-unit-price' and text()=' " + invoiceLine.unitPrice + " ']"));
             invoiceLineRow.findElement(By.xpath("mat-cell[@id='ae-cell-invoice-line-quantity' and text()=' " + invoiceLine.quantity + " ']"));

@@ -5,6 +5,7 @@ import com.softwarewithpassion.nrgyinvoicr.systemtesting.Application;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static com.softwarewithpassion.nrgyinvoicr.systemtesting.stories.clients.ClientBuilder.aClient;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -22,21 +23,21 @@ public class ClientRegistrationStory extends ClientStories {
     }
 
     private void openClientRegistrationForm() {
-        app.findElement(By.id("ae-button-register-client")).click();
+        app.clickWith30sTimeout(By.id("ae-button-register-client"));
     }
 
     private Client registerANewClient(Meter meter) {
-        Client client = ClientBuilder.aClient().withMeterSerialNumber(meter.serialNumber).build();
-        app.findElement(By.id("ae-input-client-first-name")).sendKeys(client.fistName);
-        app.findElement(By.id("ae-input-client-middle-name")).sendKeys(client.middleName);
-        app.findElement(By.id("ae-input-client-last-name")).sendKeys(client.lastName);
-        app.findElement(By.id("ae-input-client-address-line-1")).sendKeys(client.addressLine1);
-        app.findElement(By.id("ae-input-client-address-line-2")).sendKeys(client.addressLine2);
-        app.findElement(By.id("ae-input-client-postal-code")).sendKeys(client.postalCode);
-        app.findElement(By.id("ae-input-client-city")).sendKeys(client.city);
-        app.findElement(By.id("ae-input-meter-autocomplete")).sendKeys(client.meterSerialNumber);
+        Client client = aClient().withMeterSerialNumber(meter.serialNumber).build();
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-first-name")).sendKeys(client.fistName);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-middle-name")).sendKeys(client.middleName);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-last-name")).sendKeys(client.lastName);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-address-line-1")).sendKeys(client.addressLine1);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-address-line-2")).sendKeys(client.addressLine2);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-postal-code")).sendKeys(client.postalCode);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-city")).sendKeys(client.city);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-meter-autocomplete")).sendKeys(client.meterSerialNumber);
         app.clickWith30sTimeout(By.xpath("//mat-option/span[text()=' " + client.meterSerialNumber + " ']/.."));
-        app.findElement(By.id("ae-button-client-save")).click();
+        app.clickWith30sTimeout(By.id("ae-button-client-save"));
         return client;
     }
 
@@ -47,7 +48,7 @@ public class ClientRegistrationStory extends ClientStories {
     }
 
     private WebElement findClientRow(Client client) {
-        return app.findElement(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[@id='ae-cell-client-last-name' and text()=' " + client.lastName + " ']/.."));
+        return app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-clients']/mat-row/mat-cell[@id='ae-cell-client-last-name' and text()=' " + client.lastName + " ']/.."));
     }
 
     public void assertThatUserSeesARegisteredClientInAListOfClients(Client client) {
@@ -72,6 +73,6 @@ public class ClientRegistrationStory extends ClientStories {
         assertThat(app.getValueOfElement(By.id("ae-input-client-postal-code"))).isEqualTo(client.postalCode);
         assertThat(app.getValueOfElement(By.id("ae-input-client-city"))).isEqualTo(client.city);
         assertThat(app.getValueOfElement(By.id("ae-input-meter-autocomplete"))).isEqualTo(client.meterSerialNumber);
-        app.findElement(By.id("ae-button-client-cancel")).click();
+        app.clickWith30sTimeout(By.id("ae-button-client-cancel"));
     }
 }

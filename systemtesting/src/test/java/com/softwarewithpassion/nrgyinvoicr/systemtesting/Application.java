@@ -12,6 +12,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class Application {
     private static final String DEV_APPLICATION_URL = "http://localhost:8080";
     private static final String APPLICATION_TITLE = "NrgyInvoicR";
+    private static final long NANOS_IN_SECOND = 1_000_000_000L;
     private final WebDriver driver;
 
     Application() {
@@ -72,8 +73,22 @@ public class Application {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public WebElement findElement(By by) {
-        return driver.findElement(by);
+    public WebElement findTimeoutableElementWith30sTimeout(By by) {
+        return new WebElementWithTimeoutableFind(findElementWithTimeout(by, 30));
+    }
+
+    private WebElement findElementWithTimeout(By by, int timeoutInSeconds) {
+        long started = System.nanoTime();
+        RuntimeException exception = new RuntimeException();
+        while (System.nanoTime() < started + timeoutInSeconds * NANOS_IN_SECOND) {
+            try {
+                return driver.findElement(by);
+            } catch (NoSuchElementException | ElementClickInterceptedException e) {
+                exception = e;
+                waitFor125Millis();
+            }
+        }
+        throw exception;
     }
 
     public void clickWith30sTimeout(By by) {
@@ -81,22 +96,22 @@ public class Application {
     }
 
     private void clickWithTimeout(By by, int timeoutInSeconds) {
-        try {
-            tryClickingWithTimeout(by, timeoutInSeconds);
-        } catch (InterruptedException ignored) {
-        }
+        tryClickingWithTimeout(by, timeoutInSeconds);
     }
 
-    private void tryClickingWithTimeout(By by, int timeoutInSeconds) throws InterruptedException {
+    private void tryClickingWithTimeout(By by, int timeoutInSeconds) {
         long started = System.nanoTime();
-        while (System.nanoTime() < started + timeoutInSeconds * 1_000_000_000L) {
+        RuntimeException exception = new RuntimeException();
+        while (System.nanoTime() < started + timeoutInSeconds * NANOS_IN_SECOND) {
             try {
-                findElement(by).click();
+                driver.findElement(by).click();
                 return;
-            } catch (ElementClickInterceptedException e) {
-                Thread.sleep(125);
+            } catch (NoSuchElementException | ElementClickInterceptedException e) {
+                exception = e;
+                waitFor125Millis();
             }
         }
+        throw exception;
     }
 
     public String getValueOfElement(By by) {
@@ -104,7 +119,7 @@ public class Application {
     }
 
     public void clearElementAndSendKeys(By by, String keysToSend) {
-        WebElement element = findElement(by);
+        WebElement element = findTimeoutableElementWith30sTimeout(by);
         while (!element.getAttribute("value").isEmpty()) {
             element.sendKeys(Keys.BACK_SPACE);
         }
@@ -112,7 +127,7 @@ public class Application {
     }
 
     public void hoverOverElement(By by) {
-        WebElement element = findElement(by);
+        WebElement element = findElementWithTimeout(by, 30);
         new Actions(driver).moveToElement(element).perform();
     }
 }

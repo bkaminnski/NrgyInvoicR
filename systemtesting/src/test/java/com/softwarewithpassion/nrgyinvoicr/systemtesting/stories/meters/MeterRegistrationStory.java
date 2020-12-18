@@ -25,19 +25,19 @@ public class MeterRegistrationStory {
     }
 
     private void openMeterRegistrationForm() {
-        app.findElement(By.id("ae-button-register-meter")).click();
+        app.clickWith30sTimeout(By.id("ae-button-register-meter"));
     }
 
     private Meter registerANewMeter() {
         Meter meter = MeterBuilder.aMeter().build();
-        app.findElement(By.id("ae-input-meter-serial-number")).sendKeys(meter.serialNumber);
-        app.findElement(By.id("ae-button-meter-save")).click();
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-meter-serial-number")).sendKeys(meter.serialNumber);
+        app.clickWith30sTimeout(By.id("ae-button-meter-save"));
         return meter;
     }
 
     public void assertThatUserSeesARegisteredMeterInAListOfMeters(Meter meter) {
         assertThatCode(() -> {
-            app.findElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
+            app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
         }).doesNotThrowAnyException();
     }
 
@@ -45,6 +45,6 @@ public class MeterRegistrationStory {
         app.hoverOverElement(By.xpath("//*[@id='ae-table-meters']/mat-row/mat-cell[@id='ae-cell-meter-serial-number' and text()=' " + meter.serialNumber + " ']/.."));
         app.clickWith30sTimeout(By.id("ae-button-edit-meter"));
         assertThat(app.getValueOfElement(By.id("ae-input-meter-serial-number"))).isEqualTo(meter.serialNumber);
-        app.findElement(By.id("ae-button-meter-cancel")).click();
+        app.clickWith30sTimeout(By.id("ae-button-meter-cancel"));
     }
 }

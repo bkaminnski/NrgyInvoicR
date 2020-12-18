@@ -21,7 +21,7 @@ public class InvoiceRunCreationStory extends InvoiceRunStories {
     }
 
     private void openInvoiceRunCreationForm() {
-        app.findElement(By.id("ae-button-create-invoice-run")).click();
+        app.clickWith30sTimeout(By.id("ae-button-create-invoice-run"));
     }
 
     private InvoiceRun createANewInvoiceRun() {
@@ -40,7 +40,7 @@ public class InvoiceRunCreationStory extends InvoiceRunStories {
         app.clearElementAndSendKeys(By.id("ae-input-invoice-run-issue-date"), invoiceRun.issueDate);
         app.clearElementAndSendKeys(By.id("ae-input-invoice-run-first-invoice-number"), invoiceRun.firstInvoiceNumber);
         app.clearElementAndSendKeys(By.id("ae-input-invoice-run-invoice-number-template"), invoiceRun.invoiceNumberTemplate);
-        app.findElement(By.id("ae-button-invoice-run-save")).click();
+        app.clickWith30sTimeout(By.id("ae-button-invoice-run-save"));
         return invoiceRun;
     }
 

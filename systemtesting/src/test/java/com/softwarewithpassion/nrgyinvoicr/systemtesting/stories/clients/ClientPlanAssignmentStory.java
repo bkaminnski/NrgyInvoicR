@@ -26,7 +26,7 @@ public class ClientPlanAssignmentStory extends ClientStories {
     }
 
     private void openPlanAssignmentForm() {
-        app.findElement(By.id("ae-button-assign-plan")).click();
+        app.clickWith30sTimeout(By.id("ae-button-assign-plan"));
     }
 
     private ClientPlanAssignment assignAPlan(String planName) {
@@ -35,16 +35,16 @@ public class ClientPlanAssignmentStory extends ClientStories {
                 .withValidSince("3/1/2019")
                 .withValidSinceShortYear("3/1/19")
                 .build();
-        app.findElement(By.id("ae-input-client-plan-valid-since")).sendKeys(clientPlanAssignment.validSince);
-        app.findElement(By.id("ae-input-plan-autocomplete")).sendKeys(clientPlanAssignment.planName);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-client-plan-valid-since")).sendKeys(clientPlanAssignment.validSince);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-plan-autocomplete")).sendKeys(clientPlanAssignment.planName);
         app.clickWith30sTimeout(By.xpath("//mat-option/span[text()=' " + clientPlanAssignment.planName + " ']/.."));
-        app.findElement(By.id("ae-button-client-plan-save")).click();
+        app.clickWith30sTimeout(By.id("ae-button-client-plan-save"));
         return clientPlanAssignment;
     }
 
     public void assertThatUserSeesAssignedPlanInTheListOfClientPlans(ClientPlanAssignment clientPlanAssignment) {
         assertThatCode(() -> {
-            WebElement clientRow = app.findElement(By.xpath("//*[@id='ae-table-client-plans']/mat-row/mat-cell[@id='ae-cell-client-plan-name' and text()=' " + clientPlanAssignment.planName + " ']/.."));
+            WebElement clientRow = app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-client-plans']/mat-row/mat-cell[@id='ae-cell-client-plan-name' and text()=' " + clientPlanAssignment.planName + " ']/.."));
             clientRow.findElement(By.xpath("mat-cell[@id='ae-cell-client-plan-valid-since' and text()=' " + clientPlanAssignment.validSinceShortYear + " ']"));
         }).doesNotThrowAnyException();
     }
@@ -54,6 +54,6 @@ public class ClientPlanAssignmentStory extends ClientStories {
         app.clickWith30sTimeout(By.id("ae-button-edit-plan-assignment"));
         assertThat(app.getValueOfElement(By.id("ae-input-client-plan-valid-since"))).isEqualTo(clientPlanAssignment.validSince);
         assertThat(app.getValueOfElement(By.id("ae-input-plan-autocomplete"))).isEqualTo(clientPlanAssignment.planName);
-        app.findElement(By.id("ae-button-client-plan-cancel")).click();
+        app.clickWith30sTimeout(By.id("ae-button-client-plan-cancel"));
     }
 }

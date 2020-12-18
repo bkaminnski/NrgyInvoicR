@@ -34,7 +34,7 @@ public class PlanVersionDefinitionStory {
     }
 
     private void openPlanVersionDefinitionForm() {
-        app.findElement(By.id("ae-button-define-plan-version")).click();
+        app.clickWith30sTimeout(By.id("ae-button-define-plan-version"));
     }
 
     private PlanVersion defineANewPlanVersion(String planName) {
@@ -56,19 +56,19 @@ public class PlanVersionDefinitionStory {
                 .withWeekPrice(weekPrice)
                 .withWeekendPrice(weekendPrice)
                 .build();
-        app.findElement(By.id("ae-input-plan-version-valid-since")).sendKeys(planVersion.validSince);
-        app.findElement(By.id("ae-input-plan-version-subscription-fee")).sendKeys(planVersion.subscriptionFee);
-        app.findElement(By.id("ae-input-plan-version-network-fee")).sendKeys(planVersion.networkFee);
-        app.findElement(By.id("ae-textarea-plan-version-description")).sendKeys(planVersion.description);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-plan-version-valid-since")).sendKeys(planVersion.validSince);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-plan-version-subscription-fee")).sendKeys(planVersion.subscriptionFee);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-input-plan-version-network-fee")).sendKeys(planVersion.networkFee);
+        app.findTimeoutableElementWith30sTimeout(By.id("ae-textarea-plan-version-description")).sendKeys(planVersion.description);
         app.clearElementAndSendKeys(By.id("ae-textarea-plan-version-expression"), planVersion.expression);
         app.waitUpTo1sUntilElementIsVisible(By.xpath("//*[@id=\"ae-table-flattened-buckets\"]/mat-row/mat-cell[text()='" + weekendPrice + "']"));
-        app.findElement(By.id("ae-button-plan-version-save")).click();
+        app.clickWith30sTimeout(By.id("ae-button-plan-version-save"));
         return planVersion;
     }
 
     public void assertThatUserSeesADefinedPlanVersionInAListOfPlanVersions(PlanVersion planVersion) {
         assertThatCode(() -> {
-            WebElement planVersionRow = app.findElement(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[@id='ae-cell-plan-version-description' and text()=' " + planVersion.description + " ']/.."));
+            WebElement planVersionRow = app.findTimeoutableElementWith30sTimeout(By.xpath("//*[@id='ae-table-plan-versions']/mat-row/mat-cell[@id='ae-cell-plan-version-description' and text()=' " + planVersion.description + " ']/.."));
             planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-valid-since' and text()=' " + planVersion.validSinceShortYear + " ']"));
             planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-subscription-fee' and text()=' " + planVersion.subscriptionFee + " ']"));
             planVersionRow.findElement(By.xpath("mat-cell[@id='ae-cell-plan-version-network-fee' and text()=' " + planVersion.networkFee + " ']"));
@@ -83,6 +83,6 @@ public class PlanVersionDefinitionStory {
         assertThat(app.getValueOfElement(By.id("ae-input-plan-version-network-fee"))).isEqualTo(planVersion.networkFee);
         assertThat(app.getValueOfElement(By.id("ae-textarea-plan-version-description"))).isEqualTo(planVersion.description);
         assertThat(app.getValueOfElement(By.id("ae-textarea-plan-version-expression"))).isEqualTo(planVersion.expression);
-        app.findElement(By.id("ae-button-plan-version-cancel")).click();
+        app.clickWith30sTimeout(By.id("ae-button-plan-version-cancel"));
     }
 }
