@@ -33,8 +33,8 @@ export class InvoiceRunsListComponent implements OnInit, AfterViewInit {
   ];
   public expandedInvoiceRun: InvoiceRun;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'issueDate',

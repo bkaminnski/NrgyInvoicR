@@ -32,8 +32,8 @@ export class InvoicesListComponent implements OnInit, AfterViewInit {
   ];
   public expandedInvoice: Invoice;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'number',

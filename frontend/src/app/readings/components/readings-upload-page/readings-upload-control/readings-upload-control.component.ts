@@ -8,7 +8,7 @@ import { ReadingsUploadDataSource } from '../readings-upload.datasource';
 })
 export class ReadingsUploadControlComponent implements OnInit {
   public uploadStarted = false;
-  @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 
   constructor(public dataSource: ReadingsUploadDataSource) { }
 

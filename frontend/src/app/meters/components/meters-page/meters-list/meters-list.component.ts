@@ -21,8 +21,8 @@ export class MetersListComponent implements OnInit, AfterViewInit {
   public dataSource: MetersListDataSource;
   public displayedColumns: string[] = ['serialNumber', 'client.number', 'createdDate', 'options'];
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'createdDate',

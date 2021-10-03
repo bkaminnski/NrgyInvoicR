@@ -22,8 +22,8 @@ export class PlanVersionsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['validSince', 'fixedFees.subscriptionFee', 'fixedFees.networkFee', 'description', 'options'];
   public plan: Plan;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'validSince',

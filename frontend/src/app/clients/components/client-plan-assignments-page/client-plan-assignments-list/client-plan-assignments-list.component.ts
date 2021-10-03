@@ -22,8 +22,8 @@ export class ClientPlanAssignmentsListComponent implements OnInit, AfterViewInit
   public displayedColumns: string[] = ['validSince', 'plan.name', 'options'];
   public client: Client;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'validSince',

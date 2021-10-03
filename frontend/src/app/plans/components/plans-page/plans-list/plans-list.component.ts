@@ -14,8 +14,8 @@ export class PlansListComponent implements OnInit, AfterViewInit {
   dataSource: PlansListDataSource;
   displayedColumns: string[] = ['name', 'description', 'options'];
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'name',

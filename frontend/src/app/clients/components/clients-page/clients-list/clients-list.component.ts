@@ -21,8 +21,8 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
   public dataSource: ClientsListDataSource;
   public displayedColumns: string[] = ['number', 'firstName', 'lastName', 'addressLine1', 'postalCode', 'city', 'meter', 'createdDate', 'options'];
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   sortConfig = {
     initialSortActive: 'createdDate',
